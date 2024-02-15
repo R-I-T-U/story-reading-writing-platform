@@ -1,0 +1,83 @@
+.story-info {
+width: 500px;
+padding: 16px;
+background-color: white;
+border-radius: 10px;
+margin-top: 50px;
+}
+
+form {
+display: flex;
+flex-direction: column;
+
+}
+.loginHead{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loginHead h1 {
+margin-left: 20px;
+}
+#image-preview img {
+  height: 250px;
+  object-fit: cover;
+  margin-top: 10px;
+  width: 250px;
+}
+
+.form-control{
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  outline: none;
+  font-size: 16px;
+}
+
+input:focus ,textarea:focus, select:focus{
+  border-color: #4c74af;
+}
+
+#image{
+  margin-left: 20px;
+}
+#title{
+  width: 70%;
+  margin-left: 50px;
+}
+
+#description{
+  width: 70%;
+  height: 200px;
+}
+
+#genre{
+  width: 70%;
+  height: 30px;
+}
+
+#Language{
+  height: 30px;
+  width: 65%;
+}
+
+#format{
+  height: 30px;
+  width: 61%;
+}
+
+#on{
+  margin-left: 20px;
+}
+#off{
+  margin-left: 60px;
+}
+
+#rate{
+  margin-left: -240px;
+}
+
+button a{
+  text-decoration: none;
+  color: white;
+}

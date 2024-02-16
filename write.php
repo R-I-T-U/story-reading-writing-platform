@@ -1,3 +1,11 @@
+<?php
+$con = mysqli_connect("localhost", "root","","users");
+if(!$con){
+  die(mysqli_error($con));
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,18 +47,18 @@
 
   <center>
     <div class="story-info">
-      <form>
+    <form method="POST" action="write.php">
         <div class="loginHead">
           <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="50px"></a>
           <h1>Add Story Info</h1>
         </div>
         
-        <label for="image">Add cover Image: <input type="file" name="image" id="image" accept="image/*"
+        <label for="image" >Add cover Image: <input type="file" name="coverImage" id="image" accept="image/*"
             onchange="previewImage(event)"></label>
         <div id="image-preview"></div><br><br>
 
         <label for="title">Title:
-        <input type="text" id="title" name="story-title" class="form-control" required></label><br>
+        <input type="text" id="title" name="storyTitle" class="form-control" required></label><br>
 
         <label for="description">Description: <textarea id="description" name="description" required class="form-control"></textarea></label>
         <br>
@@ -72,7 +80,6 @@
         <label for="Language">Choose Language: <select name="Language" id="Language">
           <option value="English">English</option>
           <option value="Nepali">Nepali</option>
-          <option value="Hindi">Hindi</option>
 
         </select></label>
         <br>
@@ -94,9 +101,29 @@
 
         <br><br>
         <div class="buttom">
-          <button class="cancel"><a href="read.php">Cancel</a></button>
-          <button class="next"><a href="next.php">Next</a></button>
+          <button class="cancel" type="button" ><a href="read.php">Cancel</a></button>
+          <button class="next" name="next" type="button"><a href="next.php">Next</a></button>
         </div>
+
+
+
+
+        <?php
+        if(isset($_POST['next'])){
+          $coverImage = $_POST['coverImage'];
+          $storyTitle = $_POST['storyTitle']; // Fixed typo
+          $description = $_POST['description'];
+          $genre = $_POST['genre'];
+          $language = $_POST['Language']; // Corrected variable name
+          $format = $_POST['format'];
+      
+          $query = "INSERT INTO posts (cover_image, title, description, genre, language, format) 
+                    VALUES ('$coverImage', '$storyTitle', '$description', '$genre', '$language', '$format')";
+          $result = mysqli_query($con, $query);
+      }
+      
+
+?>
       </form>
     </div>
   </center>

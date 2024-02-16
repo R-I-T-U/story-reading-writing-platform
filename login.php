@@ -1,13 +1,13 @@
 <?php
-session_start();
+// session_start();
 $con = mysqli_connect("localhost", "root", "", "users");
 
 if (!$con) {
     die(mysqli_error($con));
 }
-if (isset($_COOKIE['user_id'])) {
-  $_SESSION['user_id'] = $_COOKIE['user_id'];
-}
+// if (isset($_COOKIE['user_id'])) {
+//   $_SESSION['user_id'] = $_COOKIE['user_id'];
+// }
 
 
 ?>

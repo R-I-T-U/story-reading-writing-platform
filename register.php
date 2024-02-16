@@ -1,5 +1,4 @@
 <?php
-session_start();
 $con = mysqli_connect("localhost", "root", "", "users");
 
 if (!$con) {
@@ -95,7 +94,7 @@ if (!$con) {
 
             $password = $_POST['password'];
 
-            $query1= "select * from info where email = '$email'";
+            $query1= "SELECT * FROM info WHERE email = '$email'";
             $result1 = mysqli_query($con, $query1);
             if($result1){
               $num= mysqli_num_rows($result1);
@@ -122,12 +121,12 @@ if (!$con) {
                  // After a successful login and setting the session
                  if ($result) {
                   // Storing user id in session
-                  $_SESSION['user_id'] = mysqli_insert_id($con);
+                  // $_SESSION['user_id'] = mysqli_insert_id($con);
                   
             // Set a cookie to remember the user (if "Remember me" is checked)
-            if (isset($_POST['remember_me'])  == 'on') {
-              setcookie('user_id', $_SESSION['user_id'], time() + (7 * 24 * 60 * 60), '/');
-          }
+          //   if (isset($_POST['remember_me'])  == 'on') {
+          //     setcookie('user_id', $_SESSION['user_id'], time() + (7 * 24 * 60 * 60), '/');
+          // }
 
 
           header('location: profile.php'); // Redirect to a success page

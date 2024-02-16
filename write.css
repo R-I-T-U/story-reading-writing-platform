@@ -1,10 +1,8 @@
 .story-info {
-width: 500px;
-padding: 16px;
-background-color: white;
-border-radius: 10px;
-margin-top: 50px;
-}
+  background-color: white;
+  margin-left: 10em;
+  margin-right: 10em;
+  }
 
 form {
 display: flex;
@@ -58,12 +56,12 @@ input:focus ,textarea:focus, select:focus{
 
 #Language{
   height: 30px;
-  width: 65%;
+  width: 68%;
 }
 
 #format{
   height: 30px;
-  width: 61%;
+  width: 66%;
 }
 
 #on{

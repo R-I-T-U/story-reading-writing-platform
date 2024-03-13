@@ -56,12 +56,12 @@ input:focus ,textarea:focus, select:focus{
 
 #Language{
   height: 30px;
-  width: 68%;
+  width: 67%;
 }
 
 #format{
   height: 30px;
-  width: 66%;
+  width: 65%;
 }
 
 #on{
@@ -78,4 +78,13 @@ input:focus ,textarea:focus, select:focus{
 button a{
   text-decoration: none;
   color: white;
+}
+
+@media only screen and (max-width: 768px) {
+  .story-info{
+      background-color: white;
+      margin-left: 30px;
+      margin-right: 30px;
+  }
+  
 }

@@ -54,9 +54,8 @@
 
                 <br>
                 <div class="buttom">
-                  <button class="cancel"><a href="write.php">Cancel</a></button>
-                  <button class="next"><a href="profile.php">Publish</a></button>
-                </div>
+                <a href="read.php"><button class="cancel">Cancel</button></a>
+                <a href="next.php"><button class="next" name="next">Next</button></a>
             </form>
         </div>
     </center>

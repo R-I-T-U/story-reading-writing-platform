@@ -81,8 +81,8 @@ if (!$con) {
           <!-- <button class="google">SIGN UP WITH GOOGLE</button>
           <button class="facebook">SIGN UP WITH FACEBOOK</button> -->
           <p>ALREADY HAVE AN ACCOUNT?</p>
-          <button class="create"><a href="login.php">LOGIN HERE</a></button>
-          </p>
+          <a href="login.php"><button class="create">LOGIN HERE</button></a>
+          
           <!-- >>>...................................................................................................php code  -->
 
           <?php

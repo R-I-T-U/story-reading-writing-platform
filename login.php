@@ -81,7 +81,7 @@ if (!$con) {
               <p>OR</p>
             </div>
             <p>DON'T HAVE AN ACCOUNT?</p>
-            <button class="create"><a href="register.php">CREATE NEW ACCOUNT</a></button>
+            <a href="register.php"><button class="create">CREATE NEW ACCOUNT</button></a>
           </p>
 
           <?php

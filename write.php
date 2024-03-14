@@ -104,25 +104,27 @@ if(!$con){
         <a href="read.php"><button class="cancel" >Cancel</button></a>
         <a href="next.php"><button class="next" name="next">Next</button></a>
         </div>
-<?php
-        if (isset($_POST['next'])) {
-          $coverImage = $_FILES['coverImage']['name'];
-          $storyTitle = $_POST['storyTitle']; 
-          $description = $_POST['description'];
-          $genre = $_POST['genre'];
-          $language = $_POST['Language'];
-          $format = $_POST['format'];
+
         
-         $query = "INSERT INTO posts VALUES ('$coverImage', '$storyTitle', '$description', '$genre', '$language', '$format'";
-         $result  = mysqli_query($con, $query);
-         if(!$result){
-          echo "unable to insert!!";
-         }
+        <?php
+if (isset($_POST['next'])) {
+  $coverImage = $_POST['coverImage'];
+  $storyTitle = $_POST['storyTitle']; 
+  $description = $_POST['description'];
+  $genre = $_POST['genre'];
+  $language = $_POST['Language'];
+  $format = $_POST['format'];
 
+  $query = "INSERT INTO posts (cover_image, title, description, genre, language, format) VALUES ('$coverImage', '$storyTitle' , '$description', '$genre', '$language', '$format')";
+  
+  $result = mysqli_query($con, $query);
 
-        }
+  if($result){
+    echo $storyTitle;
+  }
+}
 
-      ?>
+?>
       </form>
     </div>
   </center>

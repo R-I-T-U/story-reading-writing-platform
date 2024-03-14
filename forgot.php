@@ -84,7 +84,7 @@ if (!$con) {
                     <button type="submit" class="submit" name="submit">Login</button>
                 </div>
                 <p>OR</p>
-                <button class="create"><a href="register.php">Back</a></button>
+                <a href="register.php"><button class="create">Back</button></a>
 
 
 

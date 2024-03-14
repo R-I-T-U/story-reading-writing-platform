@@ -52,7 +52,7 @@
             <div class="cgenre">horror</div>
             <div class="cformat">poem</div>
             <div class="crate">Rating: OFF</div><br>
-            <div><button><a href="next.php">Edit</a></button></div>
+            <a href="next.php"><div><button>Edit</button></div></a>
         </div>
         
         <div class="right">

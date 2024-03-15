@@ -81,7 +81,7 @@ if (!$con) {
               <p>OR</p>
             </div>
             <p>DON'T HAVE AN ACCOUNT?</p>
-            <a href="register.php"><button class="create">CREATE NEW ACCOUNT</button></a>
+            <button class="create"><a href="register.php">CREATE NEW ACCOUNT</a></button>
           </p>
 
           <?php
@@ -99,6 +99,7 @@ if (!$con) {
               echo "<p style='color: red'> Invalid email or Incorrect password!!!</p>";
             }
           }
+          mysqli_close($con);
           ?>
       </form>
       </p>

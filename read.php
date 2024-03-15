@@ -7,7 +7,6 @@
     <title>StorySphere - Read the books you like !!</title>
     <link rel="shortcut icon" href="images/ssLogo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="read.css">
     <link rel="stylesheet" href="profile.css">
     <style>
         .navbar {
@@ -65,30 +64,51 @@
     </div>
 
     <!-- content*********************************** -->
+    
+
     <div class="container">
 
         <div class="loginHead">
             <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="70px"></a>
             <h1>Read Stories</h1>
         </div>
+        <?php
+        $con = mysqli_connect("localhost", "root","","users");
+        if(!$con){
+          die(mysqli_error($con));
+        }
+        $query= "SELECT * FROM posts";
+        $result = mysqli_query($con, $query);
+        while($row = mysqli_fetch_assoc($result)){
+            $coverImage = $row['cover_image'];
+            $storyTitle = $row['title']; 
+            $description = $row['description'];
+            $genre = $row['genre'];
+            $language = $row['language'];
+            $format = $row['format'];
+            $created= $row['created_at'];
+            $updated= $row['updated_at'];
 
-        <div class="stories">
+        echo "
+        <div class='stories'>
 
-            <div class="left">
-                <div class="ctitle">The title</div>
-                <div class="cdescription">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum saepe dolores
-                    odio corporis non quas enim maiores, dolorem quasi quae ea temporibus necessitatibus excepturi
-                    deleniti, praesentium, recusandae soluta quibusdam aut.
+            <div class='left'>
+                <div class='ctitle'>".$storyTitle."</div>
+                <div class='cdescription'>".$description."
                 </div>
-                <div class="cgenre">horror</div>
-                <div class="cformat">poem</div>
-                <div class="crate">Rating: OFF</div><br>
+                <div class='cgenre'>".$genre."</div>
+                <div class='cformat'>".$format."</div>
+                
+                <br>
             </div>
 
-            <div class="right">
-                <div class="cimage"><img src="images/bg12.jpg" alt="img"></div>
+            <div class='right'>
+                <div class='cimage'>".$coverImage."</div>
             </div>
-        </div>
+        </div>";
+
+        }
+        ?>
 
         <center>
             <p id="end">The end!!</p>

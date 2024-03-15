@@ -138,7 +138,7 @@ if (!$con) {
       }
       }
  }
-      
+ mysqli_close($con);
       ?>
       </form>
       </p>

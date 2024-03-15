@@ -1,0 +1,55 @@
+.form {
+width: 400px;
+padding: 16px;
+border-radius: 10px;
+background-color: rgba(255, 255, 255, 0.9);
+margin-top: 50px;
+}
+
+.google ,.create{
+margin-bottom: 10px;
+}
+
+.forgot {
+margin-top: 16px;
+text-align: center;
+}
+
+
+.google, .facebook, .submit, .create{
+  width: 100%;
+}
+
+.loginHead{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.loginHead h1 {
+  margin-left: 20px;
+}
+
+.form-control{
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+ input:focus {
+  border-color: #000000;
+}
+
+#email{
+  margin-left: 8%;
+  width: 74%;
+}
+#password{
+  width: 74%;
+}
+.create a{
+  text-decoration: none;
+  color: white;
+}

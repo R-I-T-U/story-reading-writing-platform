@@ -1,3 +1,11 @@
+<?php
+$con = mysqli_connect("localhost", "root","","users");
+if(!$con){
+  die(mysqli_error($con));
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,14 +44,14 @@
 
     <center>
         <div class="container">
-            <form action="">
+            <form action="" method="POST">
                 <div class="loginHead">
                     <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="50px"></a>
                     <h1>Start Writing</h1>
                 </div>
 
                 <label for="title">Title:
-                    <input type="text" id="title" name="story-title" class="form-control" placeholder="E.g.: Episode 1: The sunrise" required></label><br>
+                    <input type="text" id="title" name="story_title" class="form-control" placeholder="E.g.: Episode 1: The sunrise" required></label><br>
 
                 <label for="description">Add your Text: <textarea id="description" name="description" required
                         class="form-control"></textarea></label>
@@ -54,8 +62,28 @@
 
                 <br>
                 <div class="buttom">
-                <a href="read.php"><button class="cancel">Cancel</button></a>
-                <a href="next.php"><button class="next" name="next">Next</button></a>
+                <button class="cancel"><a href="read.php">Cancel</a></button>
+                <button class="next" name="next">Publish</button>
+
+                <?php
+                if (isset($_POST['next'])) {
+                    $ctitle = $_POST['story_title'];
+                    $cdescription = $_POST['description'];
+                    echo $ctitle;
+                    
+                    
+                    $query = "INSERT INTO chapter(chap_title, chap_description) VALUES ('$ctitle', '$cdescription')";
+                    $result = mysqli_query($con, $query);
+                    
+                    if(!$result){
+                        echo '<p style="color: red;">Sorry could not publish! Try again later !</p>';
+                    } else{
+                        header('location: profile.php');
+                    }
+                }
+
+                mysqli_close($con);
+                ?>
             </form>
         </div>
     </center>

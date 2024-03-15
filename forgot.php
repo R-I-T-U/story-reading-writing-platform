@@ -121,6 +121,7 @@ if (!$con) {
                         echo "<p style='color:red;'>Email not registered!</p>";
                     }
                 }
+                mysqli_close($con);
                 ?>
             </form>
         </div>

@@ -1,12 +1,15 @@
 <?php
+session_start();
+if(isset($_SESSION["user_id"])){
+  header("location: profile.php");
+  exit();
+
+}
 $con = mysqli_connect("localhost", "root", "", "users");
 
 if (!$con) {
     die(mysqli_error($con));
 }
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -33,16 +36,7 @@ if (!$con) {
       <input type="text" class="search-bar" placeholder="Search...">
       <button class="search-button">Search</button>
     </div>
-
-    <?php
-    // Check if the user is logged in (session or cookie exists)
-    if (isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
-        echo '<a href="profile.php" class="nav">Profile</a>';
-    } else {
-        echo '<a href="register.php" class="nav">Sign up</a>';
-    }
-    ?>
-
+    <a href="register.php" class="nav">Sign up</a>
     <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
   </div>
 
@@ -54,7 +48,7 @@ if (!$con) {
         <h1>StorySphere</h1>
       </div>
 
-      <form method="POST" action="register.php">
+      <form method="POST" action="">
         <div>
           <label for="email">Email: </label>
           <input type="email" id="email" class="form-control" placeholder="Email Address" name="email">
@@ -81,9 +75,9 @@ if (!$con) {
           <!-- <button class="google">SIGN UP WITH GOOGLE</button>
           <button class="facebook">SIGN UP WITH FACEBOOK</button> -->
           <p>ALREADY HAVE AN ACCOUNT?</p>
-          <a href="login.php"><button class="create">LOGIN HERE</button></a>
+          <button class="create" formaction="login.php">LOGIN HERE</button>
           
-          <!-- >>>...................................................................................................php code  -->
+          <!-- ............................................................................php code  -->
 
           <?php
 
@@ -103,36 +97,34 @@ if (!$con) {
               } else{
                 if (empty($email) || empty($password)) {
                   echo '<p style="color: red;">Email and password are required fields</p>';
-                 // Handle the error, prevent further processing
+                
                   } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                   echo '<p style="color: red;">Invalid email format! </p>';
                   // Handle the error, prevent further processing
                   } else if (strlen($password) < 6 || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password)) {
                   echo '<p style="color: red;">Password must be at least 6 characters long, contain at least one capital letter, and at least one number!!</p>';
-                  // Handle the error, prevent further processing
+                  
                  } else {
-                 // Hash the password
-                //  $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                 
+                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
       
-                 $query = "INSERT INTO info (email, password) VALUES ('$email', '$password')";
+                 $query = "INSERT INTO info (email, password) VALUES ('$email', '$hashedPassword')";
       
                  $result = mysqli_query($con, $query);
       
-                 // After a successful login and setting the session
+                
                  if ($result) {
-                  // Storing user id in session
-                  // $_SESSION['user_id'] = mysqli_insert_id($con);
+                  $row = mysqli_fetch_assoc($result1);                  
+                  $_SESSION['user_id'] = $row['id'];
                   
-            // Set a cookie to remember the user (if "Remember me" is checked)
-          //   if (isset($_POST['remember_me'])  == 'on') {
-          //     setcookie('user_id', $_SESSION['user_id'], time() + (7 * 24 * 60 * 60), '/');
-          // }
-
-
-          header('location: profile.php'); // Redirect to a success page
-          exit();
-          } else {
-          echo "Error in Logging in!! Try again later" . mysqli_error($con);
+            
+                  if (isset($_POST['remember_me']) && $_POST['remember_me'] == 'on') {
+                    setcookie('user_id', $_SESSION['user_id'], time() + (7 * 24 * 60 * 60), '/');
+                }
+                header('location: index.php'); 
+                exit();
+              } else {
+                echo "Error!! Please try again later" . mysqli_error($con);
           }
           }
       }

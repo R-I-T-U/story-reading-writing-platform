@@ -18,13 +18,16 @@
     </div>
 
     <?php
-    // Check if the user is logged in (session or cookie exists)
-    if (isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
-        echo '<a href="profile.php" class="nav">Profile</a>';
+    session_start();
+    if (isset($_SESSION['user_id'])) {
+        echo '<a href="profile.php" class="nav">Profile</a>'; 
+    } else if(isset($_COOKIE['user_id']) && !isset($_SESSION['user_id'])) {
+        echo '<a href="login.php" class="nav">Login</a>';    
     } else {
         echo '<a href="register.php" class="nav">Sign up</a>';
     }
     ?>
+
 
     <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
   </div>

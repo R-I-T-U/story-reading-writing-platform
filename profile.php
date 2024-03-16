@@ -18,16 +18,7 @@
       <input type="text" class="search-bar" placeholder="Search...">
       <button class="search-button">Search</button>
     </div>
-
-    <?php
-    // Check if the user is logged in (session or cookie exists)
-    if (isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
-        echo '<a href="profile.php" class="nav">Profile</a>';
-    } else {
-        echo '<a href="register.php" class="nav">Sign up</a>';
-    }
-    ?>
-
+    <a href="profile.php" class="nav">Profile</a>
     <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
   </div>
 
@@ -36,9 +27,15 @@
 
   <div class="container">
     <div class="img-container"></div>
-    <img id="profileImage" src="images/bg12.jpg" alt="User Name">
+    <img id="profileImage" src="images/bg12.jpg" alt="Image">
+    
+    <img src="images/option.jpg" alt="" height="20px" style="margin-left:20px; cursor:pointer;" onclick="toggleLogoutOptions()">
 
-    <div class="loginHead">
+    <div id="logoutOptions" style="display:none;">
+    <a href="logout.php" class="logoutOption" style="margin-left:20px; color:black; position: absolute; ">Log out</a>
+</div>    
+
+<div class="loginHead">
         <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="70px"></a>
         <h1>Your Stories</h1>
       </div>
@@ -64,6 +61,16 @@
     <center><p id="end">The end!!</p></center>
 
 </div>  
-
+<script>
+    // JavaScript function to toggle the visibility of the logout options
+    function toggleLogoutOptions() {
+        var logoutOptions = document.getElementById("logoutOptions");
+        if (logoutOptions.style.display === "none") {
+            logoutOptions.style.display = "block";
+        } else {
+            logoutOptions.style.display = "none";
+        }
+    }
+</script>
 </body>
 </html>

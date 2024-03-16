@@ -43,15 +43,7 @@ if (!$con) {
             <input type="text" class="search-bar" placeholder="Search...">
             <button class="search-button">Search</button>
         </div>
-
-        <?php
-        if (isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
-            echo '<a href="profile.php" class="nav">Profile</a>';
-        } else {
-            echo '<a href="register.php" class="nav">Login</a>';
-        }
-        ?>
-
+        <a href="login.php" class="nav">Login</a>
         <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
     </div>
 

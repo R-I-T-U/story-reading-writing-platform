@@ -1,8 +1,17 @@
 <?php
+session_start();
+
+if(!isset($_SESSION['user_id'])){
+  header("location: register.php");
+  exit();
+}
+
 $con = mysqli_connect("localhost", "root","","users");
 if(!$con){
   die(mysqli_error($con));
 }
+
+
 
 ?>
 
@@ -32,13 +41,15 @@ if(!$con){
     </div>
 
     <?php
-    // Check if the user is logged in (session or cookie exists)
-    if (isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
-        echo '<a href="profile.php" class="nav">Profile</a>';
+    if (isset($_SESSION['user_id'])) {
+        echo '<a href="profile.php" class="nav">Profile</a>'; 
+    } else if(isset($_COOKIE['user_id']) && !isset($_SESSION['user_id'])) {
+        echo '<a href="login.php" class="nav">Login</a>';    
     } else {
         echo '<a href="register.php" class="nav">Sign up</a>';
     }
     ?>
+
 
     <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
   </div>
@@ -47,7 +58,7 @@ if(!$con){
 
   <center>
     <div class="story-info">
-      <form method="POST" action="write.php">
+    <form method="POST" action="write.php" enctype="multipart/form-data">
         <div class="loginHead">
           <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="50px"></a>
           <h1>Add Story Info</h1>
@@ -105,7 +116,7 @@ if(!$con){
         </div>
 
 <?php
-if (isset($_POST['next'])) {
+if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST['next'])) {
 $coverImage = $_POST['coverImage'];
 $storyTitle = $_POST['storyTitle'];
 $description = $_POST['description'];

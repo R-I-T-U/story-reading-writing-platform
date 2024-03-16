@@ -1,13 +1,20 @@
 <?php
-// session_start();
+session_start();
+
+if (isset($_COOKIE['user_id'])) {
+  $_SESSION['user_id'] = $_COOKIE['user_id'];
+}
+
+if(isset($_SESSION["user_id"])){
+  header("location: profile.php");
+  exit();
+
+}
 $con = mysqli_connect("localhost", "root", "", "users");
 
 if (!$con) {
     die(mysqli_error($con));
 }
-// if (isset($_COOKIE['user_id'])) {
-//   $_SESSION['user_id'] = $_COOKIE['user_id'];
-// }
 
 
 ?>
@@ -36,23 +43,14 @@ if (!$con) {
       <input type="text" class="search-bar" placeholder="Search...">
       <button class="search-button">Search</button>
     </div>
-
-    <?php
-    // Check if the user is logged in (session or cookie exists)
-    if (isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
-        echo '<a href="profile.php" class="nav">Profile</a>';
-    } else {
-        echo '<a href="register.php" class="nav">Login</a>';
-    }
-    ?>
-
+    <a href="login.php" class="nav">Login</a>
     <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
   </div>
 
 
   <!-- content*********************************** -->
   <center>
-    <div class="form" method="POST" action="login.php">
+    <div class="form" method="POST" action="">
       <div class="loginHead">
         <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="50px"></a>
         <h1>StorySphere</h1>
@@ -81,26 +79,39 @@ if (!$con) {
               <p>OR</p>
             </div>
             <p>DON'T HAVE AN ACCOUNT?</p>
-            <button class="create"><a href="register.php">CREATE NEW ACCOUNT</a></button>
+            <button class="create" formaction="register.php">CREATE NEW ACCOUNT</button>
           </p>
 
           <?php
-          if(isset($_POST['submit'])){
-            $email= filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
-            $password= $_POST['password'];
+if(isset($_POST['submit'])){
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $password = $_POST['password'];
 
-            $query1 = "SELECT * FROM info WHERE email= '$email' AND password= '$password'";
-            $result1 = mysqli_query($con , $query1);
-            $count =  mysqli_num_rows($result1);
-            
-            if($count > 0){
-              header("location: index.php");
-            } else {
-              echo "<p style='color: red'> Invalid email or Incorrect password!!!</p>";
+    $query1 = "SELECT * FROM info WHERE email= '$email'";
+    $result1 = mysqli_query($con, $query1);
+
+    if($result1){
+        $row = mysqli_fetch_assoc($result1);
+        $hashedPassword = $row['password'];
+
+        if(password_verify($password, $hashedPassword)){
+            $_SESSION['user_id'] = $row['id'];
+            if(isset($_POST['remember_me']) && $_POST['remember_me'] == 'on'){
+                setcookie('user_id', $_SESSION['user_id'], time() + (7 * 24 * 60 * 60), '/');
             }
-          }
-          mysqli_close($con);
-          ?>
+            header('location: index.php');
+            exit();
+        } else {
+            echo "<p style='color: red'>Invalid email or Incorrect password!!!</p>";
+        }
+    } else {
+        
+        echo "Error: " . mysqli_error($con);
+    }
+    mysqli_close($con);
+}
+?>
+
       </form>
       </p>
     </div>

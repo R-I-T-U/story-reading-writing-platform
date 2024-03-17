@@ -1,4 +1,5 @@
 <?php
+session_start();
 $con = mysqli_connect("localhost", "root","","users");
 if(!$con){
   die(mysqli_error($con));
@@ -41,6 +42,28 @@ if(!$con){
 </head>
 
 <body>
+    <!-- navbar*********************************** -->
+  <div class="navbar">
+    <a href="read.php" class="nav">Read</a>
+    <a href="write.php" class="nav">Write</a>
+    <div class="search-container">
+      <input type="text" class="search-bar" placeholder="Search...">
+      <button class="search-button">Search</button>
+    </div>
+
+    <?php
+    if (isset($_SESSION['user_id'])) {
+        echo '<a href="profile.php" class="nav">Profile</a>'; 
+    } else if(isset($_COOKIE['user_id']) && !isset($_SESSION['user_id'])) {
+        echo '<a href="login.php" class="nav">Login</a>';    
+    } else {
+        echo '<a href="register.php" class="nav">Sign up</a>';
+    }
+    ?>
+    <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
+  </div>
+
+  <!-- content*********************************** -->
 
     <center>
         <div class="container">

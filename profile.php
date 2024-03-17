@@ -39,23 +39,58 @@
         <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="70px"></a>
         <h1>Your Stories</h1>
       </div>
-
-    <div class="stories">
       
-        <div class="left">
-            <div class="ctitle">The title</div>
-            <div class="cdescription">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum saepe dolores odio corporis non quas enim maiores, dolorem quasi quae ea temporibus necessitatibus excepturi deleniti, praesentium, recusandae soluta quibusdam aut.
+      <?php
+        $con = mysqli_connect("localhost", "root","","users");
+        if(!$con){
+          die(mysqli_error($con));
+        }
+        $query= "SELECT * FROM posts";
+        $result = mysqli_query($con, $query);
+        while($row = mysqli_fetch_assoc($result)){
+            $coverImage = $row['cover_image'];
+            $storyTitle = $row['title']; 
+            $description = $row['description'];
+            $genre = $row['genre'];
+            $language = $row['language'];
+            $format = $row['format'];
+            $created= $row['created_at'];
+            $updated= $row['updated_at'];
+            $id = $row['id'];
+
+        echo "
+        <div class='stories'>
+
+            <div class='left'>
+                <div class='ctitle'>".$storyTitle."</div>
+                <div class='cdescription'>".$description."
+                </div>
+                <div class='cgenre'>".$genre."</div>
+                <div class='cformat'>".$format."</div>
+                <br>
+                <div style='display: flex;'>
+           <a href='editCov.php?id=$id '>
+               <div><button style='margin-right: 20px;'>Edit</button>
+               </div>
+           </a> <br>
+           <a href='delete.php?id=$id '>
+               <div><button style='margin-right: 20px;'>Delete</button>
+               </div>
+           </a>
+           <a href='viewChap.php'>
+               <div><button>View Chapters</button>
+               </div>
+           </a>
+       </div>
+       </div>
+
+            <div class='right'>
+                <div class='cimage'>".$coverImage."</div>
             </div>
-            <div class="cgenre">horror</div>
-            <div class="cformat">poem</div>
-            <div class="crate">Rating: OFF</div><br>
-            <a href="next.php"><div><button>Edit</button></div></a>
-        </div>
-        
-        <div class="right">
-            <div class="cimage"><img src="images/bg12.jpg" alt="img"></div>
-        </div>
-    </div>
+        </div>";
+
+        }
+        ?>
     
 
     <center><p id="end">The end!!</p></center>

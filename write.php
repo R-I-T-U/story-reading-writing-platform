@@ -58,7 +58,7 @@ if(!$con){
 
   <center>
     <div class="story-info">
-    <form method="POST" action="write.php" enctype="multipart/form-data">
+      <form method="POST" action="write.php">
         <div class="loginHead">
           <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="50px"></a>
           <h1>Add Story Info</h1>
@@ -71,7 +71,7 @@ if(!$con){
         <label for="title">Title:
           <input type="text" id="title" name="storyTitle" class="form-control" required></label><br>
 
-        <label for="description" placeholder="write a short description about your story.">Description: <textarea
+        <label for="description">Description: <textarea
             id="description" name="description" required class="form-control"></textarea></label>
         <br>
 
@@ -110,10 +110,10 @@ if(!$con){
         </label> -->
 
         <br><br>
-        <div class="buttom">
+        <div class="button">
           <button class="cancel"><a href="read.php">Cancel</a></button>
-          <button class="next" name="next">Next</button>
-        </div>
+          <button class="next" name="next" style=" margin-left: 20px;">Next</button>
+        </div><br>
 
 <?php
 if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST['next'])) {

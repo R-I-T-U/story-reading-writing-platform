@@ -15,6 +15,7 @@
 
         .container {
             background-color: rgba(255, 255, 255, 0.9);
+            
         }
 
         main {
@@ -25,18 +26,10 @@
             margin-bottom: 20px;
         }
 
-        .story-card {
-            background-color: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-
-        }
-
         .stories {
             background-color: white;
             z-index: 1;
+            margin-bottom: 20px;
         }
     </style>
 </head>

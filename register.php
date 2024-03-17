@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if (isset($_COOKIE['user_id'])) {
+  $_SESSION['user_id'] = $_COOKIE['user_id'];
+}
+
 if(isset($_SESSION["user_id"])){
   header("location: profile.php");
   exit();
@@ -121,7 +126,7 @@ if (!$con) {
                   if (isset($_POST['remember_me']) && $_POST['remember_me'] == 'on') {
                     setcookie('user_id', $_SESSION['user_id'], time() + (7 * 24 * 60 * 60), '/');
                 }
-                header('location: index.php'); 
+                header('location: loginpract.php'); 
                 exit();
               } else {
                 echo "Error!! Please try again later" . mysqli_error($con);

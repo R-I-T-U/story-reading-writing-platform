@@ -54,9 +54,6 @@
         echo '<a href="register.php" class="nav">Sign up</a>';
     }
     ?>
-
-
-
         <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
     </div>
 
@@ -74,6 +71,8 @@
         if(!$con){
           die(mysqli_error($con));
         }
+
+
         $query= "SELECT * FROM posts";
         $result = mysqli_query($con, $query);
         while($row = mysqli_fetch_assoc($result)){
@@ -85,6 +84,7 @@
             $format = $row['format'];
             $created= $row['created_at'];
             $updated= $row['updated_at'];
+            $cvrImgPath = "img/ . {$row['cover_image']}";
 
         echo "
         <div class='stories'>
@@ -93,14 +93,18 @@
                 <div class='ctitle'>".$storyTitle."</div>
                 <div class='cdescription'>".$description."
                 </div>
-                <div class='cgenre'>".$genre."</div>
-                <div class='cformat'>".$format."</div>
+                <div class='cgenre'>Genre: ".$genre."</div>
+                <div class='cformat'>Format: ".$format."</div>
                 
-                <br>
+                <br><br>
+                <a href='viewChap.php'>
+                   <div><button>View Chapters</button>
+                   </div>
+               </a>
             </div>
 
             <div class='right'>
-                <div class='cimage'>".$coverImage."</div>
+                <div class='cimage'><a href='$cvrImgPath' target='_blank'><img src='{$cvrImgPath}' alt='{$row['title']}' '></a></div>
             </div>
         </div>";
 

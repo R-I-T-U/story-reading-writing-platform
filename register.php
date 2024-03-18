@@ -88,7 +88,6 @@ if (!$con) {
 
         if (isset($_POST['submit'])) {
 
-            // Validation
             $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL); 
 
             $password = $_POST['password'];
@@ -105,7 +104,6 @@ if (!$con) {
                 
                   } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                   echo '<p style="color: red;">Invalid email format! </p>';
-                  // Handle the error, prevent further processing
                   } else if (strlen($password) < 6 || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password)) {
                   echo '<p style="color: red;">Password must be at least 6 characters long, contain at least one capital letter, and at least one number!!</p>';
                   
@@ -126,7 +124,7 @@ if (!$con) {
                   if (isset($_POST['remember_me']) && $_POST['remember_me'] == 'on') {
                     setcookie('user_id', $_SESSION['user_id'], time() + (7 * 24 * 60 * 60), '/');
                 }
-                header('location: loginpract.php'); 
+                header('location: login.php'); 
                 exit();
               } else {
                 echo "Error!! Please try again later" . mysqli_error($con);

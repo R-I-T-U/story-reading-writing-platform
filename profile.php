@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['user_id'])){
+  header("location: register.php");
+  exit();
+} else{
+  $userId = $_SESSION['user_id'];
+}
+$con = mysqli_connect("localhost", "root", "", "users");
+        if (!$con) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,57 +55,59 @@
       </div>
       
       <?php
-        $con = mysqli_connect("localhost", "root","","users");
-        if(!$con){
-          die(mysqli_error($con));
-        }
-        $query= "SELECT * FROM posts";
+    
+        $query = "SELECT * FROM posts WHERE user_id= $userId";
         $result = mysqli_query($con, $query);
-        while($row = mysqli_fetch_assoc($result)){
-            $coverImage = $row['cover_image'];
+
+        if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
             $storyTitle = $row['title']; 
             $description = $row['description'];
             $genre = $row['genre'];
             $language = $row['language'];
             $format = $row['format'];
-            $created= $row['created_at'];
-            $updated= $row['updated_at'];
+            $created = $row['created_at'];
+            $updated = $row['updated_at'];
             $id = $row['id'];
+            $cvrImgPath = "img/ . {$row['cover_image']}";
+            
 
-        echo "
-        <div class='stories'>
+            echo "
+            <div class='stories'>
 
-            <div class='left'>
-                <div class='ctitle'>".$storyTitle."</div>
-                <div class='cdescription'>".$description."
+                <div class='left'>
+                    <div class='ctitle'>".$storyTitle."</div>
+                    <div class='cdescription'>".$description."
+                    </div>
+                    <div class='cgenre'>Genre: ".$genre."</div>
+                    <div class='cformat'>Format: ".$format."</div>
+                    <br>
+                    <div style='display: flex;'>
+               <a href='editCov.php?id=$id '>
+                   <div><button style='margin-right: 20px;'>Edit</button>
+                   </div>
+               </a> <br>
+               <a href='delete.php?id=$id '>
+                   <div><button style='margin-right: 20px;'>Delete</button>
+                   </div>
+               </a>
+               <a href='viewChap.php'>
+                   <div><button>View Chapters</button>
+                   </div>
+               </a>
+           </div>
+           </div>
+
+                <div class='right'>
+                    <div class='cimage'>
+                    <a href='$cvrImgPath' target='_blank'><img src='{$cvrImgPath}' alt='{$row['title']}' '></a>
+                    </div>
                 </div>
-                <div class='cgenre'>".$genre."</div>
-                <div class='cformat'>".$format."</div>
-                <br>
-                <div style='display: flex;'>
-           <a href='editCov.php?id=$id '>
-               <div><button style='margin-right: 20px;'>Edit</button>
-               </div>
-           </a> <br>
-           <a href='delete.php?id=$id '>
-               <div><button style='margin-right: 20px;'>Delete</button>
-               </div>
-           </a>
-           <a href='viewChap.php'>
-               <div><button>View Chapters</button>
-               </div>
-           </a>
-       </div>
-       </div>
-
-            <div class='right'>
-                <div class='cimage'>".$coverImage."</div>
-            </div>
-        </div>";
+            </div>";
 
         }
+    }
         ?>
-    
 
     <center><p id="end">The end!!</p></center>
 

@@ -1,6 +1,7 @@
 <?php
 if(isset($_GET['id'])) {
-    $postId = $_GET['id'];
+  $postId = $_GET['id'];
+
     $con = mysqli_connect("localhost", "root", "", "users");
     if(!$con) {
         die(mysqli_error($con));
@@ -17,7 +18,9 @@ if(isset($_GET['id'])) {
         $format = $post['format'];
 
     }
+    
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +66,7 @@ if(isset($_GET['id'])) {
 
   <center>
     <div class="story-info">
-      <form method="POST" action="write.php">
+      <form method="POST" action="conformEdit.php" enctype="multipart/form-data">
         <div class="loginHead">
           <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="50px"></a>
           <h1>Edit Story Info</h1>
@@ -103,7 +106,7 @@ if(isset($_GET['id'])) {
 
           </select></label>
         <br>
-
+        <input type="number" hidden value="<?php echo $postId?>" name="postId">
         <!-- <label for="" id="r">Rating: 
           <label for="on"><input type="radio" id="on" name="rate">ON</label>
           <label for="off"><input type="radio" id="off" name="rate">OFF</label>
@@ -114,28 +117,6 @@ if(isset($_GET['id'])) {
           <button class="cancel"><a href="read.php">Cancel</a></button>
           <button class="next" name="done" style=" margin-left: 20px;">Done</button>
         </div><br>
-
-<?php
-if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST['done'])) {
-$coverImage = $_POST['coverImage'];
-$storyTitle = $_POST['storyTitle'];
-$description = $_POST['description'];
-$genre = $_POST['genre'];
-$format = $_POST['format'];
-
-$query = "UPDATE posts SET cover_image='$coverImage',title='$storyTitle', description='$description',genre='$genre',format='$format' WHERE id=$postId";
-
-$result = mysqli_query($con, $query);
-if(!$result){
-  echo '<p style="color: red;">Sorry could not load! Try again later !</p>';
-} else{
-  header('location: profile.php');
-}
-
-}
-
-mysqli_close($con);
-?>
       </form>
     </div>
   </center>
@@ -144,17 +125,13 @@ mysqli_close($con);
     function previewImage(event) {
       var input = event.target;
       var preview = document.getElementById('image-preview');
-      // Ensure that a file was selected
       if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
-          // Set the source of the image to the data URL
           preview.innerHTML = '<img src="' + e.target.result + '" alt="Selected Image">';
         };
-        // Read the selected file as a data URL
         reader.readAsDataURL(input.files[0]);
       } else {
-        // Clear the preview if no file was selected
         preview.innerHTML = '';
       }
     }

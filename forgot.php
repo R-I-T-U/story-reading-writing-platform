@@ -1,5 +1,4 @@
 <?php
-// session_start();
 $con = mysqli_connect("localhost", "root", "", "users");
 if (!$con) {
     die(mysqli_error($con));

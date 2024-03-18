@@ -27,6 +27,7 @@
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     display: flex;
+    justify-content: space-between;
     align-items: center;
 
 }
@@ -72,6 +73,8 @@
     text-decoration: none;
     color: white;
   }
+
+  
 
 
 #end {

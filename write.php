@@ -4,6 +4,8 @@ session_start();
 if(!isset($_SESSION['user_id'])){
   header("location: register.php");
   exit();
+} else{
+  $userId = $_SESSION['user_id'];
 }
 
 $con = mysqli_connect("localhost", "root","","users");
@@ -58,7 +60,7 @@ if(!$con){
 
   <center>
     <div class="story-info">
-      <form method="POST" action="write.php">
+      <form method="POST" action="write.php" enctype="multipart/form-data">
         <div class="loginHead">
           <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="50px"></a>
           <h1>Add Story Info</h1>
@@ -117,20 +119,29 @@ if(!$con){
 
 <?php
 if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST['next'])) {
-$coverImage = $_POST['coverImage'];
+$coverImage = $_FILES['coverImage']['name'];
+$coverImage_temp_name = $_FILES['coverImage']['tmp_name'];
+$coverImage_Folder = "img/ . $coverImage";
 $storyTitle = $_POST['storyTitle'];
 $description = $_POST['description'];
 $genre = $_POST['genre'];
 $language = $_POST['Language'];
 $format = $_POST['format'];
 
-$query = "INSERT INTO posts (cover_image, title, description, genre, language, format) VALUES ('$coverImage',
-'$storyTitle' , '$description', '$genre', '$language', '$format')";
+ $query1 = "SELECT * FROM info WHERE id= $userId";
+ $result1 = mysqli_query($con, $query1);
+
+  $row= mysqli_fetch_assoc($result1);
+  $user_id= $row['id'];
+
+
+$query = "INSERT INTO posts (cover_image, title, description, genre, language, format, user_id) VALUES ('$coverImage','$storyTitle' , '$description', '$genre', '$language', '$format', $user_id)";
 
 $result = mysqli_query($con, $query);
 if(!$result){
   echo '<p style="color: red;">Sorry could not load! Try again later !</p>';
 } else{
+  move_uploaded_file($coverImage_temp_name,$coverImage_Folder);
   header('location: next.php');
 }
 

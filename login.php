@@ -95,6 +95,10 @@ if(isset($_POST['submit'])){
         $hashedPassword = $row['password'];
 
         if(password_verify($password, $hashedPassword)){
+          if($email == 'ritukhwalapala@gmail.com' || $email == 'rajanbhandari@gmail.com'){
+            header('Location: adm.php');
+            exit(); 
+        }
             $_SESSION['user_id'] = $row['id'];
             if(isset($_POST['remember_me']) && $_POST['remember_me'] == 'on'){
                 setcookie('user_id', $_SESSION['user_id'], time() + (7 * 24 * 60 * 60), '/');
@@ -104,6 +108,8 @@ if(isset($_POST['submit'])){
         } else {
             echo "<p style='color: red'>Invalid email or Incorrect password!!!</p>";
         }
+      
+      
     } else {
         
         echo "Error: " . mysqli_error($con);

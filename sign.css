@@ -49,6 +49,9 @@ text-align: center;
 #password{
   width: 74%;
 }
+#name{
+  width: 73%;
+}
 .create a{
   text-decoration: none;
   color: white;

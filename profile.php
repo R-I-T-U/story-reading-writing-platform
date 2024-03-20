@@ -1,16 +1,5 @@
 <?php
-session_start();
-
-if(!isset($_SESSION['user_id'])){
-  header("location: register.php");
-  exit();
-} else{
-  $userId = $_SESSION['user_id'];
-}
-$con = mysqli_connect("localhost", "root", "", "users");
-        if (!$con) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
+include 'connection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,6 +70,8 @@ $con = mysqli_connect("localhost", "root", "", "users");
                     </div>
                     <div class='cgenre'>Genre: ".$genre."</div>
                     <div class='cformat'>Format: ".$format."</div>
+                    <div class='cformat'>Created at: ".$created."</div>
+                    <div class='cformat'>Edited at: ".$updated."</div>
                     <br>
                     <div style='display: flex;'>
                <a href='editCov.php?id=$id '>
@@ -91,7 +82,7 @@ $con = mysqli_connect("localhost", "root", "", "users");
                    <div><button style='margin-right: 20px;'>Delete</button>
                    </div>
                </a>
-               <a href='viewChap.php'>
+               <a href='viewChap.php?id=$id '>
                    <div><button>View Chapters</button>
                    </div>
                </a>

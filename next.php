@@ -4,7 +4,6 @@ $con = mysqli_connect("localhost", "root","","users");
 if(!$con){
   die(mysqli_error($con));
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -90,12 +89,20 @@ if(!$con){
 
                 <?php
                 if (isset($_POST['next'])) {
+                    if(isset($_SESSION['user_id'])){
+                        $userId = $_SESSION['user_id'];
+                      }
+                    $query1 = "SELECT id FROM posts WHERE user_id = $userId ORDER BY id DESC LIMIT 1";
+                    $result1 = mysqli_query($con, $query1);
+                    $row1 = mysqli_fetch_assoc($result1);
+                    $postId = $row1['id'];
+
                     $ctitle = $_POST['story_title'];
                     $cdescription = $_POST['description'];
                     echo $ctitle;
                     
                     
-                    $query = "INSERT INTO chapter(chap_title, chap_description) VALUES ('$ctitle', '$cdescription')";
+                    $query = "INSERT INTO chapter(chap_title, chap_description,post_id,user_id) VALUES ('$ctitle', '$cdescription',$postId, $userId)";
                     $result = mysqli_query($con, $query);
                     
                     if(!$result){

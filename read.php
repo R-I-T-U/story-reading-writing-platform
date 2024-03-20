@@ -85,6 +85,7 @@
             $created= $row['created_at'];
             $updated= $row['updated_at'];
             $cvrImgPath = "img/ . {$row['cover_image']}";
+            $id = $row['id'];
 
         echo "
         <div class='stories'>
@@ -95,9 +96,10 @@
                 </div>
                 <div class='cgenre'>Genre: ".$genre."</div>
                 <div class='cformat'>Format: ".$format."</div>
-                
+                <div class='cformat'>Created at: ".$created."</div>
+                    <div class='cformat'>Edited at: ".$updated."</div>
                 <br><br>
-                <a href='viewChap.php'>
+                <a href='viewChap.php?id=$id'>
                    <div><button>View Chapters</button>
                    </div>
                </a>

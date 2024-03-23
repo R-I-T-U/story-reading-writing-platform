@@ -6,7 +6,7 @@ include 'connection.php';
 
         if (isset($_SESSION['user_id'])) {
             $userId = $_SESSION['user_id'];
-                            
+      
                     $query1 = "SELECT * FROM chapter WHERE post_id = $postId"; 
                     $result1 = mysqli_query($con, $query1);
 
@@ -32,82 +32,10 @@ include 'connection.php';
     <title>StorySphere - Read the books you like !!</title>
     <link rel="shortcut icon" href="images/ssLogo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="viewChap.css">
     <link rel="stylesheet" href="profile.css">
-    <style>
-        .navbar {
-            overflow: hidden;
-        }
 
-        .container {
-            background-color: rgba(255, 255, 255, 0.9);
-        }
-
-        main {
-            margin: 20px;
-        }
-
-        .filter-container {
-            margin-bottom: 20px;
-        }
-
-        .story {
-            height: 60rem;
-            width: 60rem;
-            margin-left: 7rem;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            background-color: white;
-            z-index: 1;
-            margin-bottom: 20px;
-            background: linear-gradient(120deg, #89a7cc 0%, rgb(50, 20, 100) 100%);
-        }
-
-        .ctitle {
-            display: flex;
-            justify-content: center;
-            font-size: 30px;
-            font-family: cursive;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .last {
-            margin-left: 7rem;
-            background-color: white;
-            z-index: 1;
-            margin-bottom: 20px;
-            margin-right: 8rem;
-            border-radius: 5px;
-        }
-
-        #cmt {
-            margin-top: 5px;
-            margin-bottom: 5px;
-            height: 2rem;
-            width: 45rem;
-            margin-left: 20px;
-        }
-
-        #report {
-            font-size: auto;
-            padding: none;
-            border: none;
-            color: gray;
-            border: none;
-            box-shadow: none;
-            background: none;
-            border-radius: none;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        .cmt{
-            margin-left: 20px;
-            margin-right: 32px;
-        }
-        #singleCmt{
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+        
 </head>
 
 <body>

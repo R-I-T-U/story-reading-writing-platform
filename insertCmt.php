@@ -12,7 +12,8 @@ $result = mysqli_query($con, $query);
 if (!$result) {
     echo "Error: " . mysqli_error($con);
 } else {
-    header('location:viewChap.php');
+    echo "<script>alert('Comment added succesfully!'); 
+            window.location='read.php';</script>";
 }
 
 }

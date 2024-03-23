@@ -3,8 +3,7 @@ $con = mysqli_connect("localhost", "root", "", "users");
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$query = "SELECT * FROM noti";
-$result = mysqli_query($con, $query);
+
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +11,7 @@ $result = mysqli_query($con, $query);
   <head>
   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Story Category</title>
 
     <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -58,7 +57,7 @@ $result = mysqli_query($con, $query);
       </a>
     </li>
     <li class="sidebar-list-item">
-      <a href="#">
+      <a href="category.php">
         <span class="material-icons-outlined">category</span> Categories
       </a>
     </li>
@@ -76,29 +75,45 @@ $result = mysqli_query($con, $query);
 </aside>
     <main class="main-container">
       <div class="main-title">
-        <h2>DASHBOARD</h2>
+        <h2>STORY CATEGORY</h2>
       </div>
       <div class="admin-panel">
-        <?php
-        while($row = mysqli_fetch_assoc($result)) {
-          $cmtId = $row['cmt_id'];
-          $cmt = $row['cmt'];
-          $postId= $row['postId'];
-          $user = $row['userId'];
-          ?>
-          <form action="decide.php" method="POST">
-          <div class="comment-container">
-            <div class="comment">
-              <p class="comment-text">
-                <input type="text" value="<?php echo $cmtId ?>" name="cid" hidden>
-                <?php echo "user ".$user." reported a comment ' <span style='color: red;'>".$cmt."</span> ."; ?>
-              </p>
-              <button class="delete-btn" type='submit' name ="delete">Delete</button>
-              <button class="ignore-btn" type='submit' name ="ignore">Ignore</button>
-            </div><br>
-          </div>
-          </form>
-        <?php } ?>
+
+       <!-- Category Form -->
+       <div class="category-form">
+            <h3>Add Category</h3>
+            <form action="add_category.php" method="POST">
+                <label for="category_name">Category Name:</label>
+                <input type="text" id="category_name" name="category_name" required>
+                <button type="submit">Add Category</button>
+            </form>
+        </div>
+        <!-- End Category Form -->
+
+        <!-- Display Existing Categories -->
+        <div class="existing-categories">
+            <h3>Existing Categories</h3>
+            <ul>
+                <?php
+                // Fetch existing categories from the database
+                $sql = "SELECT * FROM genre";
+                $result = mysqli_query($con, $sql);
+
+                // Check if categories exist
+                if (mysqli_num_rows($result) > 0) {
+                    // Loop through each row and display category names
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<li>" . $row['category_name'] . "</li>";
+                    }
+                } else {
+                    echo "No categories found.";
+                }
+                ?>
+            </ul>
+        </div>
+        <!-- End Display Existing Categories -->
+    </div>
+
       </div>
     </main> 
     <script src="as.js"></script>

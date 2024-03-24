@@ -101,6 +101,6 @@ $result = mysqli_query($con, $query);
         <?php } ?>
       </div>
     </main> 
-    <script src="as.js"></script>
+    
   </body>
 </html>

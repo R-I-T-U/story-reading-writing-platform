@@ -126,8 +126,7 @@ body {
     flex: 1;
   }
   
-  .delete-btn,
-  .ignore-btn {
+  button{
     background-color: #ff5757;
     color: #fff;
     border: none;
@@ -136,8 +135,7 @@ body {
     cursor: pointer;
   }
   
-  .delete-btn:hover,
-  .ignore-btn:hover {
+  button:hover {
     background-color: #e04444;
   }
   
@@ -154,9 +152,22 @@ body {
       font-size: 0.9rem;
     }
   
-    .delete-btn,
-    .ignore-btn {
+    button {
       padding: 3px 7px;
       font-size: 0.8rem;
     }
+  }
+  #deleteBtn{
+  color: #9e9ea4;
+  background: none;
+  cursor: pointer;
+  text-decoration: underline red;
+  }
+  input{
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  .header .header-right a{
+    text-decoration: none;
+    color: #9e9ea4;
   }

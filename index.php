@@ -21,6 +21,7 @@
     session_start();
     if (isset($_SESSION['user_id'])) {
         echo '<a href="profile.php" class="nav">Profile</a>'; 
+        echo '<a href="logout.php" class="logout">Log out</a>';
     } else if(isset($_COOKIE['user_id']) && !isset($_SESSION['user_id'])) {
         echo '<a href="login.php" class="nav">Login</a>';    
     } else {
@@ -29,7 +30,7 @@
     ?>
 
 
-    <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
+    <!-- <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a> -->
   </div>
 
    <!-- content*********************************** -->

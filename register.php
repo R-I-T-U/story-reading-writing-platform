@@ -42,7 +42,7 @@ if (!$con) {
       <button class="search-button">Search</button>
     </div>
     <a href="register.php" class="nav">Sign up</a>
-    <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
+    <!-- <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a> -->
   </div>
 
   <!-- content*********************************** -->

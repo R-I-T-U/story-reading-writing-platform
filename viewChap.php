@@ -55,9 +55,10 @@ include 'connection.php';
             echo '<a href="login.php" class="nav">Login</a>';
         } else {
             echo '<a href="register.php" class="nav">Sign up</a>';
+            echo '<a href="logout.php" class="logout">Log out</a>';
         }
         ?>
-        <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
+        <!-- <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a> -->
     </div>
 
     <!-- content*********************************** -->

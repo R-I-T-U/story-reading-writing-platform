@@ -37,8 +37,9 @@ if (!$con) {
   <a href="admNotification.php">
     <span class="material-icons-outlined">notifications</span>
       </a>
-    <span class="material-icons-outlined">email</span>
-    <span class="material-icons-outlined">account_circle</span>
+    <!-- <span class="material-icons-outlined">email</span> -->
+    <a href="logout.php">
+    <span class="material-icons-outlined">logout</span></a>
   </div>
 </header>
 <!-- End Header -->

@@ -1,10 +1,9 @@
 <?php
+session_start();
 $con = mysqli_connect("localhost", "root", "", "users");
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$query = "SELECT * FROM noti";
-$result = mysqli_query($con, $query);
 ?>
 
 <!DOCTYPE html>
@@ -38,8 +37,10 @@ $result = mysqli_query($con, $query);
     <a href="admNotification.php">
     <span class="material-icons-outlined">notifications</span>
       </a>
-    <span class="material-icons-outlined">email</span>
-    <span class="material-icons-outlined">account_circle</span>
+    <!-- <span class="material-icons-outlined">email</span> -->
+    <a href="logout.php">
+    <span class="material-icons-outlined">logout</span>
+  </a>
   </div>
 </header>
 <!-- End Header -->
@@ -76,15 +77,45 @@ $result = mysqli_query($con, $query);
     </li> -->
   </ul>
 </aside>
-    <main class="main-container">
-      <div class="main-title">
+    <main>
+      <div>
         <h2>DASHBOARD</h2>
       </div>
       <!-- here goes inner content -->
       <div class="admin-panel">
-     
+        <?php
+        $query1 = "SELECT * from info WHERE email NOT IN ('ritukhwalapala@gmail.com', 'rajanbhandari@gmail.com')";
+        $result1 = mysqli_query($con, $query1);
+        if($result1){
+          $count = mysqli_num_rows($result1);
+          echo "Total number of users = ".$count;
+        }
 
-
+        $query2 = "SELECT * FROM noti";
+        $result2 = mysqli_query($con, $query2);
+        if($result2){
+          $count = mysqli_num_rows($result2);
+          echo "<br><br>Reported comments = ".$count;
+        }
+        ?>
+        <center><h3>Users Data</h3></center>
+        <table border='1'>
+          <tr>
+            <th>id</th>
+            <th>Email</th>
+          </tr>
+            
+              <?php
+              while($row = mysqli_fetch_assoc($result1)){
+                echo "<tr>
+                <td style='height:40px'>".$row['id']."</td>
+                <td style='height:40px'>".$row['email']."</td>
+                </tr>";
+              }
+              ?>
+            
+          
+        </table>
       </div>
       <!-- ends content -->
     </main> 

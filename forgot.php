@@ -77,11 +77,7 @@ if (!$con) {
                 <p>OR</p>
                 <a href="register.php"><button class="create">Back</button></a>
 
-
-
-
-
-                
+          
                 <?php
                 if (isset($_POST['submit'])) {
                     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);

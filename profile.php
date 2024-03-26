@@ -22,7 +22,8 @@ include 'connection.php';
       <button class="search-button">Search</button>
     </div>
     <a href="profile.php" class="nav">Profile</a>
-    <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
+    <a href="logout.php" class="logout">Log out</a>
+    
   </div>
 
 
@@ -30,10 +31,7 @@ include 'connection.php';
 
   <div class="container">
     <div class="img-container"></div>
-    <img id="profileImage" src="images/bg12.jpg" alt="Image">
-    
-    <img src="images/option.jpg" alt="" height="20px" style="margin-left:20px; cursor:pointer;" onclick="toggleLogoutOptions()">
-
+    <img id="profileImage" src="images/bg12.jpg" alt="Image" required>
     <div id="logoutOptions" style="display:none;">
     <a href="logout.php" class="logoutOption" style="margin-left:20px; color:black; position: absolute; ">Log out</a>
 </div>    
@@ -69,7 +67,7 @@ include 'connection.php';
                     <div class='cdescription'>".$description."
                     </div>
                     <div class='cgenre'>Genre: ".$genre."</div>
-                    <div class='cformat'>Format: ".$format."</div>
+                    
                     <div class='cformat'>Created at: ".$created."</div>
                     <div class='cformat'>Edited at: ".$updated."</div>
                     <br>
@@ -81,11 +79,17 @@ include 'connection.php';
                <a href='delete.php?id=$id '>
                    <div><button style='margin-right: 20px;'>Delete</button>
                    </div>
-               </a>
+               </a>";
+
+               $q = "SELECT * FROM chapter WHERE post_id = $id";
+               $r = mysqli_query($con, $q);
+               if(mysqli_num_rows($r)>0){ echo "
                <a href='viewChap.php?id=$id '>
                    <div><button>View Chapters</button>
                    </div>
-               </a>
+               </a>";
+               }
+               echo "
            </div>
            </div>
 
@@ -97,22 +101,14 @@ include 'connection.php';
             </div>";
 
         }
+    } else{
+        echo "<div class='stories'><p style='height: 10rem; font-size: 2rem;'>Nothing to show</p></div>";
     }
         ?>
 
     <center><p id="end">The end!!</p></center>
 
 </div>  
-<script>
-    // JavaScript function to toggle the visibility of the logout options
-    function toggleLogoutOptions() {
-        var logoutOptions = document.getElementById("logoutOptions");
-        if (logoutOptions.style.display === "none") {
-            logoutOptions.style.display = "block";
-        } else {
-            logoutOptions.style.display = "none";
-        }
-    }
-</script>
+
 </body>
 </html>

@@ -51,9 +51,9 @@ if(!$con){
         echo '<a href="register.php" class="nav">Sign up</a>';
     }
     ?>
+    <a href="logout.php" class="logout">Log out</a>
 
-
-    <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
+    <!-- <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a> -->
   </div>
 
   <!-- content*********************************** -->
@@ -67,28 +67,32 @@ if(!$con){
         </div>
 
         <label for="image">Add cover Image: <input type="file" name="coverImage" id="image" accept="image/*"
-            onchange="previewImage(event)"></label>
+            onchange="previewImage(event)" required></label>
         <div id="image-preview"></div><br><br>
 
         <label for="title">Title:
           <input type="text" id="title" name="storyTitle" class="form-control" required></label><br>
 
-        <label for="description">Description: <textarea
-            id="description" name="description" required class="form-control"></textarea></label>
+        <label for="description">Description: <textarea id="description" name="description" required
+            class="form-control"></textarea></label>
         <br>
-
         <label for="genre">Choose Genre:
           <select name="genre" id="genre">
-            <option value="Adventure">Adventure</option>
-            <option value="Comedy">Comedy</option>
-            <option value="Horror">Horror</option>
-            <option value="Poetry">Poetry</option>
-            <option value="Manga">Manga</option>
-            <option value="Mystery">Mystery</option>
-            <option value="Paranormal">Paranormal</option>
-            <option value="Non Fiction">Non Fiction</option>
-            <option value="Science Fiction">Science Fiction</option>
-          </select></label><br>
+            <?php  
+    $query2 = "SELECT * FROM genre";
+    $result2 = mysqli_query($con, $query2);
+
+    if($result2 && mysqli_num_rows($result2) > 0) {
+      while($row = mysqli_fetch_assoc($result2)) {
+        $g_name = $row['g_name'];
+        echo "<option value='$g_name'>$g_name</option>";
+      }
+    }
+    ?>
+          </select>
+        </label>
+
+        <br>
 
         <label for="Language">Choose Language: <select name="Language" id="Language">
             <option value="English">English</option>
@@ -97,13 +101,13 @@ if(!$con){
           </select></label>
         <br>
 
-        <label for="format">Choose Story Format: <select name="format" id="format">
+        <!-- <label for="format">Choose Story Format: <select name="format" id="format">
             <option value="long">Long Form Story</option>
             <option value="short">Short Form Story</option>
             <option value="poem">Poem</option>
-            <!-- <option value="manga">Pictorial Style / Manga Style Story</option> -->
+            <option value="manga">Pictorial Style / Manga Style Story</option>
 
-          </select></label>
+          </select></label> -->
         <br>
 
         <!-- <label for="" id="r">Rating: 
@@ -117,7 +121,7 @@ if(!$con){
           <button class="next" name="next" style=" margin-left: 20px;">Next</button>
         </div><br>
 
-<?php
+        <?php
 if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST['next'])) {
 $coverImage = $_FILES['coverImage']['name'];
 $coverImage_temp_name = $_FILES['coverImage']['tmp_name'];
@@ -135,7 +139,7 @@ $format = $_POST['format'];
   $user_id= $row['id'];
 
 
-$query = "INSERT INTO posts (cover_image, title, description, genre, language, format, user_id) VALUES ('$coverImage','$storyTitle' , '$description', '$genre', '$language', '$format', $user_id)";
+$query = "INSERT INTO posts (cover_image, title, description, genre, language, format, user_id, created_at, updated_at) VALUES ('$coverImage','$storyTitle' , '$description', '$genre', '$language', '$format', $user_id, NOW(), NOW())";
 
 $result = mysqli_query($con, $query);
 if(!$result){

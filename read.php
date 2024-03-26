@@ -48,13 +48,14 @@
     session_start();
     if (isset($_SESSION['user_id'])) {
         echo '<a href="profile.php" class="nav">Profile</a>'; 
+        echo '<a href="logout.php" class="logout">Log out</a>';
     } else if(isset($_COOKIE['user_id']) && !isset($_SESSION['user_id'])) {
         echo '<a href="login.php" class="nav">Login</a>';    
     } else {
         echo '<a href="register.php" class="nav">Sign up</a>';
     }
     ?>
-        <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
+        <!-- <a href="" class="nav" >Log out</a> -->
     </div>
 
     <!-- content*********************************** -->
@@ -95,14 +96,19 @@
                 <div class='cdescription'>".$description."
                 </div>
                 <div class='cgenre'>Genre: ".$genre."</div>
-                <div class='cformat'>Format: ".$format."</div>
+                
                 <div class='cformat'>Created at: ".$created."</div>
                     <div class='cformat'>Edited at: ".$updated."</div>
-                <br><br>
-                <a href='viewChap.php?id=$id'>
+                <br><br>";
+                $q = "SELECT * FROM chapter WHERE post_id = $id";
+               $r = mysqli_query($con, $q);
+               if(mysqli_num_rows($r)>0){ echo "
+               <a href='viewChap.php?id=$id '>
                    <div><button>View Chapters</button>
                    </div>
-               </a>
+               </a>";
+               }
+               echo "
             </div>
 
             <div class='right'>
@@ -110,6 +116,10 @@
             </div>
         </div>";
 
+        }
+        if(mysqli_num_rows($result) === 0){
+            echo "<div class='stories'><p style='height: 10rem; font-size: 2rem;'>Nothing to show</p></div>";
+           
         }
         ?>
 

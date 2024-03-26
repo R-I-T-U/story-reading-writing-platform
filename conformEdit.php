@@ -34,7 +34,7 @@ $format = $_POST['format'];
 
     
 
-$query = "UPDATE posts SET cover_image='$newImage',title='$storyTitle', description='$description',genre='$genre',format='$format' WHERE user_id=$userId AND id=$postId";
+$query = "UPDATE posts SET cover_image='$newImage',title='$storyTitle', description='$description',genre='$genre',format='$format', updated_at = NOW() WHERE user_id=$userId AND id=$postId";
 
 $result = mysqli_query($con, $query);
 if(!$result){

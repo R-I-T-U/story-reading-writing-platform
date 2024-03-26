@@ -73,7 +73,7 @@ if(isset($_GET['id'])) {
         </div>
 
         <label for="image">Add cover Image: <input type="file" name="coverImage" id="image" accept="image/*"
-            onchange="previewImage(event)"></label>
+            onchange="previewImage(event)" required></label>
         <div id="image-preview"></div><br><br>
 
         <label for="title">Title:

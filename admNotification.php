@@ -38,8 +38,10 @@ $result = mysqli_query($con, $query);
     <a href="admNotification.php">
     <span class="material-icons-outlined">notifications</span>
       </a>
-    <span class="material-icons-outlined">email</span>
-    <span class="material-icons-outlined">account_circle</span>
+    <!-- <span class="material-icons-outlined">email</span> -->
+    <a href="logout.php">
+    <span class="material-icons-outlined">logout</span>
+</a>
   </div>
 </header>
 <!-- End Header -->
@@ -93,7 +95,7 @@ $result = mysqli_query($con, $query);
             <div class="comment">
               <p class="comment-text">
                 <input type="text" value="<?php echo $cmtId ?>" name="cid" hidden>
-                <?php echo "user ".$user." reported a comment ' <span style='color: red;'>".$cmt."</span> ."; ?>
+                <?php echo "user ".$user." reported a comment ' <span style='color: red;'>".$cmt."</span>' ."; ?>
               </p>
               <button class="delete-btn" type='submit' name ="delete">Delete</button>
               <button class="ignore-btn" type='submit' name ="ignore">Ignore</button>

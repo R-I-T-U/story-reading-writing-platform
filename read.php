@@ -48,7 +48,7 @@
     session_start();
     if (isset($_SESSION['user_id'])) {
         echo '<a href="profile.php" class="nav">Profile</a>'; 
-        echo '<a href="logout.php" class="logout">Log out</a>';
+        echo '<a href="logout.php" class="nav">Log out</a>';
     } else if(isset($_COOKIE['user_id']) && !isset($_SESSION['user_id'])) {
         echo '<a href="login.php" class="nav">Login</a>';    
     } else {
@@ -82,7 +82,7 @@
             $description = $row['description'];
             $genre = $row['genre'];
             $language = $row['language'];
-            $format = $row['format'];
+            // $format = $row['format'];
             $created= $row['created_at'];
             $updated= $row['updated_at'];
             $cvrImgPath = "img/ . {$row['cover_image']}";

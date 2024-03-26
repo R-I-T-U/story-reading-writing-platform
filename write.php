@@ -51,7 +51,7 @@ if(!$con){
         echo '<a href="register.php" class="nav">Sign up</a>';
     }
     ?>
-    <a href="logout.php" class="logout">Log out</a>
+    <a href="logout.php" class="logout" class="nav">Log out</a>
 
     <!-- <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a> -->
   </div>
@@ -130,7 +130,7 @@ $storyTitle = $_POST['storyTitle'];
 $description = $_POST['description'];
 $genre = $_POST['genre'];
 $language = $_POST['Language'];
-$format = $_POST['format'];
+// $format = $_POST['format'];
 
  $query1 = "SELECT * FROM info WHERE id= $userId";
  $result1 = mysqli_query($con, $query1);
@@ -139,7 +139,7 @@ $format = $_POST['format'];
   $user_id= $row['id'];
 
 
-$query = "INSERT INTO posts (cover_image, title, description, genre, language, format, user_id, created_at, updated_at) VALUES ('$coverImage','$storyTitle' , '$description', '$genre', '$language', '$format', $user_id, NOW(), NOW())";
+$query = "INSERT INTO posts (cover_image, title, description, genre, language, user_id, created_at, updated_at) VALUES ('$coverImage','$storyTitle' , '$description', '$genre', '$language', $user_id, NOW(), NOW())";
 
 $result = mysqli_query($con, $query);
 if(!$result){

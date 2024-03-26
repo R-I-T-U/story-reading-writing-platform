@@ -52,7 +52,8 @@ if(!$con){
 
     <?php
     if (isset($_SESSION['user_id'])) {
-        echo '<a href="profile.php" class="nav">Profile</a>'; 
+        echo '<a href="profile.php" class="nav">Profile</a>';
+        echo '<a href="logout.php" class="nav" >Log out</a>'; 
     } else if(isset($_COOKIE['user_id']) && !isset($_SESSION['user_id'])) {
         echo '<a href="login.php" class="nav">Login</a>';    
     } else {

@@ -22,7 +22,7 @@ include 'connection.php';
       <button class="search-button">Search</button>
     </div>
     <a href="profile.php" class="nav">Profile</a>
-    <a href="logout.php" class="logout">Log out</a>
+    <a href="logout.php" class="nav">Log out</a>
     
   </div>
 
@@ -52,7 +52,7 @@ include 'connection.php';
             $description = $row['description'];
             $genre = $row['genre'];
             $language = $row['language'];
-            $format = $row['format'];
+            // $format = $row['format'];
             $created = $row['created_at'];
             $updated = $row['updated_at'];
             $id = $row['id'];

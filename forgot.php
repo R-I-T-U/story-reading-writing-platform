@@ -47,7 +47,7 @@ if (!$con) {
     </div>
 
     <center>
-        <div class="form" method="POST" action="forgot.php">
+        <div class="form">
             <div class="loginHead">
                 <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="50px"></a>
                 <h1>StorySphere</h1>
@@ -75,7 +75,7 @@ if (!$con) {
                     <button type="submit" class="submit" name="submit">Login</button>
                 </div>
                 <p>OR</p>
-                <a href="register.php"><button class="create">Back</button></a>
+                <button class="create" formaction="login.php">Back</button>
 
           
                 <?php
@@ -95,10 +95,11 @@ if (!$con) {
                         } else if ($password1 != $password2) {
                             echo "<p style='color:red;'>Password mismatch!</p>";
                         } else {
-                            $query2 = "UPDATE info SET password = '$password1' WHERE email = '$email'";
+                            $hashedPassword = password_hash($password1, PASSWORD_DEFAULT);
+                            $query2 = "UPDATE info SET password = '$hashedPassword' WHERE email = '$email'";
                             $result2 = mysqli_query($con, $query2);
                             if ($result2) {
-                                header("Location: index.php");
+                                header("Location: login.php");
                                 exit();
                             } else {
                                 echo "<p style='color:red;'>Error updating password!</p>";

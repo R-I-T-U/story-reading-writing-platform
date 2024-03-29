@@ -50,7 +50,7 @@ if (!$con) {
 
   <!-- content*********************************** -->
   <center>
-    <div class="form" method="POST" action="">
+    <div class="form">
       <div class="loginHead">
         <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="50px"></a>
         <h1>StorySphere</h1>
@@ -89,8 +89,11 @@ if(isset($_POST['submit'])){
 
     $query1 = "SELECT * FROM info WHERE email= '$email'";
     $result1 = mysqli_query($con, $query1);
-
-    if($result1){
+    
+    if (empty($email) || empty($password)) {
+      echo '<p style="color: red;">Email and password are required fields</p>';
+    
+      } else if($result1){
         $row = mysqli_fetch_assoc($result1);
         $hashedPassword = $row['password'];
 

@@ -47,20 +47,24 @@ if (!$con) {
 
   <!-- content*********************************** -->
   <center>
-    <div class="form" action="register.php" method="POST">
+    <div class="form">
       <div class="loginHead">
         <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="50px"></a>
         <h1>StorySphere</h1>
       </div>
 
-      <form method="POST" action="">
+      <form method="POST" action="register.php">
+        <div>
+          <label for="uname">Username:</label>
+          <input type="text" id="uname" class="form-control" placeholder="Your name" name="uname">
+        </div> <br>
         <div>
           <label for="email">Email: </label>
           <input type="email" id="email" class="form-control" placeholder="Email Address" name="email">
         </div> <br>
         <div> <label for="password">
             Password: </label>
-          <input type="password" id="password" class="form-control" placeholder="Password" name="password">
+          <input type="password" id="password" class="form-control" placeholder="Set Password" name="password">
         </div>
         <div>
           <div class="custom-control custom-checkbox"><br>
@@ -81,27 +85,33 @@ if (!$con) {
           <button class="facebook">SIGN UP WITH FACEBOOK</button> -->
           <p>ALREADY HAVE AN ACCOUNT?</p>
           <button class="create" formaction="login.php">LOGIN HERE</button>
-          
+
           <!-- ............................................................................php code  -->
 
           <?php
 
         if (isset($_POST['submit'])) {
-
+          $uname = $_POST['uname'];
+          
             $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL); 
-
             $password = $_POST['password'];
 
             $query1= "SELECT * FROM info WHERE email = '$email'";
             $result1 = mysqli_query($con, $query1);
-            if($result1){
+
+            $query2 = "SELECT * FROM info WHERE uname = '$uname'";
+            $result2 = mysqli_query($con, $query2);
+            if($result1 && $result2){
               $num= mysqli_num_rows($result1);
+              $unum = mysqli_num_rows($result2);
               if($num>0){
                 echo '<p style="color: red;">User already exists! <br> Login to continue..</p>';
-              } else{
-                if (empty($email) || empty($password)) {
-                  echo '<p style="color: red;">Email and password are required fields</p>';
+              } else {
+                if (empty($email) || empty($password) || empty($uname)) {
+                  echo '<p style="color: red;">All of above are required fields</p>';
                 
+                  } else if($unum>0){
+                    echo '<p style="color: red;">Username must be unique</p>';
                   } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                   echo '<p style="color: red;">Invalid email format! </p>';
                   } else if (strlen($password) < 6 || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password)) {
@@ -111,7 +121,7 @@ if (!$con) {
                  
                  $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
       
-                 $query = "INSERT INTO info (email, password) VALUES ('$email', '$hashedPassword')";
+                 $query = "INSERT INTO info (email, password, uname) VALUES ('$email', '$hashedPassword', '$uname')";
       
                  $result = mysqli_query($con, $query);
       

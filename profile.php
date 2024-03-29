@@ -3,45 +3,69 @@ include 'connection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StorySphere - User Profile</title>
     <link rel="shortcut icon" href="images/ssLogo.jpg" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
- <!-- navbar*********************************** -->
- <div class="navbar">
-    <a href="read.php" class="nav">Read</a>
-    <a href="write.php" class="nav">Write</a>
-    <div class="search-container">
-      <input type="text" class="search-bar" placeholder="Search...">
-      <button class="search-button">Search</button>
+    <!-- navbar*********************************** -->
+    <div class="navbar">
+        <a href="read.php" class="nav">Read</a>
+        <a href="write.php" class="nav">Write</a>
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Search...">
+            <button class="search-button">Search</button>
+        </div>
+        <a href="profile.php" class="nav">Profile</a>
+        <a href="logout.php" class="nav">Log out</a>
+
     </div>
-    <a href="profile.php" class="nav">Profile</a>
-    <a href="logout.php" class="nav">Log out</a>
-    
-  </div>
 
+    <!-- content*********************************** -->
 
-  <!-- content*********************************** -->
-
-  <div class="container">
-    <div class="img-container"></div>
-    <img id="profileImage" src="images/bg12.jpg" alt="Image" required>
-    <div id="logoutOptions" style="display:none;">
-    <a href="logout.php" class="logoutOption" style="margin-left:20px; color:black; position: absolute; ">Log out</a>
-</div>    
-
-<div class="loginHead">
-        <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="70px"></a>
-        <h1>Your Stories</h1>
-      </div>
-      
+    <div class="container">
       <?php
+        
+        $que1 = "SELECT uname FROM info WHERE id= $userId";
+        $res1 = mysqli_query($con, $que1);
+        $row1 = mysqli_fetch_assoc($res1);
+        $uname = $row1['uname'];
+        
+        ?>
+      <div class="img-container"></div>
+<!-- profile -->
+<form id="profileForm" action="editProfile.php" method="POST">
+    <img id="profileImage" src="images/bg12.jpg" alt="Image">
+    <div>
+        <div class="profile-info">
+            <p id="uname">Name: <?php echo $uname; ?></p>
+            <img src="images/edit.png" alt="editImage" height="30px" id="editp" name="editp" onclick="submitForm()">
+        </div>
+    </div>
+</form>
+
+<script>
+    function submitForm() {
+        document.getElementById("profileForm").submit();
+    }
+</script>
+
+<!-- profile-end -->
+      <hr width="40%">
+
+      <div class="loginHead">
+          <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="70px"></a>
+          <h1>Your Stories</h1>
+      </div>
+        <?php
     
         $query = "SELECT * FROM posts WHERE user_id= $userId";
         $result = mysqli_query($con, $query);
@@ -106,9 +130,12 @@ include 'connection.php';
     }
         ?>
 
-    <center><p id="end">The end!!</p></center>
+        <center>
+            <p id="end">The end!!</p>
+        </center>
 
-</div>  
+    </div>
 
 </body>
+
 </html>

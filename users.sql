@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2024 at 09:16 AM
+-- Generation Time: Mar 30, 2024 at 04:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,28 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chapter`
---
-
-CREATE TABLE `chapter` (
-  `chap_id` int(11) NOT NULL,
-  `chap_title` varchar(255) NOT NULL,
-  `chap_description` text NOT NULL,
-  `post_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `chapter`
---
-
-INSERT INTO `chapter` (`chap_id`, `chap_title`, `chap_description`, `post_id`, `user_id`) VALUES
-(1, 'jinx', 'While most look at Jinx and see only a mad woman wielding an array of dangerous weapons, a few remember her as a relatively innocent girl froJinx first gained notoriety through her anonymous “pranks” on the citizens of Piltover… particularly those with connections to the wealthy merchant clans. These pranks ranged from the moderately annoying to the criminally dangerous. She blocked streets on Progress Day, with a stampede of exotic animals freed from Count Mei’s menagerie. She disrupted trade for weeks when she lined the city’s iconic bridges with adorably destructive flame chompers. Once, she even managed to move every street sign in town to new and utterly confusing locations.\r\n', 1, 2),
-(2, 'sample', 'this is testing .......', 2, 2);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `comment`
 --
 
@@ -55,13 +33,6 @@ CREATE TABLE `comment` (
   `post_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `comment`
---
-
-INSERT INTO `comment` (`cmt_id`, `cmt`, `post_id`, `user_id`) VALUES
-(1, 'helo', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -96,18 +67,21 @@ CREATE TABLE `info` (
   `id` int(11) NOT NULL,
   `uname` varchar(50) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `avatar` blob DEFAULT NULL,
+  `gender` varchar(100) DEFAULT NULL,
+  `bio` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `info`
 --
 
-INSERT INTO `info` (`id`, `uname`, `email`, `password`) VALUES
-(2, '', 'abc@gmail.com', '$2y$10$NdYJmyGcfOKEhykS4wuKyeo30RqO59md47ID7hVN4j6Wa/Xku5z.S'),
-(4, '', 'rajanbhandari@gmail.com', '$2y$10$iwWGGvYJbWtvX5Z2DZltSO07tmH2S7Ulh0cRwohoUnkDmcUjhn7cq'),
-(6, '', 'ritukhwalapala@gmail.com', '$2y$10$gtzhPGAmIJf3VmJCk2aUt.WKxQbt45/tW7zridtBwD84EnmMOI/Ta'),
-(7, 'ritu', 'ritu@gmail.com', '$2y$10$uXylhxlAaaiOtDrN07hgN.wpU1aj47oPl2RJJRf8358p6GtOmzNBS');
+INSERT INTO `info` (`id`, `uname`, `email`, `password`, `avatar`, `gender`, `bio`) VALUES
+(4, '', 'rajanbhandari@gmail.com', '$2y$10$iwWGGvYJbWtvX5Z2DZltSO07tmH2S7Ulh0cRwohoUnkDmcUjhn7cq', NULL, NULL, NULL),
+(6, '', 'ritukhwalapala@gmail.com', '$2y$10$gtzhPGAmIJf3VmJCk2aUt.WKxQbt45/tW7zridtBwD84EnmMOI/Ta', NULL, NULL, NULL),
+(7, 'ritu', 'ritu@gmail.com', '$2y$10$0.awY8eRluE4/G7.lj2KvOyx/01ztcu.jRW4Wsx9qgxZI6i2rs/bm', 0x312e6a7067, 'female', ''),
+(12, 'abc', 'abc@gmail.com', '$2y$10$RFPjEfxu9olZDOt3pXC4aemCrfAscLAjNqlLLuZ6AxljGTKdZo36e', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -133,7 +107,9 @@ CREATE TABLE `posts` (
   `id` int(11) NOT NULL,
   `cover_image` blob NOT NULL,
   `title` varchar(255) NOT NULL,
+  `abstract` varchar(200) NOT NULL,
   `description` text NOT NULL,
+  `status` varchar(100) NOT NULL,
   `genre` varchar(100) NOT NULL,
   `language` varchar(100) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -145,19 +121,12 @@ CREATE TABLE `posts` (
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `cover_image`, `title`, `description`, `genre`, `language`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 0x6a696e782e6a7067, 'jinx', 'While most look at Jinx and see only a mad woman wielding an array of dangerous weapons, a few remember her as a relatively innocent girl froJinx first gained notoriety through her anonymous “pranks” on the citizens of Piltover… particularly those with connections to the wealthy merchant clans. These pranks ranged from the moderately annoying to the criminally dangerous. She blocked streets on Progress Day, with a stampede of exotic animals freed from Count Mei’s menagerie. She disrupted trade for weeks when she lined the city’s iconic bridges with adorably destructive flame chompers. Once, she even managed to move every street sign in town to new and utterly confusing locations.\r\n', 'Adventure', 'English', 2, '2024-03-26 20:18:20', '2024-03-26 20:18:20'),
-(2, 0x41736c2e6a7067, 'solo leveling', 'They reach an iron-mesh platform attached to a collimated series of rails angled down toward the ocean and docks below. Hundreds of ships throng the wide channel, moored in the shadow of the titanic form of the Sun Gates that allow sea transit from east to west. Some are just passing through, whil', 'Paranormal', 'English', 2, '2024-03-26 20:18:56', '2024-03-26 20:18:56');
+INSERT INTO `posts` (`id`, `cover_image`, `title`, `abstract`, `description`, `status`, `genre`, `language`, `user_id`, `created_at`, `updated_at`) VALUES
+(16, 0x6a696e782e6a7067, 'solo leveling yo!!', 'nfz', 'nmbsfjg', 'completed', 'Adventure', 'English', 7, '2024-03-30 11:18:50', '2024-03-30 11:22:17');
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `chapter`
---
-ALTER TABLE `chapter`
-  ADD PRIMARY KEY (`chap_id`);
 
 --
 -- Indexes for table `comment`
@@ -194,16 +163,10 @@ ALTER TABLE `posts`
 --
 
 --
--- AUTO_INCREMENT for table `chapter`
---
-ALTER TABLE `chapter`
-  MODIFY `chap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `cmt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cmt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `genre`
@@ -215,7 +178,7 @@ ALTER TABLE `genre`
 -- AUTO_INCREMENT for table `info`
 --
 ALTER TABLE `info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `noti`
@@ -227,7 +190,7 @@ ALTER TABLE `noti`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

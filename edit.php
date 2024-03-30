@@ -13,9 +13,14 @@ if(isset($_GET['id'])) {
     if(mysqli_num_rows($result) > 0) {
         $post = mysqli_fetch_assoc($result);
         $storyTitle = $post['title'];
+        $abstract = $post['abstract'];
+        $genre = $post['genre'];
+        $language = $post['language'];
+        $updated = $post['updated_at'];
+        $status = $post['status'];
         $description = $post['description'];
         $genre = $post['genre'];
-        $format = $post['format'];
+        $cvrImgPath = "img/ . {$post['cover_image']}";
 
     }
     
@@ -59,8 +64,6 @@ if(isset($_GET['id'])) {
     }
     ?>
 
-
-    <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
   </div>
 
   <!-- content*********************************** -->
@@ -70,52 +73,59 @@ if(isset($_GET['id'])) {
       <form method="POST" action="conformEdit.php" enctype="multipart/form-data">
         <div class="loginHead">
           <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="50px"></a>
-          <h1>Edit Story Info</h1>
+          <h1>Edit your Story</h1>
         </div>
 
-        <label for="image">Add cover Image: <input type="file" name="coverImage" id="image" accept="image/*"
-            onchange="previewImage(event)" required></label>
+        <label for="image">Add cover Image: <input type="file" name="coverImage" id="image" accept="image/*" onchange="previewImage(event)" ></label>
         <div id="image-preview"></div><br><br>
 
         <label for="title">Title:
-          <input type="text" id="title" name="storyTitle" class="form-control" value="<?php echo $storyTitle; ?>" required></label><br>
+          <input type="text" id="title" name="storyTitle" class="form-control" value="<?php echo $storyTitle; ?>"
+            required></label><br>
 
-        <label for="description">Description: <textarea
-            id="description" name="description" required class="form-control"><?php echo $description; ?></textarea></label>
+        <label for="abstract">Synopsis: <textarea id="abstract" name="abstract" required
+            class="form-control"><?php echo $abstract; ?></textarea></label>
         <br>
-
         <label for="genre">Choose Genre:
           <select name="genre" id="genre">
-            <option value="Adventure">Adventure</option>
-            <option value="Comedy">Comedy</option>
-            <option value="Horror">Horror</option>
-            <option value="Poetry">Poetry</option>
-            <option value="Manga">Manga</option>
-            <option value="Mystery">Mystery</option>
-            <option value="Paranormal">Paranormal</option>
-            <option value="Non Fiction">Non Fiction</option>
-            <option value="Science Fiction">Science Fiction</option>
-          </select></label><br>
+       <?php  
+    $query2 = "SELECT * FROM genre";
+    $result2 = mysqli_query($con, $query2);
+
+    if($result2 && mysqli_num_rows($result2) > 0) {
+      while($row = mysqli_fetch_assoc($result2)) {
+        $g_name = $row['g_name'];
+        echo "<option value='$g_name'>$g_name</option>";
+      }
+    }
+    ?>
+          </select>
+        </label>
 
         <br>
 
-        <label for="format">Choose Story Format: <select name="format" id="format">
-            <option value="long">Long Form Story</option>
-            <option value="short">Short Form Story</option>
-            <option value="poem">Poem</option>
-            <!-- <option value="manga">Pictorial Style / Manga Style Story</option> -->
+        <label for="Language">Choose Language: <select name="language" id="Language">
+            <option value="English">English</option>
+            <option value="Nepali">Nepali</option>
 
           </select></label>
         <br>
+        <label for="description">Full Story: <textarea id="description" name="description" required
+            class="form-control"><?php echo $description; ?></textarea></label>
+        <br>
+
+        <label for="status">Status: <select name="status" id="status" >
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+
+          </select></label>
+        <br>
+
         <input type="number" hidden value="<?php echo $postId?>" name="postId">
-        <!-- <label for="" id="r">Rating: 
-          <label for="on"><input type="radio" id="on" name="rate">ON</label>
-          <label for="off"><input type="radio" id="off" name="rate">OFF</label>
-        </label> -->
 
         <br><br>
         <div class="buttom">
-          <button class="cancel"><a href="read.php">Cancel</a></button>
+          <button class="cancel" formaction="profile.php">Cancel</button>
           <button class="next" name="done" style=" margin-left: 20px;">Done</button>
         </div><br>
       </form>
@@ -138,4 +148,5 @@ if(isset($_GET['id'])) {
     }
   </script>
 </body>
+
 </html>

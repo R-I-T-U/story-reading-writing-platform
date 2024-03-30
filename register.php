@@ -5,15 +5,14 @@ if (isset($_COOKIE['user_id'])) {
   $_SESSION['user_id'] = $_COOKIE['user_id'];
 }
 
-if(isset($_SESSION["user_id"])){
+if (isset($_SESSION["user_id"])) {
   header("location: profile.php");
   exit();
-
 }
 $con = mysqli_connect("localhost", "root", "", "users");
 
 if (!$con) {
-    die(mysqli_error($con));
+  die(mysqli_error($con));
 }
 ?>
 
@@ -90,61 +89,60 @@ if (!$con) {
 
           <?php
 
-        if (isset($_POST['submit'])) {
-          $uname = $_POST['uname'];
-          
-            $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL); 
+          if (isset($_POST['submit'])) {
+            $uname = $_POST['uname'];
+
+            $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
             $password = $_POST['password'];
 
-            $query1= "SELECT * FROM info WHERE email = '$email'";
+            $query1 = "SELECT * FROM info WHERE email = '$email'";
             $result1 = mysqli_query($con, $query1);
 
             $query2 = "SELECT * FROM info WHERE uname = '$uname'";
             $result2 = mysqli_query($con, $query2);
-            if($result1 && $result2){
-              $num= mysqli_num_rows($result1);
+            if ($result1 && $result2) {
+              $num = mysqli_num_rows($result1);
               $unum = mysqli_num_rows($result2);
-              if($num>0){
+              if ($num > 0) {
                 echo '<p style="color: red;">User already exists! <br> Login to continue..</p>';
               } else {
                 if (empty($email) || empty($password) || empty($uname)) {
                   echo '<p style="color: red;">All of above are required fields</p>';
-                
-                  } else if($unum>0){
-                    echo '<p style="color: red;">Username must be unique</p>';
-                  } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                } else if ($unum > 0) {
+                  echo '<p style="color: red;">Username must be unique</p>';
+                } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                   echo '<p style="color: red;">Invalid email format! </p>';
-                  } else if (strlen($password) < 6 || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password)) {
+                } else if (strlen($password) < 6 || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password)) {
                   echo '<p style="color: red;">Password must be at least 6 characters long, contain at least one capital letter, and at least one number!!</p>';
-                  
-                 } else {
-                 
-                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-      
-                 $query = "INSERT INTO info (email, password, uname) VALUES ('$email', '$hashedPassword', '$uname')";
-      
-                 $result = mysqli_query($con, $query);
-      
-                
-                 if ($result) {
-                  $row = mysqli_fetch_assoc($result1);                  
-                  $_SESSION['user_id'] = $row['id'];
-                  
-            
-                  if (isset($_POST['remember_me']) && $_POST['remember_me'] == 'on') {
-                    setcookie('user_id', $_SESSION['user_id'], time() + (7 * 24 * 60 * 60), '/');
+                } else {
+
+                  $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+
+                  $query = "INSERT INTO info (email, password, uname) VALUES ('$email', '$hashedPassword', '$uname')";
+                  $result = mysqli_query($con, $query);
+
+                  if ($result) {
+                    $query1 = "SELECT * FROM info WHERE email= '$email'";
+            $result1 = mysqli_query($con, $query1);
+                    $row = mysqli_fetch_assoc($result1);
+                    $_SESSION['user_id'] = $row['id'];
+
+
+                    if (isset($_POST['remember_me']) && $_POST['remember_me'] == 'on') {
+                      setcookie('user_id', $_SESSION['user_id'], time() + (7 * 24 * 60 * 60), '/');
+                    }
+                    header('location: index.php');
+                    exit();
+                  } else {
+                    echo "Error!! Please try again later" . mysqli_error($con);
+                  }
                 }
-                header('location: login.php'); 
-                exit();
-              } else {
-                echo "Error!! Please try again later" . mysqli_error($con);
+              }
+            }
           }
-          }
-      }
-      }
- }
- mysqli_close($con);
-      ?>
+          mysqli_close($con);
+          ?>
       </form>
       </p>
     </div>

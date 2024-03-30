@@ -77,38 +77,30 @@
         $query= "SELECT * FROM posts";
         $result = mysqli_query($con, $query);
         while($row = mysqli_fetch_assoc($result)){
-            $coverImage = $row['cover_image'];
             $storyTitle = $row['title']; 
-            $description = $row['description'];
+            $abstract = $row['abstract'];
             $genre = $row['genre'];
             $language = $row['language'];
-            // $format = $row['format'];
-            $created= $row['created_at'];
-            $updated= $row['updated_at'];
-            $cvrImgPath = "img/ . {$row['cover_image']}";
+            $created = $row['created_at'];
+            $updated = $row['updated_at'];
+            $status = $row['status'];
             $id = $row['id'];
+            $cvrImgPath = "img/ . {$row['cover_image']}";
+            
 
         echo "
         <div class='stories'>
 
             <div class='left'>
                 <div class='ctitle'>".$storyTitle."</div>
-                <div class='cdescription'>".$description."
-                </div>
-                <div class='cgenre'>Genre: ".$genre."</div>
+                <div class='cdescription'>".$abstract."</div>
+                <div class='seemore'><a href='seemore.php?id=$id'>See full story</a></div>
+                <div class='cformat'>Genre: ".$genre."</div>
+                <div class='cformat'>Status: ".$status."</div>
                 
                 <div class='cformat'>Created at: ".$created."</div>
                     <div class='cformat'>Edited at: ".$updated."</div>
-                <br><br>";
-                $q = "SELECT * FROM chapter WHERE post_id = $id";
-               $r = mysqli_query($con, $q);
-               if(mysqli_num_rows($r)>0){ echo "
-               <a href='viewChap.php?id=$id '>
-                   <div><button>View Chapters</button>
-                   </div>
-               </a>";
-               }
-               echo "
+                <br><br>
             </div>
 
             <div class='right'>

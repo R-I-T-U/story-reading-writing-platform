@@ -21,8 +21,8 @@ if(isset($_GET['id'])) {
     $row = mysqli_fetch_assoc($result1);
 
     $query = "DELETE FROM posts WHERE id = $postId";
-    $query2 = "DELETE FROM chapter WHERE post_id = $postId";
-    $result2 = mysqli_query($con, $query2);
+    // $query2 = "DELETE FROM chapter WHERE post_id = $postId";
+    // $result2 = mysqli_query($con, $query2);
     $query4 = "DELETE FROM noti WHERE postId = $postId";
     $result4 = mysqli_query($con, $query4);
     $query3 = "DELETE FROM comment WHERE post_id = $postId";

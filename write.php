@@ -51,9 +51,8 @@ if(!$con){
         echo '<a href="register.php" class="nav">Sign up</a>';
     }
     ?>
-    <a href="logout.php" class="logout" class="nav">Log out</a>
+    <a href="logout.php" class="nav">Log out</a>
 
-    <!-- <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a> -->
   </div>
 
   <!-- content*********************************** -->
@@ -63,7 +62,7 @@ if(!$con){
       <form method="POST" action="write.php" enctype="multipart/form-data">
         <div class="loginHead">
           <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="50px"></a>
-          <h1>Add Story Info</h1>
+          <h1>Write your Story</h1>
         </div>
 
         <label for="image">Add cover Image: <input type="file" name="coverImage" id="image" accept="image/*"
@@ -73,7 +72,7 @@ if(!$con){
         <label for="title">Title:
           <input type="text" id="title" name="storyTitle" class="form-control" required></label><br>
 
-        <label for="description">Description: <textarea id="description" name="description" required
+        <label for="abstract">Synopsis: <textarea id="abstract" name="abstract" required
             class="form-control"></textarea></label>
         <br>
         <label for="genre">Choose Genre:
@@ -94,31 +93,28 @@ if(!$con){
 
         <br>
 
-        <label for="Language">Choose Language: <select name="Language" id="Language">
+        <label for="Language">Choose Language: <select name="language" id="Language">
             <option value="English">English</option>
             <option value="Nepali">Nepali</option>
 
           </select></label>
         <br>
-
-        <!-- <label for="format">Choose Story Format: <select name="format" id="format">
-            <option value="long">Long Form Story</option>
-            <option value="short">Short Form Story</option>
-            <option value="poem">Poem</option>
-            <option value="manga">Pictorial Style / Manga Style Story</option>
-
-          </select></label> -->
+        <label for="description">Full Story: <textarea id="description" name="description" required
+            class="form-control"></textarea></label>
         <br>
 
-        <!-- <label for="" id="r">Rating: 
-          <label for="on"><input type="radio" id="on" name="rate">ON</label>
-          <label for="off"><input type="radio" id="off" name="rate">OFF</label>
-        </label> -->
+        <label for="status">Status: <select name="status" id="status">
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+            
+          </select></label>
+        <br>
 
+        
         <br><br>
         <div class="button">
-          <button class="cancel"><a href="read.php">Cancel</a></button>
-          <button class="next" name="next" style=" margin-left: 20px;">Next</button>
+          <button class="cancel" formaction="read.php">Cancel</button>
+          <button class="next" name="next" style=" margin-left: 20px;">Publish</button>
         </div><br>
 
         <?php
@@ -127,26 +123,27 @@ $coverImage = $_FILES['coverImage']['name'];
 $coverImage_temp_name = $_FILES['coverImage']['tmp_name'];
 $coverImage_Folder = "img/ . $coverImage";
 $storyTitle = $_POST['storyTitle'];
-$description = $_POST['description'];
+$abstract = $_POST['abstract'];
 $genre = $_POST['genre'];
-$language = $_POST['Language'];
-// $format = $_POST['format'];
+$language = $_POST['language'];
+$description = $_POST['description'];
+$status = $_POST['status'];
 
- $query1 = "SELECT * FROM info WHERE id= $userId";
- $result1 = mysqli_query($con, $query1);
+//  $query1 = "SELECT * FROM info WHERE id= $userId";
+//  $result1 = mysqli_query($con, $query1);
 
-  $row= mysqli_fetch_assoc($result1);
-  $user_id= $row['id'];
+//   $row= mysqli_fetch_assoc($result1);
+//   $user_id= $row['id'];
 
 
-$query = "INSERT INTO posts (cover_image, title, description, genre, language, user_id, created_at, updated_at) VALUES ('$coverImage','$storyTitle' , '$description', '$genre', '$language', $user_id, NOW(), NOW())";
+$query = "INSERT INTO posts (cover_image, title, abstract, genre, language, description, status, user_id, created_at, updated_at) VALUES ('$coverImage','$storyTitle' , '$abstract', '$genre', '$language', '$description', '$status', $userId, NOW(), NOW())";
 
 $result = mysqli_query($con, $query);
 if(!$result){
   echo '<p style="color: red;">Sorry could not load! Try again later !</p>';
 } else{
   move_uploaded_file($coverImage_temp_name,$coverImage_Folder);
-  header('location: next.php');
+  header('location: profile.php');
 }
 
 }

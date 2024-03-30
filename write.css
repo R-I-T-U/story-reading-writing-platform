@@ -44,10 +44,16 @@ input:focus ,textarea:focus, select:focus{
   margin-left: 50px;
 }
 
+#abstract{
+  width: 70%;
+  height: 150px;
+}
+
 #description{
   width: 70%;
-  height: 200px;
+  height: 400px;
 }
+
 
 #genre{
   width: 70%;
@@ -59,7 +65,7 @@ input:focus ,textarea:focus, select:focus{
   width: 67%;
 }
 
-#format{
+#status{
   height: 30px;
   width: 65%;
 }

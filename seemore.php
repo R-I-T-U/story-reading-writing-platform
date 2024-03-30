@@ -5,17 +5,18 @@ include 'connection.php';
             $_SESSION['postId'] = $postId;
 
         if (isset($_SESSION['user_id'])) {
-            $userId = $_SESSION['user_id'];
       
-                    $query1 = "SELECT * FROM chapter WHERE post_id = $postId"; 
-                    $result1 = mysqli_query($con, $query1);
+            $query = "SELECT * FROM posts WHERE id= $postId";
+            $result = mysqli_query($con, $query);
+    
 
-                    if ($result1) {
-                        while ($row1 = mysqli_fetch_assoc($result1)) {
-                            $chap_title = $row1['chap_title'];
-                            $chap_description = $row1['chap_description'];                            
-                        }
-                    } else {
+                    if ($result) {
+                        $row = mysqli_fetch_assoc($result);
+                            $storyTitle = $row['title']; 
+                            $description = $row['description']; 
+                            $cvrImgPath = "img/ . {$row['cover_image']}";
+                            $status = $row['status'];
+                        } else {
                         echo "Error fetching chapter: " . mysqli_error($con);
                     }            
         } else {
@@ -31,9 +32,9 @@ include 'connection.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StorySphere - Read the books you like !!</title>
     <link rel="shortcut icon" href="images/ssLogo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="seemore.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="viewChap.css">
-    <link rel="stylesheet" href="profile.css">
+    <!-- <link rel="stylesheet" href="profile.css"> -->
 
         
 </head>
@@ -58,27 +59,25 @@ include 'connection.php';
             echo '<a href="register.php" class="nav">Sign up</a>';
             
         }
+
         ?>
-        <!-- <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a> -->
     </div>
 
     <!-- content*********************************** -->
 
-    <div class="container">
+    <div class="con">
 
-        <div class="loginHead">
-            <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="70px"></a>
-            <h1>Story Chapters</h1>
-        </div>
         <div class='story'>
             <div class='left'>
-                <div class='ctitle'><?php echo isset($chap_title) ? $chap_title : ''; ?></div>
-                <div class='cdescription'><?php echo isset($chap_description) ? $chap_description : ''; ?></div>
-                <br><br>
-            </div>
-        </div>
+                <div class='ctitle'><h2><?php echo $storyTitle; ?></h2></div>
+                <div class="content">
+                <div class='image'><?php echo "<a href='$cvrImgPath' ><img src='{$cvrImgPath}' alt='{$storyTitle }'></a>" ?></div>
 
-        <div class="last">
+                <div class='cdescription'><?php echo $description; ?></div>
+                </div>
+                <br><br><hr width="60%">
+            </div>
+            <div class="last">
             <form action="insertCmt.php" method="POST">
                 <input type="text" name="cmt" id="cmt">
                 <button type="submit" name='add'>Add comment</button>
@@ -104,14 +103,20 @@ include 'connection.php';
             </div>
 
         </div>
-
-        </form>
-
         <center>
             <p id="end">The end!!</p>
         </center>
+
+        </div>
+
+        </form>
+
+        
     </div>
 
 </body>
 
 </html>
+
+
+

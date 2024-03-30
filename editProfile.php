@@ -1,5 +1,15 @@
 <?php
 include 'connection.php';
+
+    $query = "SELECT * FROM info WHERE id=$userId";
+    $result = mysqli_query($con, $query);
+    $row = mysqli_fetch_assoc($result);
+
+    $uname = $row['uname'];
+    $email = $row['email'];
+    $gender = $row['gender'];
+    $bio = $row['bio'];
+
 ?>
 
 <!DOCTYPE html>
@@ -58,26 +68,40 @@ include 'connection.php';
                 <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="50px"></a>
                 <h1>Edit your profile</h1>
             </div>
-            <form method="POST" action="profile.php">
-                <label for="image">Add Profile Image: <input type="file" name="profileImage" id="image" accept="image/*"
-                        onchange="previewImage(event)" required></label>
+            
+            <form method="POST" action="confromProfile.php" enctype="multipart/form-data">
+                <label for="image">Add Profile Image: <input type="file" name="profileImage" id="image" accept="image/*" onchange="previewImage(event)" ></label>
                 <div id="image-preview"></div><br><br>
                 <div>
                     <label for="uname">Username:</label>
-                    <input type="text" id="uname" class="form-control" name="uname">
+                    <input type="text" id="uname" class="form-control" name="uname" value="<?php echo $uname; ?>" required>
                 </div> <br>
                 <div>
                     <label for="email">Email: </label>
-                    <input type="email" id="email" class="form-control" name="email">
+                    <input type="email" id="email" class="form-control" name="email" value="<?php echo $email; ?>">
                 </div> <br>
                 <div>
-                    <label for="email">Gender: </label>
-                    <input type="radio"> Male
-                    <input type="radio"> Female
+                    <label for="gender">Gender: </label>
+                    <?php
+                    if($gender == 'male'){
+                        echo "<input type='radio' name='gender' value='male' checked> Male
+                        <input type='radio' name='gender' value='female'> Female 
+                        <input type='radio' name='gender' value='Not specified'> Rather not say";
+                    } else if($gender == 'female'){
+                        echo "<input type='radio' name='gender' value='male'> Male
+                        <input type='radio' name='gender' value='female' checked> Female 
+                        <input type='radio' name='gender' value='Not specified'> Rather not say ";
+                    } else {
+                        echo "<input type='radio' name='gender' value='male'> Male
+                        <input type='radio' name='gender' value='female'> Female 
+                        <input type='radio' name='gender' value='Not specified' checked> Rather not say ";
+                    }
+                    
+                    ?>
                 </div> <br>
                 <div>
-                    <label for="email">Bio: </label>
-                    <input type="text" id="email" class="form-control" name="email">
+                    <label for="bio">Bio: </label>
+                    <input type="text" id="email" class="form-control" name="bio" value="<?php echo $bio; ?>">
                 </div> <br>
 
                 <div>
@@ -88,6 +112,7 @@ include 'connection.php';
 
         </div>
     </center>
+
     <script>
         function previewImage(event) {
             var input = event.target;

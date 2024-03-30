@@ -5,18 +5,15 @@ if (isset($_COOKIE['user_id'])) {
   $_SESSION['user_id'] = $_COOKIE['user_id'];
 }
 
-if(isset($_SESSION["user_id"])){
+if (isset($_SESSION["user_id"])) {
   header("location: profile.php");
   exit();
-
 }
 $con = mysqli_connect("localhost", "root", "", "users");
 
 if (!$con) {
-    die(mysqli_error($con));
+  die(mysqli_error($con));
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +25,7 @@ if (!$con) {
   <link rel="stylesheet" href="sign.css">
   <link rel="shortcut icon" href="images/ssLogo.jpg" type="image/x-icon">
   <style>
-    .form{
+    .form {
       background-color: rgba(255, 255, 255, 0.9);
     }
   </style>
@@ -44,7 +41,6 @@ if (!$con) {
       <button class="search-button">Search</button>
     </div>
     <a href="login.php" class="nav">Login</a>
-    <!-- <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a> -->
   </div>
 
 
@@ -75,51 +71,50 @@ if (!$con) {
         </div>
         <div>
           <p><a href="forgot.php">Forgot your password ?</a>
-            <div class="or">
-              <p>OR</p>
-            </div>
-            <p>DON'T HAVE AN ACCOUNT?</p>
-            <button class="create" formaction="register.php">CREATE NEW ACCOUNT</button>
+          <div class="or">
+            <p>OR</p>
+          </div>
+          <p>DON'T HAVE AN ACCOUNT?</p>
+          <button class="create" formaction="register.php">CREATE NEW ACCOUNT</button>
           </p>
 
           <?php
-if(isset($_POST['submit'])){
-    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $password = $_POST['password'];
+          if (isset($_POST['submit'])) {
+            $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+            $password = $_POST['password'];
 
-    $query1 = "SELECT * FROM info WHERE email= '$email'";
-    $result1 = mysqli_query($con, $query1);
-    
-    if (empty($email) || empty($password)) {
-      echo '<p style="color: red;">Email and password are required fields</p>';
-    
-      } else if($result1){
-        $row = mysqli_fetch_assoc($result1);
-        $hashedPassword = $row['password'];
+            $query1 = "SELECT * FROM info WHERE email= '$email'";
+            $result1 = mysqli_query($con, $query1);
 
-        if(password_verify($password, $hashedPassword)){
-          if($email == 'ritukhwalapala@gmail.com' || $email == 'rajanbhandari@gmail.com'){
-            header('Location: adm.php');
-            exit(); 
-        }
-            $_SESSION['user_id'] = $row['id'];
-            if(isset($_POST['remember_me']) && $_POST['remember_me'] == 'on'){
-                setcookie('user_id', $_SESSION['user_id'], time() + (7 * 24 * 60 * 60), '/');
+            if (empty($email) || empty($password)) {
+              echo '<p style="color: red;">Email and password are required fields</p>';
+            } else if ($result1) {
+              $row = mysqli_fetch_assoc($result1);
+              $hashedPassword = $row['password'];
+              $id = $row['id'];
+
+              if (password_verify($password, $hashedPassword)) {
+                if ($email == 'ritukhwalapala@gmail.com' || $email == 'rajanbhandari@gmail.com') {
+                  header('Location: adm.php');
+                  exit();
+                }
+
+                $_SESSION['user_id'] = $row['id'];
+                if (isset($_POST['remember_me']) && $_POST['remember_me'] == 'on') {
+                  setcookie('user_id', $_SESSION['user_id'], time() + (7 * 24 * 60 * 60), '/');
+                }
+                header('location: index.php');
+                exit();
+              } else {
+                echo "<p style='color: red'>Invalid email or Incorrect password!!!</p>";
+              }
+            } else {
+
+              echo "Error: " . mysqli_error($con);
             }
-            header('location: index.php');
-            exit();
-        } else {
-            echo "<p style='color: red'>Invalid email or Incorrect password!!!</p>";
-        }
-      
-      
-    } else {
-        
-        echo "Error: " . mysqli_error($con);
-    }
-    mysqli_close($con);
-}
-?>
+            mysqli_close($con);
+          }
+          ?>
 
       </form>
       </p>

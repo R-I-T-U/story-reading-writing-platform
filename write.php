@@ -51,7 +51,7 @@ if(!$con){
         echo '<a href="register.php" class="nav">Sign up</a>';
     }
     ?>
-    <a href="logout.php" class="nav">Log out</a>
+    <a onclick="confirmLogout()" class="nav">Log out</a>
 
   </div>
 
@@ -172,6 +172,11 @@ mysqli_close($con);
         preview.innerHTML = '';
       }
     }
+    function confirmLogout() {
+            if (confirm("Are you sure you want to log out?")) {
+                window.location.href = "logout.php";
+            }
+        }
   </script>
 </body>
 

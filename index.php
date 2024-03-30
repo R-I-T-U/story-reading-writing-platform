@@ -21,7 +21,7 @@
     session_start();
     if (isset($_SESSION['user_id'])) {
         echo '<a href="profile.php" class="nav">Profile</a>'; 
-        echo '<a href="logout.php" class="nav">Log out</a>';
+        echo '<a onclick="confirmLogout()" class="nav">Log out</a>';
     } else if(isset($_COOKIE['user_id']) && !isset($_SESSION['user_id'])) {
         echo '<a href="login.php" class="nav">Login</a>';    
     } else {
@@ -63,5 +63,12 @@
         <p>&copy; 2024 StorySphere.</p>
     </div>
 </footer>
+<script>
+    function confirmLogout() {
+            if (confirm("Are you sure you want to log out?")) {
+                window.location.href = "logout.php";
+            }
+        }
+</script>
 </body>
 </html>

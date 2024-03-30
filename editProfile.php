@@ -58,7 +58,7 @@ include 'connection.php';
             <button class="search-button">Search</button>
         </div>
         <a href="profile.php" class="nav">Profile</a>
-        <a href="logout.php" class="nav">Log out</a>
+        <a onclick="confirmLogout()" class="nav">Log out</a>
     </div>
 
     <!-- content*********************************** -->
@@ -114,6 +114,7 @@ include 'connection.php';
     </center>
 
     <script>
+        
         function previewImage(event) {
             var input = event.target;
             var preview = document.getElementById('image-preview');
@@ -129,6 +130,12 @@ include 'connection.php';
             } else {
                 // Clear the preview if no file was selected
                 preview.innerHTML = '';
+            }
+        }
+        
+        function confirmLogout() {
+            if (confirm("Are you sure you want to log out?")) {
+                window.location.href = "logout.php";
             }
         }
     </script>

@@ -36,7 +36,7 @@ include 'connection.php';
             <button class="search-button">Search</button>
         </div>
         <a href="profile.php" class="nav">Profile</a>
-        <a href="logout.php" class="nav">Log out</a>
+        <a onclick="confirmLogout()" class="nav">Log out</a>
 
     </div>
 
@@ -142,7 +142,13 @@ include 'connection.php';
         </center>
 
     </div>
-
+    <script>
+        function confirmLogout() {
+            if (confirm("Are you sure you want to log out?")) {
+                window.location.href = "logout.php";
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -21,6 +21,9 @@ body {
       'sidebar main main main';
     height: 100vh;
   }
+  .nav{
+    cursor: pointer;
+  }
   
   /* ---------- HEADER ---------- */
   .header {

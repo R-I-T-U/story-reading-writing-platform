@@ -26,12 +26,15 @@ body {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .nav:hover {
     background: #ddd;
     color: black;
 }
+
+
 
 /* ---------------------------- */
 
@@ -148,3 +151,4 @@ footer p{
 .copyright {
     border-top: 1px solid #fff;
 }
+

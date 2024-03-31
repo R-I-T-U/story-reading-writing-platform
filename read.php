@@ -15,7 +15,7 @@
 
         .container {
             background-color: rgba(255, 255, 255, 0.9);
-            
+
         }
 
         main {
@@ -26,11 +26,38 @@
             margin-bottom: 20px;
         }
 
-        .stories {
+        .storie {
             background-color: white;
             z-index: 1;
             margin-bottom: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
         }
+
+        .storie img {
+            height: 250px;
+            width: 250px;
+            display: block;
+            position: relative;
+            z-index: 1;
+
+        }
+
+        .stori {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .pp{
+            display: flex;
+            justify-content: flex-start;
+        }
+
     </style>
 </head>
 
@@ -45,21 +72,21 @@
         </div>
 
         <?php
-    session_start();
-    if (isset($_SESSION['user_id'])) {
-        echo '<a href="profile.php" class="nav">Profile</a>'; 
-        echo '<a onclick="confirmLogout()" class="nav">Log out</a>';
-    } else if(isset($_COOKIE['user_id']) && !isset($_SESSION['user_id'])) {
-        echo '<a href="login.php" class="nav">Login</a>';    
-    } else {
-        echo '<a href="register.php" class="nav">Sign up</a>';
-    }
-    ?>
+        session_start();
+        if (isset($_SESSION['user_id'])) {
+            echo '<a href="profile.php" class="nav">Profile</a>';
+            echo '<a onclick="confirmLogout()" class="nav">Log out</a>';
+        } else if (isset($_COOKIE['user_id']) && !isset($_SESSION['user_id'])) {
+            echo '<a href="login.php" class="nav">Login</a>';
+        } else {
+            echo '<a href="register.php" class="nav">Sign up</a>';
+        }
+        ?>
         <!-- <a href="" class="nav" >Log out</a> -->
     </div>
 
     <!-- content*********************************** -->
-    
+
 
     <div class="container">
 
@@ -68,16 +95,16 @@
             <h1>Read Stories</h1>
         </div>
         <?php
-        $con = mysqli_connect("localhost", "root","","users");
-        if(!$con){
-          die(mysqli_error($con));
+        $con = mysqli_connect("localhost", "root", "", "users");
+        if (!$con) {
+            die(mysqli_error($con));
         }
 
 
-        $query= "SELECT * FROM posts";
+        $query = "SELECT * FROM posts";
         $result = mysqli_query($con, $query);
-        while($row = mysqli_fetch_assoc($result)){
-            $storyTitle = $row['title']; 
+        while ($row = mysqli_fetch_assoc($result)) {
+            $storyTitle = $row['title'];
             $abstract = $row['abstract'];
             $genre = $row['genre'];
             $language = $row['language'];
@@ -85,33 +112,44 @@
             $updated = $row['updated_at'];
             $status = $row['status'];
             $id = $row['id'];
+            $user_id = $row['user_id'];
             $cvrImgPath = "img/ . {$row['cover_image']}";
-            
 
-        echo "
-        <div class='stories'>
 
+            $query1 = "SELECT * FROM info where id= $user_id";
+            $result1 = mysqli_query($con, $query1);
+            $row1 = mysqli_fetch_assoc($result1);
+            $profileImgPath = "profileImages/{$row1['avatar']}";
+
+            $uname = $row1['uname'];
+
+
+            echo "
+        <div class='storie'>
+        <div class='pp'>
+        <a href='$profileImgPath'><img src='{$profileImgPath}' alt='image' style='border-radius: 50%; width: 40px; height: 40px;'></a>
+        <p>&nbsp $uname</P>
+        </div>
+        <div class='stori'>
             <div class='left'>
-                <div class='ctitle'>".$storyTitle."</div>
-                <div class='cdescription'>".$abstract."</div>
+                <div class='ctitle'>" . $storyTitle . "</div>
+                <div class='cdescription'>" . $abstract . "</div>
                 <div class='seemore'><a href='seemore.php?id=$id'>See full story</a></div>
-                <div class='cformat'>Genre: ".$genre."</div>
-                <div class='cformat'>Status: ".$status."</div>
-                
-                <div class='cformat'>Created at: ".$created."</div>
-                    <div class='cformat'>Edited at: ".$updated."</div>
+                <div class='cformat'>Genre: " . $genre . "</div>
+                <div class='cformat'>Status: " . $status . "</div>
+                <div class='cformat'>Created at: " . $created . "</div>
+                    <div class='cformat'>Edited at: " . $updated . "</div>
                 <br><br>
             </div>
 
             <div class='right'>
                 <div class='cimage'><a href='$cvrImgPath' target='_blank'><img src='{$cvrImgPath}' alt='{$row['title']}' '></a></div>
             </div>
+        </div>
         </div>";
-
         }
-        if(mysqli_num_rows($result) === 0){
+        if (mysqli_num_rows($result) === 0) {
             echo "<div class='stories'><p style='height: 10rem; font-size: 2rem;'>Nothing to show</p></div>";
-           
         }
         ?>
 

@@ -6,6 +6,8 @@ width: 100%;
 
 }
 #profileImage {
+height: 250px;
+object-fit: cover;
 width: 200px;
 height: 200px;
 border-radius: 50%;
@@ -97,6 +99,7 @@ margin: 20px;
 margin-bottom: 20px;
 }
 
+
 .story-card {
 background-color: #fff;
 padding: 20px;
@@ -110,11 +113,11 @@ height: 250px;
 object-fit: cover;
 }
 #uname {
-    display: flex;
-    justify-content: center;
+display: flex;
+justify-content: center;
 }
 #editp{
-    margin-top: -30px;
-    margin-left: 25rem;
-    cursor: pointer;
+margin-top: -30px;
+margin-left: 25rem;
+cursor: pointer;
 }

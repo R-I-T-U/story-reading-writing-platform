@@ -1,29 +1,36 @@
 <?php
-include 'connection.php'; 
-        if(isset($_GET['id'])) {
-            $postId = $_GET['id'];
-            $_SESSION['postId'] = $postId;
+include 'connection.php';
+if (isset($_GET['id'])) {
+    $postId = $_GET['id'];
+    $_SESSION['postId'] = $postId;
 
-        if (isset($_SESSION['user_id'])) {
-      
-            $query = "SELECT * FROM posts WHERE id= $postId";
-            $result = mysqli_query($con, $query);
-    
+    if (isset($_SESSION['user_id'])) {
 
-                    if ($result) {
-                        $row = mysqli_fetch_assoc($result);
-                            $storyTitle = $row['title']; 
-                            $description = $row['description']; 
-                            $cvrImgPath = "img/ . {$row['cover_image']}";
-                            $status = $row['status'];
-                        } else {
-                        echo "Error fetching chapter: " . mysqli_error($con);
-                    }            
+        $query = "SELECT * FROM posts WHERE id= $postId";
+        $result = mysqli_query($con, $query);
+
+
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $storyTitle = $row['title'];
+            $description = $row['description'];
+            $cvrImgPath = "img/ . {$row['cover_image']}";
+            $status = $row['status'];
+            $user_id = $row['user_id'];
+
+            $query1 = "SELECT * FROM info where id= $user_id";
+            $result1 = mysqli_query($con, $query1);
+            $row1 = mysqli_fetch_assoc($result1);
+            $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/ppp.jpg';
+            $uname = $row1['uname'];
         } else {
-            echo "Please log in to view your chapters.";
+            echo "Error fetching chapter: " . mysqli_error($con);
         }
+    } else {
+        echo "Please log in to view your chapters.";
     }
-        ?>
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +43,7 @@ include 'connection.php';
     <link rel="stylesheet" href="style.css">
     <!-- <link rel="stylesheet" href="profile.css"> -->
 
-        
+
 </head>
 
 <body>
@@ -57,7 +64,6 @@ include 'connection.php';
             echo '<a href="login.php" class="nav">Login</a>';
         } else {
             echo '<a href="register.php" class="nav">Sign up</a>';
-            
         }
 
         ?>
@@ -69,49 +75,62 @@ include 'connection.php';
 
         <div class='story'>
             <div class='left'>
-                <div class='ctitle'><h2><?php echo $storyTitle; ?></h2></div>
-                <div class="content">
-                <div class='image'><?php echo "<a href='$cvrImgPath' ><img src='{$cvrImgPath}' alt='{$storyTitle }'></a>" ?></div>
-
-                <div class='cdescription'><?php echo $description; ?></div>
+                <div class='image'><?php echo "<a href='$cvrImgPath' ><img src='{$cvrImgPath}' alt='{$storyTitle}'></a>" ?></div>
+                <div class='pp'>
+                    <a href='<?php echo $profileImgPath; ?>'><img src='<?php echo $profileImgPath; ?>' alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'></a>
+                    <p>&nbsp <?php echo $uname; ?></p>
                 </div>
-                <br><br><hr width="60%">
+
+                <div class='ctitle'>
+                    <h2><?php echo $storyTitle; ?></h2>
+                </div>
+                <div class='cdescription'><?php echo $description; ?></div>
+                <br><br>
+                <hr width="60%">
             </div>
             <div class="last">
-            <form action="insertCmt.php" method="POST">
-                <input type="text" name="cmt" id="cmt">
-                <button type="submit" name='add'>Add comment</button>
-            </form>
-            <div class="cmt">
-                <?php
-                $pid = $_SESSION['postId'] ;
-                $query2 = "SELECT * FROM comment WHERE post_id = $pid";
-                $result2 = mysqli_query($con, $query2);
-                if($result2){
-                    while($row = mysqli_fetch_assoc($result2)){
-                        echo "<form method='POST' action='reportCmt.php'>
-                        <input type='number' value = ".$row['cmt_id']."  hidden name='cmt_id'>
-                        <p id='singleCmt'>" . $row['cmt'] . " 
-                        <button id='report' type='submit' name='report'> report</button>
-                        <br></p>
-                        </form>";
+                <form action="insertCmt.php" method="POST">
+                    <input type="text" name="cmt" id="cmt">
+                    <button type="submit" name='add'>Add comment</button>
+                </form>
+                <div class="cmt">
+                    <?php
+                    $pid = $_SESSION['postId'];
+                    $query2 = "SELECT * FROM comment WHERE post_id = $pid";
+                    $result2 = mysqli_query($con, $query2);
+                    if(mysqli_num_rows($result2)==0){
+                        echo "<div class='cpp' id='singleCmt'> <br><br>No comments available.</div>";
                     }
-                }else {
-                    echo "No comments available.";
-                }
-                ?>
+                    if ($result2) {
+                        while ($row = mysqli_fetch_assoc($result2)) {
+                            $user_id = $row['user_id'];
+                            $query1 = "SELECT * FROM info where id= $user_id";
+                            $result1 = mysqli_query($con, $query1);
+                            $row1 = mysqli_fetch_assoc($result1);
+                            $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/ppp.jpg';
+                            $uname = $row1['uname'];
+
+                            echo "<form method='POST' action='reportCmt.php'>
+                        <input type='number' value = " . $row['cmt_id'] . "  hidden name='cmt_id'>
+                        <div class='cpp' id='singleCmt'>
+                        <a href='$profileImgPath'><img src='$profileImgPath' alt='image' style='border-radius: 50%; width: 30px; height: 30px; object-fit: cover;'></a><p>&nbsp $uname
+                        commented '" . $row['cmt'] . "'.
+                        <button id='report' type='submit' name='report'> report</button>
+                        <br></p></div>
+                        </form>";
+                        }
+                    } 
+                    ?>
+                </div>
+
             </div>
+            <center>
+                <p id="end">The end!!</p>
+            </center>
 
         </div>
-        <center>
-            <p id="end">The end!!</p>
-        </center>
 
-        </div>
 
-        </form>
-
-        
     </div>
     <script>
         function confirmLogout() {
@@ -123,6 +142,3 @@ include 'connection.php';
 </body>
 
 </html>
-
-
-

@@ -26,6 +26,9 @@ if(!$con){
   <link rel="shortcut icon" href="images/ssLogo.jpg" type="image/x-icon">
   <link rel="stylesheet" href="style.css">
   <style>
+    body{
+      background-image: url(images/bg.png);
+    }
     .story-info {
       background-color: rgba(255, 255, 255, 0.9);
     }

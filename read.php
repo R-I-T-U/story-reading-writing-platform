@@ -119,7 +119,7 @@
             $query1 = "SELECT * FROM info where id= $user_id";
             $result1 = mysqli_query($con, $query1);
             $row1 = mysqli_fetch_assoc($result1);
-            $profileImgPath = "profileImages/{$row1['avatar']}";
+            $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/ppp.jpg';
 
             $uname = $row1['uname'];
 
@@ -127,8 +127,8 @@
             echo "
         <div class='storie'>
         <div class='pp'>
-        <a href='$profileImgPath'><img src='{$profileImgPath}' alt='image' style='border-radius: 50%; width: 40px; height: 40px;'></a>
-        <p>&nbsp $uname</P>
+        <a href='$profileImgPath'><img src='{$profileImgPath}' alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'></a>
+        <p>&nbsp $uname shared a story.</P>
         </div>
         <div class='stori'>
             <div class='left'>

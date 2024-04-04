@@ -110,7 +110,18 @@ if (isset($_GET['id'])) {
                             $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/ppp.png';
                             $uname = $row1['uname'];
 
-                            echo "<form method='POST' action='reportCmt.php'>
+                            if($user_id === $userId){
+                                echo "<form method='POST' action='OwnCmt.php'>
+                        <div class='cpp' id='singleCmt'>
+                        <a href='$profileImgPath'><img src='$profileImgPath' alt='image' style='border-radius: 50%; width: 30px; height: 30px; object-fit: cover;'></a><p>&nbsp $uname
+                        commented '" . $row['cmt'] . "'.
+                        <input type = 'number' value = ".$row['cmt_id']." name = 'cmtId' hidden>
+                        <button id='report' type='submit' name='delete'> delete</button>
+                        <br></p></div>
+                        </form>";
+
+                            } else{
+                                echo "<form method='POST' action='reportCmt.php'>
                         <input type='number' value = " . $row['cmt_id'] . "  hidden name='cmt_id'>
                         <div class='cpp' id='singleCmt'>
                         <a href='$profileImgPath'><img src='$profileImgPath' alt='image' style='border-radius: 50%; width: 30px; height: 30px; object-fit: cover;'></a><p>&nbsp $uname
@@ -118,6 +129,9 @@ if (isset($_GET['id'])) {
                         <button id='report' type='submit' name='report'> report</button>
                         <br></p></div>
                         </form>";
+                            }
+
+                            
                         }
                     } 
                     ?>
@@ -129,7 +143,6 @@ if (isset($_GET['id'])) {
             </center>
 
         </div>
-
 
     </div>
     <script>

@@ -13,7 +13,7 @@
         .navbar {
             overflow: hidden;
         }
-
+        
         .container {
             background-color: rgba(255, 255, 255, 0.9);
         }
@@ -21,6 +21,7 @@
 </head>
 
 <body>
+
     <!-- navbar*********************************** -->
     <div class="navbar">
         <a href="read.php" class="nav">Read</a>
@@ -30,6 +31,7 @@
             <button class="search-button">Search</button>
         </div>
 
+        
         <?php
         session_start();
         if (isset($_SESSION['user_id'])) {
@@ -105,7 +107,7 @@
             $query1 = "SELECT * FROM info where id= $user_id";
             $result1 = mysqli_query($con, $query1);
             $row1 = mysqli_fetch_assoc($result1);
-            $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/ppp.jpg';
+            $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/ppp.png';
 
             $uname = $row1['uname'];
 

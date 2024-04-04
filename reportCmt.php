@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['report'])) {
 
     $cmtId = $_POST['cmt_id'];
     $userId = $_SESSION['user_id'];
-    $pid = $_SESSION['postId'];
+    $id = $_SESSION['postId'];
 
     $query1 = "SELECT * FROM comment WHERE cmt_id = $cmtId";
     $result1 = mysqli_query($con, $query1);
@@ -13,14 +13,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['report'])) {
         $row = mysqli_fetch_assoc($result1);
         $cmt = $row['cmt'];
 
-        $que = "INSERT INTO noti (cmt_id, cmt, postId, userId) VALUES ('$cmtId', '$cmt', '$pid', '$userId')";
+        $que = "INSERT INTO noti (cmt_id, cmt, postId, userId) VALUES ('$cmtId', '$cmt', '$id', '$userId')";
         $res = mysqli_query($con, $que);
 
         if (!$res) {
             echo "Error: " . mysqli_error($con);
         } else {
             echo "<script>alert('Comment reported succesfully!'); 
-            window.location='viewChap.php';</script>";
+            window.location='seemore.php?id=$id';</script>";
         }
     } else {
         echo "Error: Comment not found.";

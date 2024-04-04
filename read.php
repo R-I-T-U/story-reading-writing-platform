@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StorySphere - Read the books you like !!</title>
     <link rel="shortcut icon" href="images/ssLogo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="read.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="profile.css">
     <style>
@@ -15,49 +16,7 @@
 
         .container {
             background-color: rgba(255, 255, 255, 0.9);
-
         }
-
-        main {
-            margin: 20px;
-        }
-
-        .filter-container {
-            margin-bottom: 20px;
-        }
-
-        .storie {
-            background-color: white;
-            z-index: 1;
-            margin-bottom: 20px;
-            margin-left: 20px;
-            margin-right: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-
-        }
-
-        .storie img {
-            height: 250px;
-            width: 250px;
-            display: block;
-            position: relative;
-            z-index: 1;
-
-        }
-
-        .stori {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .pp{
-            display: flex;
-            justify-content: flex-start;
-        }
-
     </style>
 </head>
 
@@ -82,7 +41,6 @@
             echo '<a href="register.php" class="nav">Sign up</a>';
         }
         ?>
-        <!-- <a href="" class="nav" >Log out</a> -->
     </div>
 
     <!-- content*********************************** -->
@@ -94,27 +52,55 @@
             <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="70px"></a>
             <h1>Read Stories</h1>
         </div>
+
+        <div class="filter">
+            <h2>Filter by Genre:</h2>
+            <div class="genre">
+                <?php
+                $con = mysqli_connect("localhost", "root", "", "users");
+                if (!$con) {
+                    die(mysqli_error($con));
+                }
+                $query = "SELECT * FROM genre";
+                $result = mysqli_query($con, $query);
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<div>
+                            <input type='checkbox' id='" . $row['g_name'] . "' name='genre' value='" . $row['g_name'] . "' onclick='filterPosts()'>
+                            <label for='" . $row['g_name'] . "'>" . $row['g_name'] . "</label>
+                        </div>";
+                }
+                ?>
+            </div>
+            <h2>Filter by Status:</h2>
+            <div class="genre">
+
+                <div>
+                    <input type="checkbox" id="pending" name="status" value="pending" onclick="filterStatus()">
+                    <label for="pending">Pending</label>
+                </div>
+
+                <div>
+                    <input type="checkbox" id="completed" name="status" value="completed" onclick="filterStatus()">
+                    <label for="completed">Completed</label>
+                </div>
+
+            </div>
+        </div>
+
         <?php
-        $con = mysqli_connect("localhost", "root", "", "users");
-        if (!$con) {
-            die(mysqli_error($con));
-        }
-
-
         $query = "SELECT * FROM posts";
         $result = mysqli_query($con, $query);
         while ($row = mysqli_fetch_assoc($result)) {
             $storyTitle = $row['title'];
             $abstract = $row['abstract'];
             $genre = $row['genre'];
-            $language = $row['language'];
+            // $language = $row['language'];
             $created = $row['created_at'];
             $updated = $row['updated_at'];
             $status = $row['status'];
             $id = $row['id'];
             $user_id = $row['user_id'];
             $cvrImgPath = "img/ . {$row['cover_image']}";
-
 
             $query1 = "SELECT * FROM info where id= $user_id";
             $result1 = mysqli_query($con, $query1);
@@ -125,31 +111,30 @@
 
 
             echo "
-        <div class='storie'>
-        <div class='pp'>
-        <a href='$profileImgPath'><img src='{$profileImgPath}' alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'></a>
-        <p>&nbsp $uname shared a story.</P>
-        </div>
-        <div class='stori'>
-            <div class='left'>
-                <div class='ctitle'>" . $storyTitle . "</div>
-                <div class='cdescription'>" . $abstract . "</div>
-                <div class='seemore'><a href='seemore.php?id=$id'>See full story</a></div>
-                <div class='cformat'>Genre: " . $genre . "</div>
-                <div class='cformat'>Status: " . $status . "</div>
-                <div class='cformat'>Created at: " . $created . "</div>
-                    <div class='cformat'>Edited at: " . $updated . "</div>
-                <br><br>
+            <div class='storie' id='post_$id' style='display:block;'>
+            <div class='pp'>
+                <a href='$profileImgPath'><img src='{$profileImgPath}' alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'></a>
+                <p>&nbsp $uname shared a story.</p>
             </div>
-
-            <div class='right'>
-                <div class='cimage'><a href='$cvrImgPath' target='_blank'><img src='{$cvrImgPath}' alt='{$row['title']}' '></a></div>
+            <div class='stori'>
+                <div class='left'>
+                    <div class='ctitle'>$storyTitle</div>
+                    <div class='cdescription'>$abstract</div>
+                    <div class='seemore'><a href='seemore.php?id=$id'>See full story</a></div>
+                    <div class='cgenre'>Genre: $genre</div>
+                    <div class='cstatus'>Status: $status</div>
+                    <div class='ccreate'>Created at: $created</div>
+                    <div class='cupdate'>Edited at: $updated</div>
+                    <br><br>
+                </div>
+                <div class='right'>
+                    <div class='cimage'><img src='{$cvrImgPath}' alt='$storyTitle'></div>
+                </div>
             </div>
-        </div>
         </div>";
         }
         if (mysqli_num_rows($result) === 0) {
-            echo "<div class='stories'><p style='height: 10rem; font-size: 2rem;'>Nothing to show</p></div>";
+            echo "<div class='storie'><p style='height: 10rem; font-size: 2rem;'>Nothing to show</p></div>";
         }
         ?>
 
@@ -157,14 +142,57 @@
             <p id="end">The end!!</p>
         </center>
 
-    </div>
-    <script>
-        function confirmLogout() {
-            if (confirm("Are you sure you want to log out?")) {
-                window.location.href = "logout.php";
+        <script>
+            function confirmLogout() {
+                if (confirm("Are you sure you want to log out?")) {
+                    window.location.href = "logout.php";
+                }
             }
-        }
-    </script>
+
+            function filterPosts() {
+                var checkboxes = document.getElementsByName('genre');
+                var selectedGenres = [];
+                for (var i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].checked) {
+                        selectedGenres.push(checkboxes[i].value);
+                    }
+                }
+
+                var stories = document.getElementsByClassName('storie');
+                var found = false;
+                for (var i = 0; i < stories.length; i++) {
+                    var genre = stories[i].querySelector('.cgenre').textContent.split(': ')[1].trim();
+                    if (selectedGenres.length === 0 || selectedGenres.includes(genre)) {
+                        stories[i].style.display = 'block';
+                        found = true;
+                    } else {
+                        stories[i].style.display = 'none';
+                    }
+                }
+            }
+
+            function filterStatus() {
+                var checkboxes = document.getElementsByName('status');
+                var selectedStatus = [];
+                for (var i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].checked) {
+                        selectedStatus.push(checkboxes[i].value);
+                    }
+                }
+
+                var stories = document.getElementsByClassName('storie');
+                var found = false;
+                for (var i = 0; i < stories.length; i++) {
+                    var status = stories[i].querySelector('.cstatus').textContent.split(': ')[1].trim();
+                    if (selectedStatus.length === 0 || selectedStatus.includes(status)) {
+                        stories[i].style.display = 'block';
+                        found = true;
+                    } else {
+                        stories[i].style.display = 'none';
+                    }
+                }
+            }
+        </script>
 </body>
 
 </html>

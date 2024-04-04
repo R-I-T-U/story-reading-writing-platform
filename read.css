@@ -5,14 +5,164 @@ main {
   .filter-container {
     margin-bottom: 20px;
   }
-
-  .story-card {
-    background-color: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-  }
+.pp{
+  display: flex;
+  justify-content: flex-start;
+}
   
+  .storie{
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    }
+
+    .stori{
+      display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+   
+    
+    .ctitle{
+    font-size: 27px;
+    font-family:cursive;
+    font-weight: bold;
+    
+    }
+    
+    .storie img{
+    height: 250px;
+    width: 250px;
+    
+    display: block;
+    position: relative;
+    z-index: 1;
+    
+    }
+    
+    .cformat{
+    font-family: cursive;
+    
+    }
+    
+    .cdescription{
+    margin-right: 20px;
+    text-align: justify;
+    }
+    
+    .loginHead{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+    .loginHead h1 {
+    margin-left: 20px;
+    
+    }
+    .right img{
+      height: 250px;
+      object-fit: cover;
+      }
+      #uname {
+      display: flex;
+      justify-content: center;
+      }    
+
+
+
+
+
+
+
+  .filter {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.filter h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.genre {
+    display: flex; /* Use flexbox to align checkboxes horizontally */
+    flex-wrap: wrap; /* Allow wrapping of checkboxes */
+}
+
+.genre div {
+    margin-right: 10px; /* Add spacing between checkboxes */
+    margin-bottom: 10px; /* Add spacing between rows */
+}
+
+.filter input[type="checkbox"] {
+    display: none;
+}
+
+.filter label {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #eaeaea;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filter label:hover {
+    background-color: #d4d4d4;
+}
+
+/* Style for checked checkboxes */
+.filter input[type="checkbox"]:checked + label {
+    background-color: #66acf7;
+    color: white;
+}
+
+/* Style for checked checkboxes on hover */
+.filter input[type="checkbox"]:checked + label:hover {
+    background-color: #66acf7;
+}
+
+  .status {
+    display: flex; /* Use flexbox to align checkboxes horizontally */
+    flex-wrap: wrap; /* Allow wrapping of checkboxes */
+}
+
+.status div {
+    margin-right: 10px; /* Add spacing between checkboxes */
+    margin-bottom: 10px; /* Add spacing between rows */
+}
+
+.status input[type="checkbox"] {
+    display: none;
+}
+
+.status label {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #eaeaea;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.status label:hover {
+    background-color: #d4d4d4;
+}
+
+/* Style for checked checkboxes */
+.status input[type="checkbox"]:checked + label {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Style for checked checkboxes on hover */
+.status input[type="checkbox"]:checked + label:hover {
+    background-color: #0056b3;
+}
+
   

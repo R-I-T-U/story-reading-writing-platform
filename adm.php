@@ -65,12 +65,12 @@ if (!$con) {
         <span class="material-icons-outlined">category</span> Categories
       </a>
     </li>
-    <!-- <li class="sidebar-list-item">
+    <li class="sidebar-list-item">
       <a href="#">
         <span class="material-icons-outlined">groups</span> Authors
       </a>
     </li>
-    <li class="sidebar-list-item">
+    <!-- <li class="sidebar-list-item">
       <a href="#">
         <span class="material-icons-outlined">settings</span> Settings
       </a>
@@ -79,7 +79,7 @@ if (!$con) {
 </aside>
     <main>
       <div>
-        <h2>DASHBOARD</h2>
+        <h2>DASHBOARD lore</h2>
       </div>
       <!-- here goes inner content -->
       <div class="admin-panel">
@@ -98,17 +98,21 @@ if (!$con) {
           echo "<br><br>Reported comments = ".$count;
         }
         ?>
-        <center><h3>Users Data</h3></center>
+        <center><h3>Users Data Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis accusantium quam in molestiae perferendis. Nobis ullam fugit consequatur quia quam blanditiis, nulla doloremque iure, architecto debitis nihil error optio exercitationem?</h3></center>
         <table border='1'>
           <tr>
-            <th>id</th>
+            <th>S.N.</th>
+            <th>Username</th>
             <th>Email</th>
           </tr>
             
               <?php
+              $count = 1;
               while($row = mysqli_fetch_assoc($result1)){
+                
                 echo "<tr>
-                <td style='height:40px'>".$row['id']."</td>
+                <td style='height:40px'>".$count++."</td>
+                <td style='height:40px'>".$row['uname']."</td>
                 <td style='height:40px'>".$row['email']."</td>
                 </tr>";
               }

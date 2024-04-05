@@ -156,13 +156,13 @@ main {
 
 /* Style for checked checkboxes */
 .status input[type="checkbox"]:checked + label {
-    background-color: #007bff;
+    background-color: #66acf7;
     color: white;
 }
 
 /* Style for checked checkboxes on hover */
 .status input[type="checkbox"]:checked + label:hover {
-    background-color: #0056b3;
+    background-color: #66acf7;
 }
 
   

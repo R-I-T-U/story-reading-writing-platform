@@ -79,13 +79,19 @@ if (isset($_GET['id'])) {
                 <div class='pp'>
                     <a href='<?php echo $profileImgPath; ?>'><img src='<?php echo $profileImgPath; ?>' alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'></a>
                     <p>&nbsp <?php echo $uname; ?></p>
+                    
                 </div>
-
+                <?php
+                if(!($user_id === $userId)){
+                echo "<p class='irrelevant'>Irrelevant or Inappropriate story? <a href='reportStory.php'> report it </a></p>";
+                }
+                ?>
                 <div class='ctitle'>
                     <h2><?php echo $storyTitle; ?></h2>
                 </div>
                 <div class='cdescription'><?php echo $description; ?></div>
                 <br><br>
+                
                 <hr width="60%">
             </div>
             <div class="last">

@@ -36,10 +36,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['done'])) {
     $newImage = $_FILES['coverImage']['name'];
     $newImage_temp_name = $_FILES['coverImage']['tmp_name'];
     $newImage_Folder = "img/ . $newImage";
+    $state = 0;
     // $DestiPath = "img/ . $newImage";
 
 
-    $query = "UPDATE posts SET cover_image='$newImage',title='$storyTitle',abstract='$abstract', description='$description',genre='$genre',language='$language',status='$status', updated_at = NOW() WHERE user_id=$userId AND id=$postId";
+    $query = "UPDATE posts SET cover_image='$newImage',title='$storyTitle',abstract='$abstract', description='$description',genre='$genre',language='$language',status='$status', updated_at = NOW(), state = $state WHERE user_id=$userId AND id=$postId";
 
   $result = mysqli_query($con, $query);
   if (!$result) {
@@ -51,7 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['done'])) {
   }
   
   } else{
-    $query = "UPDATE posts SET title='$storyTitle',abstract='$abstract', description='$description',genre='$genre',language='$language',status='$status', updated_at = NOW() WHERE user_id=$userId AND id=$postId";
+    $state = 0;
+    $query = "UPDATE posts SET title='$storyTitle',abstract='$abstract', description='$description',genre='$genre',language='$language',status='$status', updated_at = NOW(), state = $state WHERE user_id=$userId AND id=$postId";
 
   $result = mysqli_query($con, $query);
   if (!$result) {

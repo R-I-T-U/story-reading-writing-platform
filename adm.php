@@ -11,7 +11,7 @@ if (!$con) {
   <head>
   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Admin| Dashboard</title>
 
     <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -21,6 +21,7 @@ if (!$con) {
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="ad.css">
+    <link rel="stylesheet" href="profile.css">
   </head>
   <body>
   <div class="grid-container">
@@ -66,8 +67,8 @@ if (!$con) {
       </a>
     </li>
     <li class="sidebar-list-item">
-      <a href="#">
-        <span class="material-icons-outlined">groups</span> Authors
+      <a href="adpostReq.php">
+        <span class="material-icons-outlined">groups</span> Post Request
       </a>
     </li>
     <!-- <li class="sidebar-list-item">
@@ -104,7 +105,7 @@ if (!$con) {
             <th>ID</th>
             <th>Username</th>
             <th>Email</th>
-            <th>Action</th>
+            <!-- <th>Action</th> -->
           </tr>
             
               <?php
@@ -115,7 +116,7 @@ if (!$con) {
                 <td style='height:40px'>".$row['id']."</td>
                 <td style='height:40px'>".$row['uname']."</td>
                 <td style='height:40px'>".$row['email']."</td>
-                <td style='height:40px'><button>Restrict</button></td>
+               
                 </tr>";
               }
               ?>

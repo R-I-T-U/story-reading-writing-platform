@@ -84,34 +84,39 @@ include 'connection.php';
                 $created = $row['created_at'];
                 $updated = $row['updated_at'];
                 $status = $row['status'];
+                $state = $row['state'];
                 $id = $row['id'];
                 $cvrImgPath = "img/ . {$row['cover_image']}";
 
 
-                echo "
+            echo "
             <div class='stories'>
-
-                <div class='left'>
+            <div class='left'>
                     <div class='ctitle'>" . $storyTitle . "</div>
-                    <div class='cdescription'>" . $abstract . "
-                    </div>
+                    <div class='cdescription'>" . $abstract . "</div>
                     <div class='seemore'><a href='seemore.php?id=$id'>See full story</a></div>
                     <div class='cformat'>Genre: " . $genre . "</div>
                     <div class='cformat'>Status: " . $status . "</div>
                     <div class='cformat'>Created at: " . $created . "</div>
-                    <div class='cformat'>Edited at: " . $updated . "</div>
+                    <div class='cformat'>Edited at: " . $updated . "</div>";
+                if ($state == 0) {
+                    echo "<div class='state' style='color:grey;'>Submission state: Being reviewed</div>";
+                } else if ($state == 1) {
+                    echo "<div class='state' style='color:green;'>Submission state: Approved!</div>";
+                } else {
+                    echo "<div class='state' style='color:red;'>Submission state: Rejected!</div>";
+                }
+                echo "
                     <br>
-                    <div style='display: flex;'>
+                <div style='display: flex;'>
                <a href='edit.php?id=$id '>
-                   <div><button style='margin-right: 20px;'>Edit</button>
-                   </div>
+                   <div><button style='margin-right: 20px;'>Edit</button></div>
                </a> <br>
                <a href='delete.php?id=$id '>
-                   <div><button style='margin-right: 20px;'>Delete</button>
-                   </div>
+                   <div><button style='margin-right: 20px;'>Delete</button></div>
                </a>
-           </div>
-           </div>
+               </div>
+            </div>
 
                 <div class='right'>
                     <div class='cimage'>

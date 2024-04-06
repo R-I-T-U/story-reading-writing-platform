@@ -11,7 +11,7 @@ if (!$con) {
   <head>
   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Story Category</title>
+    <title>Admin| Story Category</title>
 
     <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -21,6 +21,7 @@ if (!$con) {
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="ad.css">
+    <link rel="stylesheet" href="profile.css">
   </head>
   <body>
   <div class="grid-container">
@@ -64,16 +65,12 @@ if (!$con) {
         <span class="material-icons-outlined">category</span> Categories
       </a>
     </li>
-    <!-- <li class="sidebar-list-item">
-      <a href="#">
-        <span class="material-icons-outlined">groups</span> Authors
+    <li class="sidebar-list-item">
+      <a href="adpostReq.php">
+        <span class="material-icons-outlined">groups</span> Post Request
       </a>
     </li>
-    <li class="sidebar-list-item">
-      <a href="#">
-        <span class="material-icons-outlined">settings</span> Settings
-      </a>
-    </li> -->
+    
   </ul>
 </aside>
     <main class="main-container">
@@ -86,10 +83,11 @@ if (!$con) {
        <div class="category-form">
             <h3>Add Category</h3>
             <form action="add_category.php" method="POST">
-                <label for="category_name">Category Name:</label>
+                <label for="category_name">Category Name: </label>
                 <input type="text" id="category_name" name="category_name" required>
                 <button type="submit" name="submit">Add Category</button>
             </form>
+            
         </div>
         <!-- End Category Form -->
 

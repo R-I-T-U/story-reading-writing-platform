@@ -173,3 +173,7 @@ body {
     text-decoration: none;
     color: #9e9ea4;
   }
+  .pp {
+    display: flex;
+    justify-content: flex-start;
+}

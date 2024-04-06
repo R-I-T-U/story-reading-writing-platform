@@ -131,6 +131,7 @@ $genre = $_POST['genre'];
 $language = $_POST['language'];
 $description = $_POST['description'];
 $status = $_POST['status'];
+$state = 0;
 
 //  $query1 = "SELECT * FROM info WHERE id= $userId";
 //  $result1 = mysqli_query($con, $query1);
@@ -139,7 +140,7 @@ $status = $_POST['status'];
 //   $user_id= $row['id'];
 
 
-$query = "INSERT INTO posts (cover_image, title, abstract, genre, language, description, status, user_id, created_at, updated_at) VALUES ('$coverImage','$storyTitle' , '$abstract', '$genre', '$language', '$description', '$status', $userId, NOW(), NOW())";
+$query = "INSERT INTO posts (cover_image, title, abstract, genre, language, description, status, user_id, created_at, updated_at, state) VALUES ('$coverImage','$storyTitle' , '$abstract', '$genre', '$language', '$description', '$status', $userId, NOW(), NOW(), $state)";
 
 $result = mysqli_query($con, $query);
 if(!$result){

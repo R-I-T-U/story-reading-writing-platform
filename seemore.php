@@ -81,11 +81,7 @@ if (isset($_GET['id'])) {
                     <p>&nbsp <?php echo $uname; ?></p>
                     
                 </div>
-                <?php
-                if(!($user_id === $userId)){
-                echo "<p class='irrelevant'>Irrelevant or Inappropriate story? <a href='reportStory.php'> report it </a></p>";
-                }
-                ?>
+                
                 <div class='ctitle'>
                     <h2><?php echo $storyTitle; ?></h2>
                 </div>

@@ -63,9 +63,9 @@
                 if (!$con) {
                     die(mysqli_error($con));
                 }
-                $query = "SELECT * FROM genre";
-                $result = mysqli_query($con, $query);
-                while ($row = mysqli_fetch_assoc($result)) {
+                $query4 = "SELECT * FROM genre";
+                $result4 = mysqli_query($con, $query4);
+                while ($row = mysqli_fetch_assoc($result4)) {
                     echo "<div>
                             <input type='checkbox' id='" . $row['g_name'] . "' name='genre' value='" . $row['g_name'] . "' onclick='filterPosts()'>
                             <label for='" . $row['g_name'] . "'>" . $row['g_name'] . "</label>
@@ -90,8 +90,9 @@
         </div>
 
         <?php
-        $query = "SELECT * FROM posts";
+        $query = "SELECT * FROM posts WHERE state = 1";
         $result = mysqli_query($con, $query);
+        if(mysqli_num_rows($result)>0){
         while ($row = mysqli_fetch_assoc($result)) {
             $storyTitle = $row['title'];
             $abstract = $row['abstract'];
@@ -102,6 +103,7 @@
             $status = $row['status'];
             $id = $row['id'];
             $user_id = $row['user_id'];
+           
             $cvrImgPath = "img/ . {$row['cover_image']}";
 
             $query1 = "SELECT * FROM info where id= $user_id";
@@ -110,7 +112,8 @@
             $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/ppp.png';
 
             $uname = $row1['uname'];
-
+            
+           
 
             echo "
             <div class='storie' id='post_$id' style='display:block;'>
@@ -135,9 +138,10 @@
             </div>
         </div>";
         }
-        if (mysqli_num_rows($result) === 0) {
+        } else {
             echo "<div class='storie'><p style='height: 10rem; font-size: 2rem;'>Nothing to show</p></div>";
         }
+        
         ?>
 
         <center>

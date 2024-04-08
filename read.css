@@ -75,10 +75,12 @@ main {
 #uname {
     display: flex;
     justify-content: center;
+
 }
 
-
-
+.noUnderline{
+    text-decoration: none;
+}
 
 
 

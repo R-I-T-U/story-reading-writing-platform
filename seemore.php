@@ -77,8 +77,8 @@ if (isset($_GET['id'])) {
             <div class='left'>
                 <div class='image'><?php echo "<a href='$cvrImgPath' ><img src='{$cvrImgPath}' alt='{$storyTitle}'></a>" ?></div>
                 <div class='pp'>
-                    <a href='<?php echo $profileImgPath; ?>'><img src='<?php echo $profileImgPath; ?>' alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'></a>
-                    <p>&nbsp <?php echo $uname; ?></p>
+                    <a href='othersProfile.php?user_id=<?php echo $user_id ?>'><img src='<?php echo $profileImgPath; ?>' alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'></a>
+                    <p>&nbsp <a href='othersProfile.php?user_id=<?php echo $user_id ?>' class="noUnderline"><?php echo $uname; ?></a></p>
                     
                 </div>
                 
@@ -115,7 +115,7 @@ if (isset($_GET['id'])) {
                             if($user_id === $userId){
                                 echo "<form method='POST' action='OwnCmt.php'>
                         <div class='cpp' id='singleCmt'>
-                        <a href='$profileImgPath'><img src='$profileImgPath' alt='image' style='border-radius: 50%; width: 30px; height: 30px; object-fit: cover;'></a><p>&nbsp $uname
+                        <a href='othersProfile.php?user_id=$user_id'><img src='$profileImgPath' alt='image' style='border-radius: 50%; width: 30px; height: 30px; object-fit: cover;'></a><p>&nbsp <a href='othersProfile.php?user_id=$user_id' class='noUnderline'>$uname</a>
                         commented '" . $row['cmt'] . "'.
                         <input type = 'number' value = ".$row['cmt_id']." name = 'cmtId' hidden>
                         <button id='report' type='submit' name='delete'> delete</button>
@@ -126,7 +126,7 @@ if (isset($_GET['id'])) {
                                 echo "<form method='POST' action='reportCmt.php'>
                         <input type='number' value = " . $row['cmt_id'] . "  hidden name='cmt_id'>
                         <div class='cpp' id='singleCmt'>
-                        <a href='$profileImgPath'><img src='$profileImgPath' alt='image' style='border-radius: 50%; width: 30px; height: 30px; object-fit: cover;'></a><p>&nbsp $uname
+                        <a href='othersProfile.php?user_id=$user_id'><img src='$profileImgPath' alt='image' style='border-radius: 50%; width: 30px; height: 30px; object-fit: cover;'></a><p>&nbsp <a href='othersProfile.php?user_id=$user_id' class='noUnderline'>$uname</a>
                         commented '" . $row['cmt'] . "'.
                         <button id='report' type='submit' name='report'> report</button>
                         <br></p></div>

@@ -118,8 +118,8 @@
             echo "
             <div class='storie' id='post_$id' style='display:block;'>
             <div class='pp'>
-                <a href='$profileImgPath'><img src='{$profileImgPath}' alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'></a>
-                <p>&nbsp $uname shared a story.</p>
+                <a href='othersProfile.php?user_id=$user_id'><img src='{$profileImgPath}' alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'></a>
+                <p>&nbsp <a href='othersProfile.php?user_id=$user_id' class='noUnderline'>$uname</a> shared a story.</p>
             </div>
             <div class='stori'>
                 <div class='left'>

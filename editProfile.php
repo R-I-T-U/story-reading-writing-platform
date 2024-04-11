@@ -1,14 +1,14 @@
 <?php
 include 'connection.php';
 
-    $query = "SELECT * FROM info WHERE id=$userId";
-    $result = mysqli_query($con, $query);
-    $row = mysqli_fetch_assoc($result);
+$query = "SELECT * FROM info WHERE id=$userId";
+$result = mysqli_query($con, $query);
+$row = mysqli_fetch_assoc($result);
 
-    $uname = $row['uname'];
-    $email = $row['email'];
-    $gender = $row['gender'];
-    $bio = $row['bio'];
+$uname = $row['uname'];
+$email = $row['email'];
+$gender = $row['gender'];
+$bio = $row['bio'];
 
 ?>
 
@@ -68,26 +68,29 @@ include 'connection.php';
                 <a href="index.php"><img src="images/ssLogo.jpg" alt="logo" height="50px"></a>
                 <h1>Edit your profile</h1>
             </div>
-            
-            <form method="POST" action="confromProfile.php" enctype="multipart/form-data">
-                <label for="image">Add Profile Image: <input type="file" name="profileImage" id="image" accept="image/*" onchange="previewImage(event)" ></label>
+
+            <form method="POST" action="editProfile.php" enctype="multipart/form-data">
+                <label for="image">Add Profile Image: <input type="file" name="profileImage" id="image" accept="image/*" onchange="previewImage(event)"></label>
                 <div id="image-preview"></div><br><br>
                 <div>
                     <label for="uname">Username:</label>
                     <input type="text" id="uname" class="form-control" name="uname" value="<?php echo $uname; ?>" required>
-                </div> <br>
+                </div>
+
+                <br>
                 <div>
                     <label for="email">Email: </label>
                     <input type="email" id="email" class="form-control" name="email" value="<?php echo $email; ?>">
-                </div> <br>
+                </div>
+                <br>
                 <div>
                     <label for="gender">Gender: </label>
                     <?php
-                    if($gender == 'male'){
+                    if ($gender == 'male') {
                         echo "<input type='radio' name='gender' value='male' checked> Male
                         <input type='radio' name='gender' value='female'> Female 
                         <input type='radio' name='gender' value='Not specified'> Rather not say";
-                    } else if($gender == 'female'){
+                    } else if ($gender == 'female') {
                         echo "<input type='radio' name='gender' value='male'> Male
                         <input type='radio' name='gender' value='female' checked> Female 
                         <input type='radio' name='gender' value='Not specified'> Rather not say ";
@@ -96,7 +99,7 @@ include 'connection.php';
                         <input type='radio' name='gender' value='female'> Female 
                         <input type='radio' name='gender' value='Not specified' checked> Rather not say ";
                     }
-                    
+
                     ?>
                 </div> <br>
                 <div>
@@ -109,12 +112,77 @@ include 'connection.php';
                 </div>
 
             </form>
+            <?php
 
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+                $query4 = "SELECT * FROM info WHERE id=$userId";
+                $result4 = mysqli_query($con, $query4);
+                $row = mysqli_fetch_assoc($result4);
+
+                $oldImage = $row['avatar'];
+                $oldImageSrc = "profileImages/" . $oldImage;
+
+                $uname = $_POST['uname'];
+                $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+                $avatar = $_FILES['profileImage']['name'];
+
+                $bio = $_POST['bio'];
+                $gender = $_POST['gender'];
+
+                $query1 = "SELECT * FROM info WHERE email = '$email'";
+                $result1 = mysqli_query($con, $query1);
+
+                $query2 = "SELECT * FROM info WHERE uname = '$uname'";
+                $result2 = mysqli_query($con, $query2);
+                if ($result1 && $result2) {
+                    $num = mysqli_num_rows($result1);
+                    $unum = mysqli_num_rows($result2);
+                    if ($num > 1) {
+                        echo '<p style="color: red;">User already exists! </p>';
+                    } else {
+                        if (empty($email) || empty($uname)) {
+                            echo '<p style="color: red;">Email and Name are required fields</p>';
+                        } else if ($unum > 1) {
+                            echo '<p style="color: red;">Username must be unique</p>';
+                        } else if (!preg_match('/^(?!^[0-9])(?!.*[^a-zA-Z0-9]).+$/', $uname)) {
+                            echo '<p style="color: red;">Invalid Username! Only letters and numbers are allowed and name can not start with number </p>';
+                        } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                            echo '<p style="color: red;">Invalid email format! </p>';
+                        } else {
+
+                            if (!empty($avatar)) {
+                                $avatar_tmp = $_FILES['profileImage']['tmp_name'];
+                                $avatar_path = 'profileImages/' . $avatar;
+                                $query = "UPDATE info SET uname='$uname', email='$email', avatar='$avatar', bio='$bio', gender='$gender' WHERE id=$userId";
+                                $result = mysqli_query($con, $query);
+
+                                if ($result) {
+                                    unlink($oldImageSrc);
+                                    move_uploaded_file($avatar_tmp, $avatar_path);
+                                    header("Location: profile.php");
+                                    exit();
+                                } else {
+                                    echo "Error: " . mysqli_error($con);
+                                }
+                            } else {
+                                $query = "UPDATE info SET uname='$uname', email='$email', bio='$bio', gender='$gender' WHERE id=$userId";
+                                $result = mysqli_query($con, $query);
+                                if ($result) {
+                                    header("Location: profile.php");
+                                    exit();
+                                } else {
+                                    echo "Error: " . mysqli_error($con);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            ?>
         </div>
     </center>
 
     <script>
-        
         function previewImage(event) {
             var input = event.target;
             var preview = document.getElementById('image-preview');
@@ -132,7 +200,7 @@ include 'connection.php';
                 preview.innerHTML = '';
             }
         }
-        
+
         function confirmLogout() {
             if (confirm("Are you sure you want to log out?")) {
                 window.location.href = "logout.php";

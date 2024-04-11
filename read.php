@@ -126,8 +126,15 @@
                     <div class='ctitle'>$storyTitle</div>
                     <div class='cdescription'>$abstract</div>
                     <div class='seemore'><a href='seemore.php?id=$id'>See full story</a></div>
-                    <div class='cgenre'>Genre: $genre</div>
-                    <div class='cstatus'>Status: $status</div>
+                    <div class='cgenre'>Genre: $genre</div> ";
+                    
+                    if($status == 'pending'){
+                        echo "<div style='color:green;' class='cstatus'>Status: $status</div>";
+                    }else{
+                        echo "<div style='color:green;' class='cstatus'>Status: $status</div>";
+                    };
+                    
+                        echo "
                     <div class='ccreate'>Created at: $created</div>
                     <div class='cupdate'>Edited at: $updated</div>
                     <br><br>
@@ -198,6 +205,7 @@
                     }
                 }
             }
+            
         </script>
 </body>
 

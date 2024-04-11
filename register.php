@@ -110,6 +110,8 @@ if (!$con) {
                   echo '<p style="color: red;">All of above are required fields</p>';
                 } else if ($unum > 0) {
                   echo '<p style="color: red;">Username must be unique</p>';
+                } else if (!preg_match('/^(?!^[0-9])(?!.*[^a-zA-Z0-9]).+$/', $uname)) {
+                  echo '<p style="color: red;">Invalid Username! Only letters and numbers are allowed and name cannot start with number </p>';
                 } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                   echo '<p style="color: red;">Invalid email format! </p>';
                 } else if (strlen($password) < 6 || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password)) {
@@ -124,7 +126,7 @@ if (!$con) {
 
                   if ($result) {
                     $query1 = "SELECT * FROM info WHERE email= '$email'";
-            $result1 = mysqli_query($con, $query1);
+                    $result1 = mysqli_query($con, $query1);
                     $row = mysqli_fetch_assoc($result1);
                     $_SESSION['user_id'] = $row['id'];
 

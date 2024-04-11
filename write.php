@@ -90,6 +90,7 @@ if(!$con){
         echo "<option value='$g_name'>$g_name</option>";
       }
     }
+    
     ?>
           </select>
         </label>

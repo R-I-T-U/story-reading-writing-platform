@@ -80,7 +80,6 @@ include 'connection.php';
                 $storyTitle = $row['title'];
                 $abstract = $row['abstract'];
                 $genre = $row['genre'];
-                $language = $row['language'];
                 $created = $row['created_at'];
                 $updated = $row['updated_at'];
                 $status = $row['status'];

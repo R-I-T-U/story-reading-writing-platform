@@ -15,7 +15,6 @@ if(isset($_GET['id'])) {
         $storyTitle = $post['title'];
         $abstract = $post['abstract'];
         $genre = $post['genre'];
-        $language = $post['language'];
         $updated = $post['updated_at'];
         $status = $post['status'];
         $description = $post['description'];
@@ -104,12 +103,12 @@ if(isset($_GET['id'])) {
 
         <br>
 
-        <label for="Language">Choose Language: <select name="language" id="Language">
+        <!-- <label for="Language">Choose Language: <select name="language" id="Language">
             <option value="English">English</option>
             <option value="Nepali">Nepali</option>
 
           </select></label>
-        <br>
+        <br> -->
         <label for="description">Full Story: <textarea id="description" name="description" required
             class="form-control"><?php echo $description; ?></textarea></label>
         <br>

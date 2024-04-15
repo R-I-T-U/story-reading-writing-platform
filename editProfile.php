@@ -23,7 +23,6 @@ $bio = $row['bio'];
     <style>
         body {
             background: rgb(192, 192, 192);
-            ;
         }
 
         .form {
@@ -74,13 +73,15 @@ $bio = $row['bio'];
                 <div id="image-preview"></div><br><br>
                 <div>
                     <label for="uname">Username:</label>
-                    <input type="text" id="uname" class="form-control" name="uname" value="<?php echo $uname; ?>" required>
+                    <input type="text" id="uname" class="form-control" name="uname" value="<?php echo $uname; ?>" required oninput="validateUname()">
+                    <div id="uname-error" style="color: red;"></div>
                 </div>
 
                 <br>
                 <div>
                     <label for="email">Email: </label>
-                    <input type="email" id="email" class="form-control" name="email" value="<?php echo $email; ?>">
+                    <input type="email" id="email" class="form-control" name="email" value="<?php echo $email; ?>" oninput="validateEmail()">
+                    <div id="email-error" style="color: red;"></div>
                 </div>
                 <br>
                 <div>
@@ -104,7 +105,8 @@ $bio = $row['bio'];
                 </div> <br>
                 <div>
                     <label for="bio">Bio: </label>
-                    <input type="text" id="email" class="form-control" name="bio" value="<?php echo $bio; ?>">
+                    <input type="text" id="bio" class="form-control" name="bio" value="<?php echo $bio; ?>" oninput="validateBio()">
+                    <div id="bio-error" style="color: red;"></div>
                 </div> <br>
 
                 <div>
@@ -185,6 +187,80 @@ $bio = $row['bio'];
     </center>
 
     <script>
+        function validateUname() {
+            var input = document.getElementById('uname');
+            var Error = document.getElementById('uname-error');
+
+            // Regular expression pattern for alphanumeric characters only
+            var pattern = /^(?!.*[@#$%^*~<>{}()[;.?/+=^~!',":&`\n]).*$/;
+            var pattern1 = /^(?![0-9@#$%^*~<>{}()[;\n]).*$/;
+            var pattern2 = /^.{0,50}$/;
+
+            if (!pattern.test(input.value)) {
+                Error.textContent = "Usernames cannot contain special characters.";
+                input.setCustomValidity("Invalid Username");
+            } else if (!pattern1.test(input.value)) {
+                Error.textContent = "Username cannot begin with a number.";
+                input.setCustomValidity("Invalid Username");
+            } else if (!pattern2.test(input.value)) {
+                Error.textContent = "Username cannot exceed 50 characters.";
+                input.setCustomValidity("Invalid Username");
+            } else {
+                Error.textContent = "";
+                input.setCustomValidity("");
+            }
+        }
+
+        function validateEmail() {
+            var input = document.getElementById('email');
+            var Error = document.getElementById('email-error');
+
+            // Regular expression pattern for alphanumeric characters only
+            var pattern = /^(?!.*[#$%^*~<>{}()[;?/+=^~!',":&`\n]).*$/;
+            var pattern1 = /^(?![0-9#$%^*~<>{}()[;\n]).*$/;
+            var pattern2 = /^.{0,50}$/;
+
+            if (!pattern.test(input.value)) {
+                Error.textContent = "Email must not contain invalid characters.";
+                input.setCustomValidity("Invalid Email");
+            } else if (!pattern1.test(input.value)) {
+                Error.textContent = "Email cannot begin with a number.";
+                input.setCustomValidity("Invalid Email");
+            } else if (!pattern2.test(input.value)) {
+                Error.textContent = "Email must be at most 50 characters long.";
+                input.setCustomValidity("Invalid Email");
+            } else {
+                Error.textContent = "";
+                input.setCustomValidity("");
+            }
+        }
+
+        function validateBio() {
+            var input = document.getElementById('bio');
+            var Error = document.getElementById('bio-error');
+
+            // Regular expression pattern for alphanumeric characters only
+            var pattern = /^(?!.*[@$%^*~\n]).*$/;
+            var pattern1 = /^(?![0-9@$%^*~\n]).*$/;
+            var pattern2 = /^.{0,100}$/;
+
+
+
+            if (!pattern.test(input.value)) {
+                Error.textContent = "Bio cannot contain some special characters and one line spaces.";
+                input.setCustomValidity("Invalid Bio");
+            } else if (!pattern1.test(input.value)) {
+                Error.textContent = "Bio cannot begin with a number.";
+                input.setCustomValidity("Invalid Bio");
+            } else if (!pattern2.test(input.value)) {
+                Error.textContent = "Bio must be at most 50 characters long.";
+                input.setCustomValidity("Invalid Bio");
+            } else {
+                Error.textContent = "";
+                input.setCustomValidity("");
+            }
+        }
+
         function previewImage(event) {
             var input = event.target;
             var preview = document.getElementById('image-preview');

@@ -42,7 +42,7 @@ text-align: center;
   border-color: #000000;
 }
 
-#email{
+#email, #bio{
   margin-left: 8%;
   width: 74%;
 }

@@ -225,13 +225,13 @@ if (!$con) {
 
       if (!pattern.test(input.value)) {
         Error.textContent = "Synopsis cannot contain some special characters and one line spaces.";
-        input.setCustomValidity("Invalid title");
+        input.setCustomValidity("Invalid Synopsis");
       } else if (!pattern1.test(input.value)) {
         Error.textContent = "Synopsis cannot begin with a number.";
-        input.setCustomValidity("Invalid title");
+        input.setCustomValidity("Invalid Synopsis");
       } else if (!pattern2.test(input.value)) {
         Error.textContent = "Synopsis must be between 100 and 800 characters long.";
-        input.setCustomValidity("Invalid title");
+        input.setCustomValidity("Invalid Synopsis");
       } else {
         Error.textContent = "";
         input.setCustomValidity("");
@@ -243,8 +243,8 @@ if (!$con) {
       var Error = document.getElementById('desc-error');
 
       // Regular expression pattern for alphanumeric characters only
-      var pattern = /^[^@#$%^*~]*$/;
-      var pattern1 = /^[^0-9@#$%^*~][^@#$%^*~]*$/;
+      var pattern = /^[^@#$%^~`]*$/;
+      var pattern1 = /^(?![0-9])[\s\S]*$/;
       var pattern2 = /^[\S\s]{800,}$/;
 
       if (!pattern.test(input.value)) {

@@ -50,8 +50,8 @@ include 'connection.php';
             <div>
                 <div class="profile-info">
                     <p id="uname">Name: <?php echo $uname; ?></p>
-                    <p id="uname">Gender: <?php echo $gender; ?></p>
-                    <p id="uname">Bio: <?php echo $bio; ?></p>
+                    <p id="gender">Gender: <?php echo $gender; ?></p>
+                    <p id="bio">Bio: <?php echo $bio; ?></p>
                     <img src="images/edit.png" alt="editImage" height="30px" id="editp" name="editp" onclick="submitForm()">
                 </div>
             </div>

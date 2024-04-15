@@ -5,7 +5,7 @@ if (!$con) {
 }
 
 if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST['submit'])){
-    $category = $_POST['category_name'];
+    $category = mysqli_real_escape_string($con,$_POST['category_name']);
 
     $query1 = "SELECT * FROM genre WHERE g_name='$category'";
     $result1= mysqli_query($con, $query1);

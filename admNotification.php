@@ -13,7 +13,7 @@ $result = mysqli_query($con, $query);
   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Admin| notifications</title>
-
+    <link rel="shortcut icon" href="images/ssLogo.jpg" type="image/x-icon">
     <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -29,11 +29,11 @@ $result = mysqli_query($con, $query);
 
 <!-- Header -->
 <header class="header">
-  <div class="menu-icon" onclick="openSidebar()">
+  <!-- <div class="menu-icon" onclick="openSidebar()">
     <span class="material-icons-outlined">menu</span>
-  </div>
+  </div> -->
   <div class="header-left">
-    <span class="material-icons-outlined">search</span>
+    <span class="material-icons-outlined"></span>
   </div>
   <div class="header-right">
     <a href="admNotification.php">
@@ -53,7 +53,7 @@ $result = mysqli_query($con, $query);
     <div class="sidebar-brand">
       <span class="material-icons-outlined"></span> StorySphere
     </div>
-    <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+    <!-- <span class="material-icons-outlined" onclick="closeSidebar()">close</span> -->
   </div>
 
   <ul class="sidebar-list">

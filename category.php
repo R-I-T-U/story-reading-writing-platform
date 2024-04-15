@@ -12,6 +12,7 @@ if (!$con) {
   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Admin| Story Category</title>
+    <link rel="shortcut icon" href="images/ssLogo.jpg" type="image/x-icon">
 
     <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -28,11 +29,11 @@ if (!$con) {
 
 <!-- Header -->
 <header class="header">
-  <div class="menu-icon" onclick="openSidebar()">
+  <!-- <div class="menu-icon" onclick="openSidebar()">
     <span class="material-icons-outlined">menu</span>
-  </div>
+  </div> -->
   <div class="header-left">
-    <span class="material-icons-outlined">search</span>
+    <span class="material-icons-outlined"></span>
   </div>
   <div class="header-right">
   <a href="admNotification.php">
@@ -51,7 +52,7 @@ if (!$con) {
     <div class="sidebar-brand">
       <span class="material-icons-outlined"></span> StorySphere
     </div>
-    <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+    <!-- <span class="material-icons-outlined" onclick="closeSidebar()">close</span> -->
   </div>
 
   <ul class="sidebar-list">
@@ -84,8 +85,9 @@ if (!$con) {
             <h3>Add Category</h3>
             <form action="add_category.php" method="POST">
                 <label for="category_name">Category Name: </label>
-                <input type="text" id="category_name" name="category_name" required>
-                <button type="submit" name="submit">Add Category</button>
+                <input type="text" id="category_name" name="category_name" required oninput="validateCategory()">
+                <button type="submit" name="submit">Add Category</button><br><br>
+                <div id="cat-error" style="color: red;"></div>
             </form>
             
         </div>
@@ -126,6 +128,27 @@ if (!$con) {
                 window.location.href = "logout.php";
             }
         }
+
+        function validateCategory() {
+      var input = document.getElementById('category_name');
+      var Error = document.getElementById('cat-error');
+
+      // Regular expression pattern for alphanumeric characters only
+      var pattern = /^[a-zA-Z\s]*$/;
+      var pattern2 = /^.{0,20}$/;
+
+      if (!pattern.test(input.value)) {
+        Error.textContent = "Genre should contain letters and white spaces only.";
+        input.setCustomValidity("Invalid Genre");
+      }  else if (!pattern2.test(input.value)) {
+        Error.textContent = "Genre cannot exceed 20 characters.";
+        input.setCustomValidity("Invalid Genre");
+      } else {
+        Error.textContent = "";
+        input.setCustomValidity("");
+      }
+    }
+
     </script>
   </body>
 </html>

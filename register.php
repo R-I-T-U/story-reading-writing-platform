@@ -162,7 +162,7 @@ if (!$con) {
       var pattern2 = /^.{0,50}$/;
 
       if (!pattern.test(input.value)) {
-        Error.textContent = "Usernames cannot contain special characters.";
+        Error.textContent = "Username cannot contain special characters.";
         input.setCustomValidity("Invalid Username");
       } else if (!pattern1.test(input.value)) {
         Error.textContent = "Username cannot begin with a number.";

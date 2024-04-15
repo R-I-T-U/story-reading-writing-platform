@@ -13,7 +13,7 @@ if (!$con) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Admin| Post Request</title>
-
+    <link rel="shortcut icon" href="images/ssLogo.jpg" type="image/x-icon">
     <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -30,11 +30,11 @@ if (!$con) {
 
         <!-- Header -->
         <header class="header">
-            <div class="menu-icon" onclick="openSidebar()">
+            <!-- <div class="menu-icon" onclick="openSidebar()">
                 <span class="material-icons-outlined">menu</span>
-            </div>
+            </div> -->
             <div class="header-left">
-                <span class="material-icons-outlined">search</span>
+                <span class="material-icons-outlined"></span>
             </div>
             <div class="header-right">
                 <a href="admNotification.php">
@@ -53,7 +53,7 @@ if (!$con) {
                 <div class="sidebar-brand">
                     <span class="material-icons-outlined"></span> StorySphere
                 </div>
-                <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+                <!-- <span class="material-icons-outlined" onclick="closeSidebar()">close</span> -->
             </div>
 
             <ul class="sidebar-list">
@@ -103,8 +103,8 @@ if (!$con) {
 
                     $uname = $row1['uname'];
 
-                   
-                        echo "
+
+                    echo "
             <div class='storie' id='post_$id' style='display:block;'>
             <div class='pp'>
                 <a href='$profileImgPath'><img src='{$profileImgPath}' alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'></a>
@@ -134,11 +134,8 @@ if (!$con) {
                    </div>
                </a>
                </div>
-            </div><hr>";
-                    }
-                
-
-
+            </div><br><hr>";
+                }
                 ?>
 
             </div>

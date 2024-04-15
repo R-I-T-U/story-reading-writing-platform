@@ -77,9 +77,11 @@ if (isset($_GET['id'])) {
         <div id="image-preview"></div><br><br>
 
         <label for="title">Title:
-          <input type="text" id="title" name="storyTitle" class="form-control" value="<?php echo $storyTitle; ?>" required></label><br>
+          <input type="text" id="title" name="storyTitle" class="form-control" value="<?php echo $storyTitle; ?>" required oninput="validateTitle()">
+          <div id="title-error" style="color: red;"></div></label><br>
 
-        <label for="abstract">Synopsis: <textarea id="abstract" name="abstract" required class="form-control"><?php echo $abstract; ?></textarea></label>
+        <label for="abstract">Synopsis: <textarea id="abstract" name="abstract" required class="form-control" oninput="validateAbstract()"><?php echo $abstract; ?></textarea>
+        <div id="abstract-error" style="color: red;"></div></label>
         <br>
         <label for="genre">Choose Genre:
           <select name="genre" id="genre">
@@ -98,14 +100,8 @@ if (isset($_GET['id'])) {
         </label>
 
         <br>
-
-        <!-- <label for="Language">Choose Language: <select name="language" id="Language">
-            <option value="English">English</option>
-            <option value="Nepali">Nepali</option>
-
-          </select></label>
-        <br> -->
-        <label for="description">Full Story: <textarea id="description" name="description" required class="form-control"><?php echo $description; ?></textarea></label>
+        <label for="description">Full Story: <textarea id="description" name="description" required class="form-control" oninput="validateDesc()"><?php echo $description; ?></textarea>
+        <div id="desc-error" style="color: red;"></div></label>
         <br>
 
         <label for="status">Status: <select name="status" id="status">
@@ -144,6 +140,80 @@ if (isset($_GET['id'])) {
     function confirmLogout() {
       if (confirm("Are you sure you want to log out?")) {
         window.location.href = "logout.php";
+      }
+    }
+
+    function validateTitle() {
+      var input = document.getElementById('title');
+      var Error = document.getElementById('title-error');
+
+      // Regular expression pattern for alphanumeric characters only
+      var pattern = /^(?!.*[@#$%^*~<>{}()[;\n]).*$/;
+      var pattern1 = /^(?![0-9@#$%^*~<>{}()[;\n]).*$/;
+      var pattern2 = /^.{0,50}$/;
+
+      if (!pattern.test(input.value)) {
+        Error.textContent = "Title can only contain letters and numbers.";
+        input.setCustomValidity("Invalid title");
+      } else if (!pattern1.test(input.value)) {
+        Error.textContent = "Title cannot begin with a number.";
+        input.setCustomValidity("Invalid title");
+      } else if (!pattern2.test(input.value)) {
+        Error.textContent = "Title cannot exceed 50 characters.";
+        input.setCustomValidity("Invalid title");
+      } else {
+        Error.textContent = "";
+        input.setCustomValidity("");
+      }
+    }
+
+    function validateAbstract() {
+      var input = document.getElementById('abstract');
+      var Error = document.getElementById('abstract-error');
+
+      // Regular expression pattern for alphanumeric characters only
+      var pattern = /^(?!.*[@#$%^*~\n]).*$/;
+      var pattern1 = /^(?![0-9@#$%^*~\n]).*$/;
+      var pattern2 = /^.{500,800}$/;
+
+
+
+      if (!pattern.test(input.value)) {
+        Error.textContent = "Synopsis cannot contain some special characters and one line spaces.";
+        input.setCustomValidity("Invalid Synopsis");
+      } else if (!pattern1.test(input.value)) {
+        Error.textContent = "Synopsis cannot begin with a number.";
+        input.setCustomValidity("Invalid Synopsis");
+      } else if (!pattern2.test(input.value)) {
+        Error.textContent = "Synopsis must be between 100 and 800 characters long.";
+        input.setCustomValidity("Invalid Synopsis");
+      } else {
+        Error.textContent = "";
+        input.setCustomValidity("");
+      }
+    }
+
+    function validateDesc() {
+      var input = document.getElementById('description');
+      var Error = document.getElementById('desc-error');
+
+      // Regular expression pattern for alphanumeric characters only
+      var pattern = /^[^@#$%^~`]*$/;
+      var pattern1 = /^(?![0-9])[\s\S]*$/;
+      var pattern2 = /^[\S\s]{800,}$/;
+
+      if (!pattern.test(input.value)) {
+        Error.textContent = "Description cannot contain some special characters.";
+        input.setCustomValidity("Invalid description");
+      } else if (!pattern1.test(input.value)) {
+        Error.textContent = "Description cannot begin with a number.";
+        input.setCustomValidity("Invalid description");
+      } else if (!pattern2.test(input.value)) {
+        Error.textContent = "Description should contain at least 800 characters.";
+        input.setCustomValidity("Invalid description");
+      } else {
+        Error.textContent = "";
+        input.setCustomValidity("");
       }
     }
   </script>

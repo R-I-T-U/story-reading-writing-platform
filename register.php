@@ -55,15 +55,18 @@ if (!$con) {
       <form method="POST" action="register.php">
         <div>
           <label for="uname">Username:</label>
-          <input type="text" id="uname" class="form-control" placeholder="Your name" name="uname">
+          <input type="text" id="uname" class="form-control" placeholder="Your name" name="uname" oninput="validateUname()">
+          <div id="uname-error" style="color: red;"></div>
         </div> <br>
         <div>
           <label for="email">Email: </label>
-          <input type="email" id="email" class="form-control" placeholder="Email Address" name="email">
+          <input type="email" id="email" class="form-control" placeholder="Email Address" name="email" oninput="validateEmail()">
+          <div id="email-error" style="color: red;"></div>
         </div> <br>
         <div> <label for="password">
             Password: </label>
-          <input type="password" id="password" class="form-control" placeholder="Set Password" name="password">
+          <input type="password" id="password" class="form-control" placeholder="Set Password" name="password" oninput="validatePw()">
+          <div id="pw-error" style="color: red;"></div>
         </div>
         <div>
           <div class="custom-control custom-checkbox"><br>
@@ -90,10 +93,9 @@ if (!$con) {
           <?php
 
           if (isset($_POST['submit'])) {
-            $uname = $_POST['uname'];
-
-            $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-            $password = $_POST['password'];
+            $uname = mysqli_real_escape_string($con, $_POST['uname']);
+            $email = mysqli_real_escape_string($con, filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
+            $password = mysqli_real_escape_string($con, $_POST['password']);
 
             $query1 = "SELECT * FROM info WHERE email = '$email'";
             $result1 = mysqli_query($con, $query1);
@@ -104,18 +106,18 @@ if (!$con) {
               $num = mysqli_num_rows($result1);
               $unum = mysqli_num_rows($result2);
               if ($num > 0) {
-                echo '<p style="color: red;">User already exists! <br> Login to continue..</p>';
+                echo '<p id="error-msg" style="color: red;">User already exists! <br> Login to continue..</p>';
               } else {
                 if (empty($email) || empty($password) || empty($uname)) {
-                  echo '<p style="color: red;">All of above are required fields</p>';
+                  echo '<p id="error-msg" style="color: red;">All of above are required fields</p>';
                 } else if ($unum > 0) {
-                  echo '<p style="color: red;">Username must be unique</p>';
-                } else if (!preg_match('/^(?!^[0-9])(?!.*[^a-zA-Z0-9]).+$/', $uname)) {
-                  echo '<p style="color: red;">Invalid Username! Only letters and numbers are allowed and name cannot start with number </p>';
+                  echo '<p id="error-msg" style="color: red;">Username must be unique</p>';
+                } else if (!preg_match('/^(?![0-9])[a-zA-Z0-9\s]{0,50}$/', $uname)) {
+                  echo '<p id="error-msg" style="color: red;">Invalid Username! Only letters and numbers are allowed and name cannot start with number. </p>';
                 } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                  echo '<p style="color: red;">Invalid email format! </p>';
+                  echo '<p id="error-msg" style="color: red;">Invalid email format! </p>';
                 } else if (strlen($password) < 6 || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password)) {
-                  echo '<p style="color: red;">Password must be at least 6 characters long, contain at least one capital letter, and at least one number!!</p>';
+                  echo '<p id="error-msg" style="color: red;">Password must be at least 6 characters long, contain at least one capital letter, and at least one number!!</p>';
                 } else {
 
                   $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -149,7 +151,89 @@ if (!$con) {
       </p>
     </div>
   </center>
+  <script>
+    function validateUname() {
+      var input = document.getElementById('uname');
+      var Error = document.getElementById('uname-error');
 
+      // Regular expression pattern for alphanumeric characters only
+      var pattern = /^(?!.*[@#$%^*~<>{}()[;.?/+=^~!',":&`\n]).*$/;
+      var pattern1 = /^(?![0-9@#$%^*~<>{}()[;\n]).*$/;
+      var pattern2 = /^.{0,50}$/;
+
+      if (!pattern.test(input.value)) {
+        Error.textContent = "Usernames cannot contain special characters.";
+        input.setCustomValidity("Invalid Username");
+      } else if (!pattern1.test(input.value)) {
+        Error.textContent = "Username cannot begin with a number.";
+        input.setCustomValidity("Invalid Username");
+      } else if (!pattern2.test(input.value)) {
+        Error.textContent = "Username cannot exceed 50 characters.";
+        input.setCustomValidity("Invalid Username");
+      } else {
+        Error.textContent = "";
+        input.setCustomValidity("");
+      }
+    }
+
+    function validateEmail() {
+      var input = document.getElementById('email');
+      var Error = document.getElementById('email-error');
+
+      // Regular expression pattern for alphanumeric characters only
+      var pattern = /^(?!.*[#$%^*~<>{}()[;?/+=^~!',":&`\n]).*$/;
+      var pattern1 = /^(?![0-9#$%^*~<>{}()[;\n]).*$/;
+      var pattern2 = /^.{0,50}$/;
+
+      if (!pattern.test(input.value)) {
+        Error.textContent = "Email must not contain invalid characters.";
+        input.setCustomValidity("Invalid Email");
+      } else if (!pattern1.test(input.value)) {
+        Error.textContent = "Email cannot begin with a number.";
+        input.setCustomValidity("Invalid Email");
+      } else if (!pattern2.test(input.value)) {
+        Error.textContent = "Email must be at most 50 characters long.";
+        input.setCustomValidity("Invalid Email");
+      } else {
+        Error.textContent = "";
+        input.setCustomValidity("");
+      }
+    }
+
+
+    function validatePw() {
+      var input = document.getElementById('password');
+      var Error = document.getElementById('pw-error');
+
+      // Regular expression pattern for alphanumeric characters only
+      var pattern = /[A-Z]/;
+      var pattern1 = /[0-9]/;
+      var pattern2 = /^.{6,}$/;
+
+      if (!pattern.test(input.value)) {
+        Error.textContent = "Password must contain at least 1 capital letter.";
+        input.setCustomValidity("Invalid Password");
+      } else if (!pattern1.test(input.value)) {
+        Error.textContent = "Password must contain at least 1 number.";
+        input.setCustomValidity("Invalid Password");
+      } else if (!pattern2.test(input.value)) {
+        Error.textContent = "Password must be at least 6 characters long.";
+        input.setCustomValidity("Invalid Password");
+      } else {
+        Error.textContent = "";
+        input.setCustomValidity("");
+      }
+    }
+
+    // _____________________________error msg remove
+   
+    window.addEventListener('load', function() {
+      var errorMsg = document.getElementById('error-msg');
+      if (errorMsg) {
+        errorMsg.remove();
+      }
+    });
+  </script>
 </body>
 
 </html>

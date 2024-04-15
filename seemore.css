@@ -31,16 +31,18 @@
 
 }
 
-.pp{
+.pp {
     display: flex;
     justify-content: flex-start;
 }
-.cpp{
+
+.cpp {
     display: flex;
     justify-content: flex-start;
-    
+
 }
-.cpp img{
+
+.cpp img {
     margin-top: 15px;
     margin-left: 5px;
 }
@@ -56,6 +58,8 @@
 
 .cdescription {
     text-align: justify;
+    display: flex;
+    justify-content: center;
 }
 
 /* last part */
@@ -95,9 +99,10 @@
 
 #singleCmt {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
+
 }
-.irrelevant{
+
+.irrelevant {
     display: flex;
     justify-content: flex-end;
     margin-top: -40px;
@@ -115,6 +120,7 @@
     }
 
 }
-.noUnderline{
+
+.noUnderline {
     text-decoration: none;
 }

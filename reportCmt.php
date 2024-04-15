@@ -19,8 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['report'])) {
         if (!$res) {
             echo "Error: " . mysqli_error($con);
         } else {
-            echo "<script>alert('Comment reported succesfully!'); 
-            window.location='seemore.php?id=$id';</script>";
+            header("location: seemore.php?id=$id");
         }
     } else {
         echo "Error: Comment not found.";

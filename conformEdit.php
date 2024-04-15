@@ -22,14 +22,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['done'])) {
   $oldImage = $row['cover_image'];
   $oldImageSrc = "img/ . $oldImage";
   $postid = $row['id'];
-  
-  $storyTitle = $_POST['storyTitle'];
 
-  $abstract = $_POST['abstract'];
+
+  $storyTitle = mysqli_real_escape_string($con, $_POST['storyTitle']);
+  $abstract = mysqli_real_escape_string($con, $_POST['abstract']);
+  $description = mysqli_real_escape_string($con, $_POST['description']);
+  // $storyTitle = $_POST['storyTitle'];
+
+  // $abstract = $_POST['abstract'];
   $genre = $_POST['genre'];
-  $language = $_POST['language'];
+  // $language = $_POST['language'];
   $status = $_POST['status'];
-  $description = $_POST['description'];
+  // $description = $_POST['description'];
   $postId = $_POST['postId'];
 
   if(!empty($_FILES['coverImage']['name'])){
@@ -40,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['done'])) {
     // $DestiPath = "img/ . $newImage";
 
 
-    $query = "UPDATE posts SET cover_image='$newImage',title='$storyTitle',abstract='$abstract', description='$description',genre='$genre',language='$language',status='$status', updated_at = NOW(), state = $state WHERE user_id=$userId AND id=$postId";
+    $query = "UPDATE posts SET cover_image='$newImage',title='$storyTitle',abstract='$abstract', description='$description',genre='$genre',status='$status', updated_at = NOW(), state = $state WHERE user_id=$userId AND id=$postId";
 
   $result = mysqli_query($con, $query);
   if (!$result) {
@@ -53,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['done'])) {
   
   } else{
     $state = 0;
-    $query = "UPDATE posts SET title='$storyTitle',abstract='$abstract', description='$description',genre='$genre',language='$language',status='$status', updated_at = NOW(), state = $state WHERE user_id=$userId AND id=$postId";
+    $query = "UPDATE posts SET title='$storyTitle',abstract='$abstract', description='$description',genre='$genre',status='$status', updated_at = NOW(), state = $state WHERE user_id=$userId AND id=$postId";
 
   $result = mysqli_query($con, $query);
   if (!$result) {

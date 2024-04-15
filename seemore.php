@@ -128,7 +128,7 @@ if (isset($_GET['id'])) {
                         <div class='cpp' id='singleCmt'>
                         <a href='othersProfile.php?user_id=$user_id'><img src='$profileImgPath' alt='image' style='border-radius: 50%; width: 30px; height: 30px; object-fit: cover;'></a><p>&nbsp <a href='othersProfile.php?user_id=$user_id' class='noUnderline'>$uname</a>
                         commented '" . $row['cmt'] . "'.
-                        <button id='report' type='submit' name='report'> report</button>
+                        <button id='report' type='submit' name='report' onclick= 'msg()'> report</button>
                         <br></p></div>
                         </form>";
                             }
@@ -152,6 +152,9 @@ if (isset($_GET['id'])) {
             if (confirm("Are you sure you want to log out?")) {
                 window.location.href = "logout.php";
             }
+        }
+        function msg(){
+            alert('Comment reported succesfully!');
         }
     </script>
 </body>

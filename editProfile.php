@@ -121,12 +121,12 @@ $bio = $row['bio'];
 
                 $oldImage = $row['avatar'];
                 $oldImageSrc = "profileImages/" . $oldImage;
+                $uname = mysqli_real_escape_string($con, $_POST['uname']);
 
-                $uname = $_POST['uname'];
-                $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+                $email = mysqli_real_escape_string($con, filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
+                // $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
                 $avatar = $_FILES['profileImage']['name'];
-
-                $bio = $_POST['bio'];
+                $bio = mysqli_real_escape_string($con, $_POST['bio']);
                 $gender = $_POST['gender'];
 
                 $query1 = "SELECT * FROM info WHERE email = '$email'";
@@ -144,7 +144,7 @@ $bio = $row['bio'];
                             echo '<p style="color: red;">Email and Name are required fields</p>';
                         } else if ($unum > 1) {
                             echo '<p style="color: red;">Username must be unique</p>';
-                        } else if (!preg_match('/^(?!^[0-9])(?!.*[^a-zA-Z0-9]).+$/', $uname)) {
+                        } else if (!preg_match('/^(?![0-9])[a-zA-Z0-9\s]{0,50}$/', $uname)) {
                             echo '<p style="color: red;">Invalid Username! Only letters and numbers are allowed and name can not start with number </p>';
                         } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                             echo '<p style="color: red;">Invalid email format! </p>';
@@ -157,7 +157,9 @@ $bio = $row['bio'];
                                 $result = mysqli_query($con, $query);
 
                                 if ($result) {
-                                    unlink($oldImageSrc);
+                                    if (isset($oldImage) && !empty($oldImage)) {
+                                        unlink($oldImageSrc);
+                                    }
                                     move_uploaded_file($avatar_tmp, $avatar_path);
                                     header("Location: profile.php");
                                     exit();

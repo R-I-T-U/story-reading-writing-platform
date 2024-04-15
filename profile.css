@@ -1,119 +1,123 @@
-.img-container{
-background-image: url(images/brown.jpg);
-filter: blur(10px);
-height: 250px;
-width: 100%;
+.img-container {
+    background-image: url(images/brown.jpg);
+    filter: blur(10px);
+    height: 250px;
+    width: 100%;
 
 }
+
 #profileImage {
-height: 250px;
-object-fit: cover;
-width: 200px;
-height: 200px;
-border-radius: 50%;
-margin-bottom: 20px;
-display: block;
-margin-left: auto;
-margin-right: auto;
-margin-top: -100px;
-position: relative;
-z-index: 1;
+    height: 250px;
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -100px;
+    position: relative;
+    z-index: 1;
 
 }
 
-.stories{
-margin-left: 20px;
-margin-right: 20px;
-padding: 10px;
-border-radius: 5px;
-overflow: hidden;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-display: flex;
-justify-content: space-between;
-align-items: center;
+.stories {
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
 }
 
-.ctitle{
-font-size: 27px;
-font-family:cursive;
-font-weight: bold;
+.ctitle {
+    font-size: 27px;
+    font-family: cursive;
+    font-weight: bold;
 
 }
 
-.stories img{
-height: 250px;
-width: 250px;
+.stories img {
+    height: 250px;
+    width: 250px;
 
-display: block;
-position: relative;
-z-index: 1;
-
-}
-
-.cformat{
-font-family: cursive;
+    display: block;
+    position: relative;
+    z-index: 1;
 
 }
 
-.cdescription{
-margin-right: 20px;
-text-align: justify;
+.cformat {
+    font-family: cursive;
+
 }
 
-.loginHead{
-display: flex;
-align-items: center;
-justify-content: center;
+.cdescription {
+    margin-right: 20px;
+    text-align: justify;
 }
+
+.loginHead {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .loginHead h1 {
-margin-left: 20px;
+    margin-left: 20px;
 
 }
 
-.left button a{
-text-decoration: none;
-color: white;
+.left button a {
+    text-decoration: none;
+    color: white;
 }
 
 #end {
-font-family:'Courier New', Courier, monospace;
-font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
 }
 
 @media only screen and (max-width: 768px) {
-.img-container{
-background-image: url(images/bg12.jpg);
-filter: blur(10px);
-height: 200px;
-width: 100%;
+    .img-container {
+        background-image: url(images/bg12.jpg);
+        filter: blur(10px);
+        height: 200px;
+        width: 100%;
+
+    }
 
 }
 
-}
 main {
-margin: 20px;
+    margin: 20px;
 }
 
 .filter-container {
-margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
-
-
-.right img{
-height: 250px;
-object-fit: cover;
+.right img {
+    height: 250px;
+    object-fit: cover;
 }
+
 #uname {
-display: flex;
-justify-content: center;
+    display: flex;
+    justify-content: center;
 }
-#editp{
-margin-top: -30px;
-margin-left: 25rem;
-cursor: pointer;
+
+#editp {
+    margin-top: -30px;
+    margin-left: 25rem;
+    cursor: pointer;
 }
-.state{
-    text-align: center;
+
+.state {
+    margin-left: 400px;
 }

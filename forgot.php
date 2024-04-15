@@ -55,15 +55,17 @@ if (!$con) {
             <form method="POST" action="forgot.php">
                 <div>
                     <label for="email">Email: </label>
-                    <input type="email" id="email" class="form-control" placeholder="Email Address" name="email">
+                    <input type="email" id="email" class="form-control" placeholder="Email Address" name="email" oninput="validateEmail()">
+                    <div id="email-error" style="color: red;"></div>
                 </div><br>
                 <div>
                     <label for="password">New Password: </label>
-                    <input type="password" id="password" class="form-control" placeholder="Password" name="password1">
+                    <input type="password" id="password" class="form-control" placeholder="Password" name="password1" oninput="validatePw()">
                 </div><br>
                 <div>
                     <label for="confirm">Confirm new Password: </label>
                     <input type="password" id="confirm" class="form-control" placeholder="Confirm Password" name="password2">
+                    <div id="pw-error" style="color: red;"></div>
                 </div>
                 <div>
                     <div class="custom-control custom-checkbox"><br>
@@ -80,21 +82,24 @@ if (!$con) {
           
                 <?php
                 if (isset($_POST['submit'])) {
-                    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-                    $password1 = $_POST['password1'];
-                    $password2 = $_POST['password2'];
+                    $email = mysqli_real_escape_string($con, filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
+                    // $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+                    // $password1 = $_POST['password1'];
+                    $password1 = mysqli_real_escape_string($con, $_POST['password1']);
+                    $password2 = mysqli_real_escape_string($con, $_POST['password2']);
 
                     $query1 = "SELECT * FROM info WHERE email = '$email'";
                     $result1 = mysqli_query($con, $query1);
 
                     $count = mysqli_num_rows($result1);
-
+                    
                     if ($count > 0) {
                         if (strlen($password1) < 6 || !preg_match('/[A-Z]/', $password1) || !preg_match('/[0-9]/', $password1)) {
                             echo '<p style="color: red;">Password must be at least 6 characters long, contain at least one capital letter, and at least one number!!</p>';
                         } else if ($password1 != $password2) {
                             echo "<p style='color:red;'>Password mismatch!</p>";
                         } else {
+                            // echo "<p style='color:green;'>Password changed! Login to continue...</p>";
                             $hashedPassword = password_hash($password1, PASSWORD_DEFAULT);
                             $query2 = "UPDATE info SET password = '$hashedPassword' WHERE email = '$email'";
                             $result2 = mysqli_query($con, $query2);
@@ -106,7 +111,12 @@ if (!$con) {
                             }
                         }
                     } else {
-                        echo "<p style='color:red;'>Email not registered!</p>";
+                        if (empty($email) || empty($password) || empty($uname)) {
+                            echo '<p style="color: red;">All of above are required fields</p>';
+                          }else{
+                            echo "<p style='color:red;'>Email not registered!</p>";
+                          }
+                        
                     }
                 }
                 mysqli_close($con);
@@ -114,5 +124,56 @@ if (!$con) {
             </form>
         </div>
     </center>
+    <script>
+        function validateEmail() {
+      var input = document.getElementById('email');
+      var Error = document.getElementById('email-error');
+
+      // Regular expression pattern for alphanumeric characters only
+      var pattern = /^(?!.*[#$%^*~<>{}()[;?/+=^~!',":&`\n]).*$/;
+      var pattern1 = /^(?![0-9#$%^*~<>{}()[;\n]).*$/;
+      var pattern2 = /^.{0,50}$/;
+
+      if (!pattern.test(input.value)) {
+        Error.textContent = "Email must not contain invalid characters.";
+        input.setCustomValidity("Invalid Email");
+      } else if (!pattern1.test(input.value)) {
+        Error.textContent = "Email cannot begin with a number.";
+        input.setCustomValidity("Invalid Email");
+      } else if (!pattern2.test(input.value)) {
+        Error.textContent = "Email must be at most 50 characters long.";
+        input.setCustomValidity("Invalid Email");
+      } else {
+        Error.textContent = "";
+        input.setCustomValidity("");
+      }
+    }
+
+    function validatePw() {
+      var input = document.getElementById('password');
+      var Error = document.getElementById('pw-error');
+
+      // Regular expression pattern for alphanumeric characters only
+      var pattern = /[A-Z]/;
+      var pattern1 = /[0-9]/;
+      var pattern2 = /^.{6,}$/;
+
+      if (!pattern.test(input.value)) {
+        Error.textContent = "Password must contain at least 1 capital letter.";
+        input.setCustomValidity("Invalid Password");
+      } else if (!pattern1.test(input.value)) {
+        Error.textContent = "Password must contain at least 1 number.";
+        input.setCustomValidity("Invalid Password");
+      } else if (!pattern2.test(input.value)) {
+        Error.textContent = "Password must be at least 6 characters long.";
+        input.setCustomValidity("Invalid Password");
+      } else {
+        Error.textContent = "";
+        input.setCustomValidity("");
+      }
+    }
+
+       
+    </script>
 </body>
 </html>

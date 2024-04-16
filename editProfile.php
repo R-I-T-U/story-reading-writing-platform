@@ -9,7 +9,7 @@ $uname = $row['uname'];
 $email = $row['email'];
 $gender = $row['gender'];
 $bio = $row['bio'];
-
+$oldImage = $row['avatar'];
 ?>
 
 <!DOCTYPE html>
@@ -44,6 +44,8 @@ $bio = $row['bio'];
             border-radius: 50%;
             z-index: 1;
         }
+
+        
     </style>
 </head>
 
@@ -117,11 +119,7 @@ $bio = $row['bio'];
             <?php
 
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-                $query4 = "SELECT * FROM info WHERE id=$userId";
-                $result4 = mysqli_query($con, $query4);
-                $row = mysqli_fetch_assoc($result4);
 
-                $oldImage = $row['avatar'];
                 $oldImageSrc = "profileImages/" . $oldImage;
                 $uname = mysqli_real_escape_string($con, $_POST['uname']);
 
@@ -136,6 +134,7 @@ $bio = $row['bio'];
 
                 $query2 = "SELECT * FROM info WHERE uname = '$uname'";
                 $result2 = mysqli_query($con, $query2);
+
                 if ($result1 && $result2) {
                     $num = mysqli_num_rows($result1);
                     $unum = mysqli_num_rows($result2);

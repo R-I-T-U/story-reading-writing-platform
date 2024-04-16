@@ -22,18 +22,17 @@ if (!$con) {
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="ad.css">
-  <link rel="stylesheet" href="profile.css">
+  <link rel="stylesheet" href="adm.css">
 </head>
 
 <body>
   <div class="grid-container">
     <!-- Header -->
     <header class="header">
-      <div class="header-left"></div>
+      <div class="header-left">
+        <h2>DASHBOARD</h2>
+      </div>
       <div class="header-right">
-        <a href="admNotification.php">
-          <span class="material-icons-outlined">notifications</span>
-        </a>
         <a onclick="confirmLogout()" class="nav">
           <span class="material-icons-outlined">logout</span>
         </a>
@@ -65,13 +64,16 @@ if (!$con) {
             <span class="material-icons-outlined">groups</span> Post Request
           </a>
         </li>
+        <li class="sidebar-list-item">
+          <a href="admNotification.php">
+            <span class="material-icons-outlined">notifications</span> Reported Comments
+          </a>
+        </li>
       </ul>
     </aside>
     <!--End Sidebar -->
     <main>
-      <div>
-        <h2>DASHBOARD</h2>
-      </div>
+
       <!-- here goes inner content -->
       <div class="admin-panel">
         <?php
@@ -113,7 +115,7 @@ if (!$con) {
 
           while ($row = mysqli_fetch_assoc($result1)) {
             $idd = $row['id'];
-            
+
             $query4 = "SELECT * FROM posts WHERE user_id = $idd";
             $result4 = mysqli_query($con, $query4);
             $countT = mysqli_num_rows($result4);
@@ -125,7 +127,7 @@ if (!$con) {
             $query6 = "SELECT * FROM posts WHERE user_id = $idd AND state = 0";
             $result6 = mysqli_query($con, $query6);
             $countP = mysqli_num_rows($result6);
-            
+
 
             echo "<tr>
                 <td style='height:40px'>" . $row['id'] . "</td>
@@ -140,7 +142,7 @@ if (!$con) {
 
 
         </table>
-        <p>AP: Approved Post <br>PP: Pending Post <br>TP: Total Post </p>
+        <p>Note: AP= Approved Post, PP= Pending Post, TP= Total Post </p>
       </div>
       <!-- ends content -->
     </main>

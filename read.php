@@ -13,7 +13,7 @@
         .navbar {
             overflow: hidden;
         }
-        
+
         .container {
             background-color: rgba(255, 255, 255, 0.9);
         }
@@ -31,7 +31,7 @@
             <button class="search-button">Search</button>
         </div>
 
-        
+
         <?php
         session_start();
         if (isset($_SESSION['user_id'])) {
@@ -92,30 +92,30 @@
         <?php
         $query = "SELECT * FROM posts WHERE state = 1";
         $result = mysqli_query($con, $query);
-        if(mysqli_num_rows($result)>0){
-        while ($row = mysqli_fetch_assoc($result)) {
-            $storyTitle = $row['title'];
-            $abstract = $row['abstract'];
-            $genre = $row['genre'];
-            // $language = $row['language'];
-            $created = $row['created_at'];
-            $updated = $row['updated_at'];
-            $status = $row['status'];
-            $id = $row['id'];
-            $user_id = $row['user_id'];
-           
-            $cvrImgPath = "img/ . {$row['cover_image']}";
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $storyTitle = $row['title'];
+                $abstract = $row['abstract'];
+                $genre = $row['genre'];
+                // $language = $row['language'];
+                $created = $row['created_at'];
+                $updated = $row['updated_at'];
+                $status = $row['status'];
+                $id = $row['id'];
+                $user_id = $row['user_id'];
 
-            $query1 = "SELECT * FROM info where id= $user_id";
-            $result1 = mysqli_query($con, $query1);
-            $row1 = mysqli_fetch_assoc($result1);
-            $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/ppp.png';
+                $cvrImgPath = "img/ . {$row['cover_image']}";
 
-            $uname = $row1['uname'];
-            
-           
+                $query1 = "SELECT * FROM info where id= $user_id";
+                $result1 = mysqli_query($con, $query1);
+                $row1 = mysqli_fetch_assoc($result1);
+                $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/cat.webp';
 
-            echo "
+                $uname = $row1['uname'];
+
+
+
+                echo "
             <div class='storie' id='post_$id' style='display:block;'>
             <div class='pp'>
                 <a href='othersProfile.php?user_id=$user_id'><img src='{$profileImgPath}' alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'></a>
@@ -127,14 +127,14 @@
                     <div class='cdescription'>$abstract</div>
                     <div class='seemore'><a href='seemore.php?id=$id'>See full story</a></div>
                     <div class='cgenre'>Genre: $genre</div> ";
-                    
-                    if($status == 'pending'){
-                        echo "<div style='color:green;' class='cstatus'>Status: $status</div>";
-                    }else{
-                        echo "<div style='color:green;' class='cstatus'>Status: $status</div>";
-                    };
-                    
-                        echo "
+
+                if ($status == 'pending') {
+                    echo "<div style='color:green;' class='cstatus'>Status: $status</div>";
+                } else {
+                    echo "<div style='color:green;' class='cstatus'>Status: $status</div>";
+                };
+
+                echo "
                     <div class='ccreate'>Created at: $created</div>
                     <div class='cupdate'>Edited at: $updated</div>
                     <br><br>
@@ -144,13 +144,14 @@
                 </div>
             </div>
         </div>";
-        }
+            }
         } else {
             echo "<div class='storie'><p style='height: 10rem; font-size: 2rem;'>Nothing to show</p></div>";
         }
-        
-        ?>
 
+        ?>
+        <div class="nopostyet" id="nopostyet">
+        </div>
         <center>
             <p id="end">The end!!</p>
         </center>
@@ -182,6 +183,19 @@
                         stories[i].style.display = 'none';
                     }
                 }
+
+                if (!found) {
+                    var noStoriesDiv = document.createElement('div');
+                    noStoriesDiv.className = 'storie';
+                    noStoriesDiv.innerHTML = "<p style='height: 10rem; font-size: 2rem;'>No post yet!!</p>";
+                    var nopostyetContainer = document.getElementById('nopostyet');
+                    nopostyetContainer.appendChild(noStoriesDiv);
+
+                    // Remove the child node after 10 seconds
+                    setTimeout(function() {
+                        nopostyetContainer.removeChild(noStoriesDiv);
+                    }, 2000); // 10000 milliseconds = 10 seconds
+                }
             }
 
             function filterStatus() {
@@ -194,7 +208,7 @@
                 }
 
                 var stories = document.getElementsByClassName('storie');
-                var found = false;
+                let found = false;
                 for (var i = 0; i < stories.length; i++) {
                     var status = stories[i].querySelector('.cstatus').textContent.split(': ')[1].trim();
                     if (selectedStatus.length === 0 || selectedStatus.includes(status)) {
@@ -204,8 +218,21 @@
                         stories[i].style.display = 'none';
                     }
                 }
+
+                if (!found) {
+                    var noStoriesDiv = document.createElement('div');
+                    noStoriesDiv.className = 'storie';
+                    noStoriesDiv.innerHTML = "<p style='height: 10rem; font-size: 2rem;'>No post yet!!</p>";
+                    var nopostyetContainer = document.getElementById('nopostyet');
+                    nopostyetContainer.appendChild(noStoriesDiv);
+
+                    // Remove the child node after 10 seconds
+                    setTimeout(function() {
+                        nopostyetContainer.removeChild(noStoriesDiv);
+                    }, 2000); // 10000 milliseconds = 10 seconds
+                }
+
             }
-            
         </script>
 </body>
 

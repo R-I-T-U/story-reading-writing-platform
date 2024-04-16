@@ -21,8 +21,8 @@ if (!$con) {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="ad.css">
-    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="adm.css">
+    <!-- <link rel="stylesheet" href="profile.css"> -->
 </head>
 
 <body>
@@ -34,13 +34,10 @@ if (!$con) {
                 <span class="material-icons-outlined">menu</span>
             </div> -->
             <div class="header-left">
-                <span class="material-icons-outlined"></span>
+                <h2>POST REQUEST</h2>
             </div>
             <div class="header-right">
-                <a href="admNotification.php">
-                    <span class="material-icons-outlined">notifications</span>
-                </a>
-                <!-- <span class="material-icons-outlined">email</span> -->
+
                 <a onclick="confirmLogout()" class="nav">
                     <span class="material-icons-outlined">logout</span></a>
             </div>
@@ -72,19 +69,22 @@ if (!$con) {
                         <span class="material-icons-outlined">groups</span> Post Request
                     </a>
                 </li>
-
+                <li class="sidebar-list-item">
+                    <a href="admNotification.php">
+                        <span class="material-icons-outlined">notifications</span> Reported Comments
+                    </a>
+                </li>
             </ul>
         </aside>
         <main class="main-container">
-            <div class="main-title">
-                <h2>POST REQUEST</h2>
-            </div>
+
             <div class="admin-panel">
 
 
                 <?php
                 $query = "SELECT * FROM posts WHERE state = 0";
                 $result = mysqli_query($con, $query);
+                if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
                     $storyTitle = $row['title'];
                     $abstract = $row['abstract'];
@@ -99,7 +99,7 @@ if (!$con) {
                     $query1 = "SELECT * FROM info where id= $user_id";
                     $result1 = mysqli_query($con, $query1);
                     $row1 = mysqli_fetch_assoc($result1);
-                    $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/ppp.png';
+                    $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/cat.webp';
 
                     $uname = $row1['uname'];
 
@@ -112,7 +112,7 @@ if (!$con) {
             </div>
             <div class='stori'>
                 <div class='left'>
-                    <div class='ctitle'>Title: $storyTitle</div>
+                    <div class='ctitle'><b>Title:</b> $storyTitle</div>
                     <div class='cgenre'><b>Genre:</b> $genre</div>
                     <div class='cstatus'><b>Status:</b> $status</div>
                     <div class='cdescription'><b>Sypnosis:</b><br> $abstract</div>
@@ -135,7 +135,10 @@ if (!$con) {
                </a>
                </div>
             </div><br><hr>";
-                }
+                }}
+                else {
+                    echo "<p style='display:flex; justify-content:center;'>No results.</p>";
+                  }
                 ?>
 
             </div>

@@ -110,6 +110,7 @@ if (isset($_GET['id'])) {
 
           </select></label>
         <br>
+        <p><i>Note: It can take up to 48 hours for a submission to be approved. If issues are found within the submission,<br> it will be rejected and can be submitted again after making corrections. </i></p>
 
         <input type="number" hidden value="<?php echo $postId ?>" name="postId">
 

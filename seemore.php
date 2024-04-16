@@ -21,7 +21,7 @@ if (isset($_GET['id'])) {
             $query1 = "SELECT * FROM info where id= $user_id";
             $result1 = mysqli_query($con, $query1);
             $row1 = mysqli_fetch_assoc($result1);
-            $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/ppp.png';
+            $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/cat.webp';
             $uname = $row1['uname'];
         } else {
             echo "Error fetching chapter: " . mysqli_error($con);
@@ -109,7 +109,7 @@ if (isset($_GET['id'])) {
                             $query1 = "SELECT * FROM info where id= $user_id";
                             $result1 = mysqli_query($con, $query1);
                             $row1 = mysqli_fetch_assoc($result1);
-                            $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/ppp.png';
+                            $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/cat.webp';
                             $uname = $row1['uname'];
 
                             if($user_id === $userId){

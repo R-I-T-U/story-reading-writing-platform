@@ -115,11 +115,11 @@ if (!$con) {
 
           </select></label>
         <br>
-
+        <p><i>Note: It can take up to 48 hours for a submission to be approved. If issues are found within the submission,<br> it will be rejected and can be submitted again after making corrections. </i></p>
 
         <br><br>
         <div class="button">
-          <button class="cancel" formaction="read.php">Cancel</button>
+          <button class="cancel" formaction="profile.php">Cancel</button>
           <button class="next" name="next" style=" margin-left: 20px;">Publish</button>
         </div><br>
 

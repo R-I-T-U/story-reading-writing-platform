@@ -1,0 +1,159 @@
+/* CSS for sidebar */
+#sidebar {
+    background-color: #272727;
+    color: white;
+    width: 250px;
+    height: 100vh;
+    /* Make sidebar full height */
+    position: fixed;
+    /* Make sidebar fixed */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    /* Ensure sidebar stays on top of other content */
+    overflow-y: auto;
+    /* Allow sidebar content to be scrolled */
+}
+
+.sidebar-title {
+    padding: 20px;
+    border-bottom: 1px solid #444;
+}
+
+.sidebar-brand {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.sidebar-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-list-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #444;
+}
+
+.sidebar-list-item a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-list-item a .material-icons-outlined {
+    margin-right: 10px;
+}
+
+/* CSS for main content */
+.main-container {
+    margin-top: 100px; /* Adjust according to header height */
+  
+    margin-left: 250px;
+    /* Adjust margin to accommodate the fixed sidebar */
+    padding: 20px;
+}
+
+.header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: calc(100% - 250px);
+    /* Adjust width to accommodate the fixed sidebar */
+    z-index: 1000;
+    /* Ensure header stays on top of other content */
+    top: 0;
+    right: 0;
+}
+
+.header .material-icons-outlined {
+    cursor: pointer;
+}
+
+/* Adjust content position to prevent it from being hidden under the fixed header */
+.main-title {
+    margin-top: 60px;
+}
+
+.pp {
+    display: flex;
+    justify-content: flex-start;
+}
+
+td {
+    text-align: center;
+}
+
+a {
+    color: white;
+}
+
+.comment-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.comment {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.comment-text {
+    flex: 1;
+}
+
+button {
+    background-color: #ff5757;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e04444;
+}
+
+@media (max-width: 600px) {
+    .comment-container {
+        gap: 5px;
+    }
+
+    .comment {
+        padding: 5px;
+    }
+
+    .comment-text {
+        font-size: 0.9rem;
+    }
+
+    button {
+        padding: 3px 7px;
+        font-size: 0.8rem;
+    }
+}
+
+
+
+input {
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.header h2 {
+    margin-left: 30px;
+}
+#removeBtn{
+    margin-left: 20px;
+}

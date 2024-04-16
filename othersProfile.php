@@ -44,7 +44,7 @@ include 'connection.php';
         $res1 = mysqli_query($con, $que1);
         $row = mysqli_fetch_assoc($res1);
         $uname = $row['uname'];
-        $avatar = isset($row['avatar']) ? 'profileImages/' . $row['avatar'] : 'images/ppp.png';
+        $avatar = isset($row['avatar']) ? 'profileImages/' . $row['avatar'] : 'images/cat.webp';
         $gender = !empty($row['gender']) ? $row['gender'] : 'Not specified';
         $bio = !empty($row['bio']) ? $row['bio'] : 'Not specified';
 

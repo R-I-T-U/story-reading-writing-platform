@@ -178,3 +178,8 @@ main {
 .status input[type="checkbox"]:checked+label:hover {
     background-color: #66acf7;
 }
+
+.seemore a {
+    font-style: italic; 
+  }
+  

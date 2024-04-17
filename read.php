@@ -129,7 +129,7 @@
                     <div class='cgenre'>Genre: $genre</div> ";
 
                 if ($status == 'pending') {
-                    echo "<div style='color:green;' class='cstatus'>Status: $status</div>";
+                    echo "<div style='color:red;' class='cstatus'>Status: $status</div>";
                 } else {
                     echo "<div style='color:green;' class='cstatus'>Status: $status</div>";
                 };

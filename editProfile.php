@@ -44,8 +44,6 @@ $oldImage = $row['avatar'];
             border-radius: 50%;
             z-index: 1;
         }
-
-        
     </style>
 </head>
 
@@ -82,7 +80,7 @@ $oldImage = $row['avatar'];
                 <br>
                 <div>
                     <label for="email">Email: </label>
-                    <input type="email" id="email" class="form-control" name="email" value="<?php echo $email; ?>" oninput="validateEmail()">
+                    <input type="email" id="email" class="form-control" name="email" value="<?php echo $email; ?>" oninput="validateEmail()" required>
                     <div id="email-error" style="color: red;"></div>
                 </div>
                 <br>
@@ -218,15 +216,18 @@ $oldImage = $row['avatar'];
             var pattern = /^(?!.*[#$%^*~<>{}()[;?/+=^~!',":&`\n]).*$/;
             var pattern1 = /^(?![0-9#$%^*~<>{}()[;\n]).*$/;
             var pattern2 = /^.{0,50}$/;
-
+            var pattern3 = /^(?:[a-zA-Z0-9._%+-]+@(?:gmail|yahoo|outlook|protonmail|icloud|aol|hotmail|mail|yandex|zoho)\.com)$/;
             if (!pattern.test(input.value)) {
                 Error.textContent = "Email must not contain invalid characters.";
                 input.setCustomValidity("Invalid Email");
             } else if (!pattern1.test(input.value)) {
-                Error.textContent = "Email cannot begin with a number.";
+                Error.textContent = "Email must begin with alphabets.";
                 input.setCustomValidity("Invalid Email");
             } else if (!pattern2.test(input.value)) {
                 Error.textContent = "Email must be at most 50 characters long.";
+                input.setCustomValidity("Invalid Email");
+            } else if (!pattern3.test(input.value)) {
+                Error.textContent = "Invalid Email!";
                 input.setCustomValidity("Invalid Email");
             } else {
                 Error.textContent = "";
@@ -242,8 +243,6 @@ $oldImage = $row['avatar'];
             var pattern = /^(?!.*[@$%^*~\n]).*$/;
             var pattern1 = /^(?![0-9@$%^*~\n]).*$/;
             var pattern2 = /^.{0,100}$/;
-
-
 
             if (!pattern.test(input.value)) {
                 Error.textContent = "Bio cannot contain some special characters and one line spaces.";

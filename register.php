@@ -106,18 +106,18 @@ if (!$con) {
               $num = mysqli_num_rows($result1);
               $unum = mysqli_num_rows($result2);
               if ($num > 0) {
-                echo '<p id="error-msg" style="color: red;">User already exists! <br> Login to continue..</p>';
+                echo '<p style="color: red;">User already exists! <br> Login to continue..</p>';
               } else {
                 if (empty($email) || empty($password) || empty($uname)) {
-                  echo '<p id="error-msg" style="color: red;">All of above are required fields</p>';
+                  echo '<p style="color: red;">All of above are required fields</p>';
                 } else if ($unum > 0) {
-                  echo '<p id="error-msg" style="color: red;">Username must be unique</p>';
+                  echo '<p style="color: red;">Username must be unique</p>';
                 } else if (!preg_match('/^(?![0-9])[a-zA-Z0-9\s]{0,50}$/', $uname)) {
-                  echo '<p id="error-msg" style="color: red;">Invalid Username! Only letters and numbers are allowed and name cannot start with number. </p>';
+                  echo '<p style="color: red;">Invalid Username! Only letters and numbers are allowed and name cannot start with number. </p>';
                 } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                  echo '<p id="error-msg" style="color: red;">Invalid email format! </p>';
+                  echo '<p style="color: red;">Invalid email format! </p>';
                 } else if (strlen($password) < 6 || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password)) {
-                  echo '<p id="error-msg" style="color: red;">Password must be at least 6 characters long, contain at least one capital letter, and at least one number!!</p>';
+                  echo '<p style="color: red;">Password must be at least 6 characters long, contain at least one capital letter, and at least one number!!</p>';
                 } else {
 
                   $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -182,24 +182,27 @@ if (!$con) {
 
       // Regular expression pattern for alphanumeric characters only
       var pattern = /^(?!.*[#$%^*~<>{}()[;?/+=^~!',":&`\n]).*$/;
-      var pattern1 = /^(?![0-9#$%^*~<>{}()[;\n]).*$/;
+      var pattern1 = /^(?!^\.)[^0-9#$%^*~<>{}()[;\n].*$/;
       var pattern2 = /^.{0,50}$/;
+      var pattern3 = /^(?:[a-zA-Z0-9._%+-]+@(?:gmail|yahoo|outlook|protonmail|icloud|aol|hotmail|mail|yandex|zoho)\.com)$/;
 
       if (!pattern.test(input.value)) {
         Error.textContent = "Email must not contain invalid characters.";
         input.setCustomValidity("Invalid Email");
       } else if (!pattern1.test(input.value)) {
-        Error.textContent = "Email cannot begin with a number.";
+        Error.textContent = "Email must begin with alphabets.";
         input.setCustomValidity("Invalid Email");
       } else if (!pattern2.test(input.value)) {
         Error.textContent = "Email must be at most 50 characters long.";
+        input.setCustomValidity("Invalid Email");
+      } else if (!pattern3.test(input.value) ) {
+        Error.textContent = "Invalid Email!";
         input.setCustomValidity("Invalid Email");
       } else {
         Error.textContent = "";
         input.setCustomValidity("");
       }
     }
-
 
     function validatePw() {
       var input = document.getElementById('password');
@@ -225,14 +228,7 @@ if (!$con) {
       }
     }
 
-    // _____________________________error msg remove
-   
-    window.addEventListener('load', function() {
-      var errorMsg = document.getElementById('error-msg');
-      if (errorMsg) {
-        errorMsg.remove();
-      }
-    });
+  
   </script>
 </body>
 

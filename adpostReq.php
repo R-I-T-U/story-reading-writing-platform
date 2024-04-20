@@ -120,7 +120,7 @@ if (!$con) {
                     <br>
                 </div>
                 <div class='right'>
-                    <div class='cimage'><img src='{$cvrImgPath}' alt='$storyTitle' style='width: 250px; height: 250px; object-fit: cover;'></div><br>
+                    <div class='cimage'><a href='$cvrImgPath'><img src='{$cvrImgPath}' alt='$storyTitle' style='width: 250px; height: 250px; object-fit: cover;'></a></div><br>
                    
                 </div>
                 <div class='cdescription'><b>Descrition:</b><br> $description</div><br>

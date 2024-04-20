@@ -1,6 +1,15 @@
 <?php
+session_start();
+
 if (isset($_GET['id'])) {
   $postId = $_GET['id'];
+
+  if (!isset($_SESSION['user_id'])) {
+    header("location: register.php");
+    exit();
+  } else {
+    $userId = $_SESSION['user_id'];
+  }
 
   $con = mysqli_connect("localhost", "root", "", "users");
   if (!$con) {
@@ -22,6 +31,13 @@ if (isset($_GET['id'])) {
     $cvrImgPath = "img/ . {$post['cover_image']}";
   }
 }
+$que1 = "SELECT uname, avatar, gender, bio FROM info WHERE id= $userId";
+$res1 = mysqli_query($con, $que1);
+$row = mysqli_fetch_assoc($res1);
+$uname = $row['uname'];
+$avatar = isset($row['avatar']) ? 'profileImages/' . $row['avatar'] : 'images/cat.webp';
+// $gender = !empty($row['gender']) ? $row['gender'] : 'Not specified';
+// $bio = !empty($row['bio']) ? $row['bio'] : 'Not specified';
 
 ?>
 <!DOCTYPE html>
@@ -49,17 +65,10 @@ if (isset($_GET['id'])) {
       <button class="search-button">Search</button>
     </div>
 
-    <?php
-    session_start();
-    if (isset($_SESSION['user_id'])) {
-      echo '<a href="profile.php" class="nav">Profile</a>';
-      echo '<a onclick="confirmLogout()" class="nav">Log out</a>';
-    } else if (isset($_COOKIE['user_id']) && !isset($_SESSION['user_id'])) {
-      echo '<a href="login.php" class="nav">Login</a>';
-    } else {
-      echo '<a href="register.php" class="nav">Sign up</a>';
-    }
-    ?>
+    <a href="profile.php" class="nav"><?php echo $uname; ?>&nbsp;
+      <img src="<?php echo $avatar; ?>" alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'>
+    </a>
+    <a onclick="confirmLogout()" class="nav">Log out</a>
 
   </div>
 
@@ -78,10 +87,12 @@ if (isset($_GET['id'])) {
 
         <label for="title">Title:
           <input type="text" id="title" name="storyTitle" class="form-control" value="<?php echo $storyTitle; ?>" required oninput="validateTitle()">
-          <div id="title-error" style="color: red;"></div></label><br>
+          <div id="title-error" style="color: red;"></div>
+        </label><br>
 
         <label for="abstract">Synopsis: <textarea id="abstract" name="abstract" required class="form-control" oninput="validateAbstract()"><?php echo $abstract; ?></textarea>
-        <div id="abstract-error" style="color: red;"></div></label>
+          <div id="abstract-error" style="color: red;"></div>
+        </label>
         <br>
         <label for="genre">Choose Genre:
           <select name="genre" id="genre">
@@ -101,7 +112,8 @@ if (isset($_GET['id'])) {
 
         <br>
         <label for="description">Full Story: <textarea id="description" name="description" required class="form-control" oninput="validateDesc()"><?php echo $description; ?></textarea>
-        <div id="desc-error" style="color: red;"></div></label>
+          <div id="desc-error" style="color: red;"></div>
+        </label>
         <br>
 
         <label for="status">Status: <select name="status" id="status">

@@ -5,7 +5,13 @@ if (isset($_GET['id'])) {
     $_SESSION['postId'] = $postId;
 
     if (isset($_SESSION['user_id'])) {
-
+        $que1 = "SELECT uname, avatar, gender, bio FROM info WHERE id= $userId";
+        $res1 = mysqli_query($con, $que1);
+        $row = mysqli_fetch_assoc($res1);
+        $myname = $row['uname'];
+        $avatar = isset($row['avatar']) ? 'profileImages/' . $row['avatar'] : 'images/cat.webp';
+        $gender = !empty($row['gender']) ? $row['gender'] : 'Not specified';
+        $bio = !empty($row['bio']) ? $row['bio'] : 'Not specified';
         $query = "SELECT * FROM posts WHERE id= $postId";
         $result = mysqli_query($con, $query);
 
@@ -27,7 +33,8 @@ if (isset($_GET['id'])) {
             echo "Error fetching chapter: " . mysqli_error($con);
         }
     } else {
-        echo "Please log in to view your chapters.";
+        header("location: register.php");
+        exit();
     }
 }
 ?>
@@ -56,17 +63,10 @@ if (isset($_GET['id'])) {
             <button class="search-button">Search</button>
         </div>
 
-        <?php
-        if (isset($_SESSION['user_id'])) {
-            echo '<a href="profile.php" class="nav">Profile</a>';
-            echo '<a onclick="confirmLogout()" class="nav">Log out</a>';
-        } else if (isset($_COOKIE['user_id']) && !isset($_SESSION['user_id'])) {
-            echo '<a href="login.php" class="nav">Login</a>';
-        } else {
-            echo '<a href="register.php" class="nav">Sign up</a>';
-        }
-
-        ?>
+        <a href="profile.php" class="nav"><?php echo $myname; ?>&nbsp;
+            <img src="<?php echo $avatar; ?>" alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'>
+        </a>
+        <a onclick="confirmLogout()" class="nav">Log out</a>
     </div>
 
     <!-- content*********************************** -->
@@ -79,15 +79,15 @@ if (isset($_GET['id'])) {
                 <div class='pp'>
                     <a href='othersProfile.php?user_id=<?php echo $user_id ?>'><img src='<?php echo $profileImgPath; ?>' alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'></a>
                     <p>&nbsp <a href='othersProfile.php?user_id=<?php echo $user_id ?>' class="noUnderline"><?php echo $uname; ?></a></p>
-                    
+
                 </div>
-                
+
                 <div class='ctitle'>
                     <h2><?php echo $storyTitle; ?></h2>
                 </div>
                 <div class='cdescription'><?php echo $description; ?></div>
                 <br><br>
-                
+
                 <hr width="60%">
             </div>
             <div class="last">
@@ -100,7 +100,7 @@ if (isset($_GET['id'])) {
                     $pid = $_SESSION['postId'];
                     $query2 = "SELECT * FROM comment WHERE post_id = $pid";
                     $result2 = mysqli_query($con, $query2);
-                    if(mysqli_num_rows($result2)==0){
+                    if (mysqli_num_rows($result2) == 0) {
                         echo "<div class='cpp' id='singleCmt'> <br><br>No comments available.</div>";
                     }
                     if ($result2) {
@@ -112,17 +112,16 @@ if (isset($_GET['id'])) {
                             $profileImgPath = !empty($row1['avatar']) ? 'profileImages/' . $row1['avatar'] : 'images/cat.webp';
                             $uname = $row1['uname'];
 
-                            if($user_id === $userId){
+                            if ($user_id === $userId) {
                                 echo "<form method='POST' action='OwnCmt.php'>
                         <div class='cpp' id='singleCmt'>
                         <a href='othersProfile.php?user_id=$user_id'><img src='$profileImgPath' alt='image' style='border-radius: 50%; width: 30px; height: 30px; object-fit: cover;'></a><p>&nbsp <a href='othersProfile.php?user_id=$user_id' class='noUnderline'>$uname</a>
                         commented '" . $row['cmt'] . "'.
-                        <input type = 'number' value = ".$row['cmt_id']." name = 'cmtId' hidden>
+                        <input type = 'number' value = " . $row['cmt_id'] . " name = 'cmtId' hidden>
                         <button id='report' type='submit' name='delete'> delete </button>
                         <br></p></div>
                         </form>";
-
-                            } else{
+                            } else {
                                 echo "<form method='POST' action='reportCmt.php'>
                         <input type='number' value = " . $row['cmt_id'] . "  hidden name='cmt_id'>
                         <div class='cpp' id='singleCmt'>
@@ -132,10 +131,8 @@ if (isset($_GET['id'])) {
                         <br></p></div>
                         </form>";
                             }
-
-                            
                         }
-                    } 
+                    }
                     ?>
                 </div>
 
@@ -153,7 +150,8 @@ if (isset($_GET['id'])) {
                 window.location.href = "logout.php";
             }
         }
-        function msg(){
+
+        function msg() {
             alert('Comment reported succesfully!');
         }
     </script>

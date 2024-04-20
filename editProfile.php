@@ -10,6 +10,8 @@ $email = $row['email'];
 $gender = $row['gender'];
 $bio = $row['bio'];
 $oldImage = $row['avatar'];
+$avatar = isset($row['avatar']) ? 'profileImages/' . $row['avatar'] : 'images/cat.webp';
+
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +58,9 @@ $oldImage = $row['avatar'];
             <input type="text" class="search-bar" placeholder="Search...">
             <button class="search-button">Search</button>
         </div>
-        <a href="profile.php" class="nav">Profile</a>
+        <a href="profile.php" class="nav"><?php echo $uname; ?>&nbsp;
+            <img src="<?php echo $avatar; ?>" alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'>
+        </a>
         <a onclick="confirmLogout()" class="nav">Log out</a>
     </div>
 
@@ -122,63 +126,55 @@ $oldImage = $row['avatar'];
                 $uname = mysqli_real_escape_string($con, $_POST['uname']);
 
                 $email = mysqli_real_escape_string($con, filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
-                // $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+
                 $avatar = $_FILES['profileImage']['name'];
                 $bio = mysqli_real_escape_string($con, $_POST['bio']);
                 $gender = $_POST['gender'];
 
-                $query1 = "SELECT * FROM info WHERE email = '$email'";
-                $result1 = mysqli_query($con, $query1);
+                $accCheck = "SELECT * FROM info WHERE (email = '$email' OR uname='$uname') AND id != $userId";
+                $result_1 = $con->query($accCheck);
 
-                $query2 = "SELECT * FROM info WHERE uname = '$uname'";
-                $result2 = mysqli_query($con, $query2);
-
-                if ($result1 && $result2) {
-                    $num = mysqli_num_rows($result1);
-                    $unum = mysqli_num_rows($result2);
-                    if ($num > 1) {
-                        echo '<p style="color: red;">User already exists! </p>';
+                if ($result_1->num_rows > 0) {
+                    echo '<p style="color: red;">Username or email already exists! </p>';
+                } else {
+                    if (empty($email) || empty($uname)) {
+                        echo '<p style="color: red;">Email and Name are required fields</p>';
+                    } else if (!preg_match('/^(?![0-9])[a-zA-Z0-9\s]{0,50}$/', $uname)) {
+                        echo '<p style="color: red;">Invalid Username! Only letters and numbers are allowed and name can not start with number </p>';
+                    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                        echo '<p style="color: red;">Invalid email format! </p>';
                     } else {
-                        if (empty($email) || empty($uname)) {
-                            echo '<p style="color: red;">Email and Name are required fields</p>';
-                        } else if ($unum > 1) {
-                            echo '<p style="color: red;">Username must be unique</p>';
-                        } else if (!preg_match('/^(?![0-9])[a-zA-Z0-9\s]{0,50}$/', $uname)) {
-                            echo '<p style="color: red;">Invalid Username! Only letters and numbers are allowed and name can not start with number </p>';
-                        } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                            echo '<p style="color: red;">Invalid email format! </p>';
-                        } else {
 
-                            if (!empty($avatar)) {
-                                $avatar_tmp = $_FILES['profileImage']['tmp_name'];
-                                $avatar_path = 'profileImages/' . $avatar;
-                                $query = "UPDATE info SET uname='$uname', email='$email', avatar='$avatar', bio='$bio', gender='$gender' WHERE id=$userId";
-                                $result = mysqli_query($con, $query);
+                        if (!empty($avatar)) {
+                            $avatar_tmp = $_FILES['profileImage']['tmp_name'];
+                            $avatar_path = 'profileImages/' . $avatar;
+                            $query = "UPDATE info SET uname='$uname', email='$email', avatar='$avatar', bio='$bio', gender='$gender' WHERE id=$userId";
+                            $result = mysqli_query($con, $query);
 
-                                if ($result) {
-                                    if (isset($oldImage) && !empty($oldImage)) {
-                                        unlink($oldImageSrc);
-                                    }
-                                    move_uploaded_file($avatar_tmp, $avatar_path);
-                                    header("Location: profile.php");
-                                    exit();
-                                } else {
-                                    echo "Error: " . mysqli_error($con);
+                            if ($result) {
+                                if (isset($oldImage) && !empty($oldImage)) {
+                                    unlink($oldImageSrc);
                                 }
+                                move_uploaded_file($avatar_tmp, $avatar_path);
+                                header("Location: profile.php");
+                                exit();
                             } else {
-                                $query = "UPDATE info SET uname='$uname', email='$email', bio='$bio', gender='$gender' WHERE id=$userId";
-                                $result = mysqli_query($con, $query);
-                                if ($result) {
-                                    header("Location: profile.php");
-                                    exit();
-                                } else {
-                                    echo "Error: " . mysqli_error($con);
-                                }
+                                echo "Error: " . mysqli_error($con);
+                            }
+                        } else {
+                            $query = "UPDATE info SET uname='$uname', email='$email', bio='$bio', gender='$gender' WHERE id=$userId";
+                            $result = mysqli_query($con, $query);
+                            if ($result) {
+                                header("Location: profile.php");
+                                exit();
+                            } else {
+                                echo "Error: " . mysqli_error($con);
                             }
                         }
                     }
                 }
             }
+
             ?>
         </div>
     </center>

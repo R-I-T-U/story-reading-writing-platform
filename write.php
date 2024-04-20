@@ -6,12 +6,20 @@ if (!isset($_SESSION['user_id'])) {
   exit();
 } else {
   $userId = $_SESSION['user_id'];
+  
 }
 
 $con = mysqli_connect("localhost", "root", "", "users");
 if (!$con) {
   die(mysqli_error($con));
 }
+$que1 = "SELECT uname, avatar, gender, bio FROM info WHERE id= $userId";
+$res1 = mysqli_query($con, $que1);
+$row = mysqli_fetch_assoc($res1);
+$uname = $row['uname'];
+$avatar = isset($row['avatar']) ? 'profileImages/' . $row['avatar'] : 'images/cat.webp';
+// $gender = !empty($row['gender']) ? $row['gender'] : 'Not specified';
+// $bio = !empty($row['bio']) ? $row['bio'] : 'Not specified';
 ?>
 
 <!DOCTYPE html>
@@ -43,15 +51,9 @@ if (!$con) {
       <button class="search-button">Search</button>
     </div>
 
-    <?php
-    if (isset($_SESSION['user_id'])) {
-      echo '<a href="profile.php" class="nav">Profile</a>';
-    } else if (isset($_COOKIE['user_id']) && !isset($_SESSION['user_id'])) {
-      echo '<a href="login.php" class="nav">Login</a>';
-    } else {
-      echo '<a href="register.php" class="nav">Sign up</a>';
-    }
-    ?>
+    <a href="profile.php" class="nav"><?php echo $uname; ?>&nbsp;
+      <img src="<?php echo $avatar; ?>" alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'>
+    </a>
     <a onclick="confirmLogout()" class="nav">Log out</a>
 
   </div>
@@ -120,7 +122,7 @@ if (!$con) {
         <br><br>
         <div class="button">
           <button class="cancel" formaction="profile.php">Cancel</button>
-          <button class="next" name="next" style=" margin-left: 20px;">Publish</button>
+          <button class="next" name="next" style=" margin-left: 20px;">Submit</button>
         </div><br>
 
         <?php
@@ -138,12 +140,12 @@ if (!$con) {
           $state = 0;
           if (empty($storyTitle) || empty($abstract) || empty($description) || empty($coverImage)) {
             echo '<p style="color: red;">All of above are required fields</p>';
-          // } else if (!preg_match('/^(?![0-9])[a-zA-Z0-9\s]{0,50}$/', $storyTitle)) {
-          //   echo '<p style="color: red;">Invalid story title! </p>';
-          // } else if (!preg_match('/^(?!.*[@#$%^*~])(?![0-9@#$%^*~]).{300,800}$/', $abstract)) {
-          //   echo '<p style="color: red;">Invalid sypnosis!</p>';
-          // } else if (!preg_match('/^(?!.*[@#$%^*~])(?![0-9@#$%^*~]).{500,}$/', $description)) {
-          //   echo '<p style="color: red;">Invalid description! </p>';
+            // } else if (!preg_match('/^(?![0-9])[a-zA-Z0-9\s]{0,50}$/', $storyTitle)) {
+            //   echo '<p style="color: red;">Invalid story title! </p>';
+            // } else if (!preg_match('/^(?!.*[@#$%^*~])(?![0-9@#$%^*~]).{300,800}$/', $abstract)) {
+            //   echo '<p style="color: red;">Invalid sypnosis!</p>';
+            // } else if (!preg_match('/^(?!.*[@#$%^*~])(?![0-9@#$%^*~]).{500,}$/', $description)) {
+            //   echo '<p style="color: red;">Invalid description! </p>';
           } else {
             $query = "INSERT INTO posts (cover_image, title, abstract, genre, description, status, user_id, created_at, updated_at, state) VALUES ('$coverImage','$storyTitle' , '$abstract', '$genre', '$description', '$status', $userId, NOW(), NOW(), $state)";
 

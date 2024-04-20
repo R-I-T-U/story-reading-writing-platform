@@ -35,7 +35,20 @@
         <?php
         session_start();
         if (isset($_SESSION['user_id'])) {
-            echo '<a href="profile.php" class="nav">Profile</a>';
+            $userId = $_SESSION['user_id'];
+            $con = mysqli_connect("localhost", "root", "", "users");
+            if (!$con) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+            $que1 = "SELECT uname, avatar, gender, bio FROM info WHERE id= $userId";
+            $res1 = mysqli_query($con, $que1);
+            $row = mysqli_fetch_assoc($res1);
+            $uname = $row['uname'];
+            $avatar = isset($row['avatar']) ? 'profileImages/' . $row['avatar'] : 'images/cat.webp';
+
+            echo '<a href="profile.php" class="nav">  '.$uname .'&nbsp;
+            <img src="'. $avatar.'" alt="image" style="border-radius: 50%; width: 40px; height: 40px; object-fit: cover;">
+            </a>';
             echo '<a onclick="confirmLogout()" class="nav">Log out</a>';
         } else if (isset($_COOKIE['user_id']) && !isset($_SESSION['user_id'])) {
             echo '<a href="login.php" class="nav">Login</a>';

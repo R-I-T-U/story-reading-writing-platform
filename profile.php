@@ -1,5 +1,13 @@
 <?php
 include 'connection.php';
+
+$que1 = "SELECT uname, avatar, gender, bio FROM info WHERE id= $userId";
+$res1 = mysqli_query($con, $que1);
+$row = mysqli_fetch_assoc($res1);
+$uname = $row['uname'];
+$avatar = isset($row['avatar']) ? 'profileImages/' . $row['avatar'] : 'images/cat.webp';
+$gender = !empty($row['gender']) ? $row['gender'] : 'Not specified';
+$bio = !empty($row['bio']) ? $row['bio'] : 'Not specified';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +31,9 @@ include 'connection.php';
             <input type="text" class="search-bar" placeholder="Search...">
             <button class="search-button">Search</button>
         </div>
-        <a href="profile.php" class="nav">Profile</a>
+        <a href="profile.php" class="nav"><?php echo $uname; ?>&nbsp;
+            <img src="<?php echo $avatar; ?>" alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'>
+        </a>
         <a onclick="confirmLogout()" class="nav">Log out</a>
 
     </div>
@@ -31,16 +41,6 @@ include 'connection.php';
     <!-- content*********************************** -->
 
     <div class="container">
-        <?php
-
-        $que1 = "SELECT uname, avatar, gender, bio FROM info WHERE id= $userId";
-        $res1 = mysqli_query($con, $que1);
-        $row = mysqli_fetch_assoc($res1);
-        $uname = $row['uname'];
-        $avatar = isset($row['avatar']) ? 'profileImages/' . $row['avatar'] : 'images/cat.webp';
-        $gender = !empty($row['gender']) ? $row['gender'] : 'Not specified';
-        $bio = !empty($row['bio']) ? $row['bio'] : 'Not specified';
-        ?>
         <div class="img-container"></div>
         <!-- profile -->
         <form id="profileForm" action="editProfile.php" method="POST">
@@ -87,7 +87,7 @@ include 'connection.php';
                 $cvrImgPath = "img/ . {$row['cover_image']}";
 
 
-            echo "
+                echo "
             <div class='stories'>
             <div class='left'>
                     <div class='ctitle'>" . $storyTitle . "</div>

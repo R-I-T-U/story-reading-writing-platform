@@ -1,5 +1,13 @@
 <?php
 include 'connection.php';
+
+$que1 = "SELECT uname, avatar, gender, bio FROM info WHERE id= $userId";
+$res1 = mysqli_query($con, $que1);
+$row = mysqli_fetch_assoc($res1);
+$uuname = $row['uname'];
+$aavatar = isset($row['avatar']) ? 'profileImages/' . $row['avatar'] : 'images/cat.webp';
+$gender = !empty($row['gender']) ? $row['gender'] : 'Not specified';
+$bio = !empty($row['bio']) ? $row['bio'] : 'Not specified';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +32,9 @@ include 'connection.php';
             <input type="text" class="search-bar" placeholder="Search...">
             <button class="search-button">Search</button>
         </div>
-        <a href="profile.php" class="nav">Profile</a>
+        <a href="profile.php" class="nav"><?php echo $uuname; ?>&nbsp;
+            <img src="<?php echo $aavatar; ?>" alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'>
+        </a>
         <a onclick="confirmLogout()" class="nav">Log out</a>
 
     </div>
@@ -47,8 +57,6 @@ include 'connection.php';
         $avatar = isset($row['avatar']) ? 'profileImages/' . $row['avatar'] : 'images/cat.webp';
         $gender = !empty($row['gender']) ? $row['gender'] : 'Not specified';
         $bio = !empty($row['bio']) ? $row['bio'] : 'Not specified';
-
-
 
         }
         

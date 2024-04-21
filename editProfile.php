@@ -212,7 +212,7 @@ $avatar = isset($row['avatar']) ? 'profileImages/' . $row['avatar'] : 'images/ca
             var pattern = /^(?!.*[#$%^*~<>{}()[;?/+=^~!',":&`\n]).*$/;
             var pattern1 = /^(?![0-9#$%^*~<>{}()[;\n]).*$/;
             var pattern2 = /^.{0,50}$/;
-            var pattern3 = /^(?:[a-zA-Z0-9._%+-]+@(?:gmail|yahoo|outlook|protonmail|icloud|aol|hotmail|mail|yandex|zoho)\.com)$/;
+            var pattern3 = /^(?:[a-zA-Z0-9._%+-]+@(?:gmail|yahoo)\.com)$/;
             if (!pattern.test(input.value)) {
                 Error.textContent = "Email must not contain invalid characters.";
                 input.setCustomValidity("Invalid Email");

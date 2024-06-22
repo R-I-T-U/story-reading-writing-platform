@@ -1,4 +1,13 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['admin_id'])) {
+  header("location: login.php");
+  exit();
+} else {
+  $userId = $_SESSION['admin_id'];
+}
+
 $con = mysqli_connect("localhost", "root", "", "users");
 if (!$con) {
   die("Connection failed: " . mysqli_connect_error());

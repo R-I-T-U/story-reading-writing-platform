@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-if (isset($_COOKIE['user_id'])) {
-  $_SESSION['user_id'] = $_COOKIE['user_id'];
-}
+// if (isset($_COOKIE['user_id'])) {
+//   $_SESSION['user_id'] = $_COOKIE['user_id'];
+// }
 
 if (isset($_SESSION["user_id"])) {
   header("location: profile.php");
@@ -36,10 +36,12 @@ if (!$con) {
   <div class="navbar">
     <a href="read.php" class="nav">Read</a>
     <a href="write.php" class="nav">Write</a>
-    <div class="search-container">
-      <input type="text" class="search-bar" placeholder="Search...">
-      <button class="search-button">Search</button>
-    </div>
+    <form action="search_result.php" method="POST">
+      <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search..." name="search_content">
+        <button class="search-button">Search</button>
+      </div>
+    </form>
     <a href="register.php" class="nav">Sign up</a>
     <!-- <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a> -->
   </div>
@@ -67,14 +69,14 @@ if (!$con) {
             Password: </label>
           <input type="password" id="password" class="form-control" placeholder="Set Password" name="password" oninput="validatePw()">
           <div id="pw-error" style="color: red;"></div>
-        </div>
-        <div>
+        </div> <br><br>
+        <!-- <div>
           <div class="custom-control custom-checkbox"><br>
             <input type="checkbox" class="custom-control-input" id="remember_me" name="remember_me">
             <label class="custom-control-label" for="remember_me">Remember me</label>
           </div>
 
-        </div>
+        </div> -->
         <div>
           <button type="submit" class="submit" name="submit">Sign Up</button>
         </div>
@@ -133,9 +135,9 @@ if (!$con) {
                     $_SESSION['user_id'] = $row['id'];
 
 
-                    if (isset($_POST['remember_me']) && $_POST['remember_me'] == 'on') {
-                      setcookie('user_id', $_SESSION['user_id'], time() + (7 * 24 * 60 * 60), '/');
-                    }
+                    // if (isset($_POST['remember_me']) && $_POST['remember_me'] == 'on') {
+                    //   setcookie('user_id', $_SESSION['user_id'], time() + (7 * 24 * 60 * 60), '/');
+                    // }
                     header('location: index.php');
                     exit();
                   } else {
@@ -195,7 +197,7 @@ if (!$con) {
       } else if (!pattern2.test(input.value)) {
         Error.textContent = "Email must be at most 50 characters long.";
         input.setCustomValidity("Invalid Email");
-      } else if (!pattern3.test(input.value) ) {
+      } else if (!pattern3.test(input.value)) {
         Error.textContent = "Invalid Email!";
         input.setCustomValidity("Invalid Email");
       } else {
@@ -227,8 +229,6 @@ if (!$con) {
         input.setCustomValidity("");
       }
     }
-
-  
   </script>
 </body>
 

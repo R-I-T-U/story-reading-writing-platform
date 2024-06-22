@@ -14,11 +14,12 @@
     <div class="navbar">
         <a href="read.php" class="nav">Read</a>
         <a href="write.php" class="nav">Write</a>
+        <form action="search_result.php" method="POST">
         <div class="search-container">
-            <input type="text" class="search-bar" placeholder="Search...">
+            <input type="text" class="search-bar" placeholder="Search..." name="search_content">
             <button class="search-button">Search</button>
         </div>
-
+        </form>
         <?php
         session_start();
         if (isset($_SESSION['user_id'])) {

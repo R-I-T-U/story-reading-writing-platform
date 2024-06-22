@@ -38,10 +38,12 @@ if (!$con) {
     <div class="navbar">
         <a href="read.php" class="nav">Read</a>
         <a href="write.php" class="nav">Write</a>
-        <div class="search-container">
-            <input type="text" class="search-bar" placeholder="Search...">
-            <button class="search-button">Search</button>
-        </div>
+        <form action="search_result.php" method="POST">
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Search..." name="search_content">
+                <button class="search-button">Search</button>
+            </div>
+        </form>
         <a href="login.php" class="nav">Login</a>
         <a href="" class="nav"><img src="images/noti.jpeg" height="20px"></a>
     </div>
@@ -79,7 +81,7 @@ if (!$con) {
                 <p>OR</p>
                 <button class="create" formaction="login.php">Back</button>
 
-          
+
                 <?php
                 if (isset($_POST['submit'])) {
                     $email = mysqli_real_escape_string($con, filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
@@ -92,7 +94,7 @@ if (!$con) {
                     $result1 = mysqli_query($con, $query1);
 
                     $count = mysqli_num_rows($result1);
-                    
+
                     if ($count > 0) {
                         if (strlen($password1) < 6 || !preg_match('/[A-Z]/', $password1) || !preg_match('/[0-9]/', $password1)) {
                             echo '<p style="color: red;">Password must be at least 6 characters long, contain at least one capital letter, and at least one number!!</p>';
@@ -113,10 +115,9 @@ if (!$con) {
                     } else {
                         if (empty($email) || empty($password) || empty($uname)) {
                             echo '<p style="color: red;">All of above are required fields</p>';
-                          }else{
+                        } else {
                             echo "<p style='color:red;'>Email not registered!</p>";
-                          }
-                        
+                        }
                     }
                 }
                 mysqli_close($con);
@@ -126,54 +127,53 @@ if (!$con) {
     </center>
     <script>
         function validateEmail() {
-      var input = document.getElementById('email');
-      var Error = document.getElementById('email-error');
+            var input = document.getElementById('email');
+            var Error = document.getElementById('email-error');
 
-      // Regular expression pattern for alphanumeric characters only
-      var pattern = /^(?!.*[#$%^*~<>{}()[;?/+=^~!',":&`\n]).*$/;
-      var pattern1 = /^(?![0-9#$%^*~<>{}()[;\n]).*$/;
-      var pattern2 = /^.{0,50}$/;
+            // Regular expression pattern for alphanumeric characters only
+            var pattern = /^(?!.*[#$%^*~<>{}()[;?/+=^~!',":&`\n]).*$/;
+            var pattern1 = /^(?![0-9#$%^*~<>{}()[;\n]).*$/;
+            var pattern2 = /^.{0,50}$/;
 
-      if (!pattern.test(input.value)) {
-        Error.textContent = "Email must not contain invalid characters.";
-        input.setCustomValidity("Invalid Email");
-      } else if (!pattern1.test(input.value)) {
-        Error.textContent = "Email cannot begin with a number.";
-        input.setCustomValidity("Invalid Email");
-      } else if (!pattern2.test(input.value)) {
-        Error.textContent = "Email must be at most 50 characters long.";
-        input.setCustomValidity("Invalid Email");
-      } else {
-        Error.textContent = "";
-        input.setCustomValidity("");
-      }
-    }
+            if (!pattern.test(input.value)) {
+                Error.textContent = "Email must not contain invalid characters.";
+                input.setCustomValidity("Invalid Email");
+            } else if (!pattern1.test(input.value)) {
+                Error.textContent = "Email cannot begin with a number.";
+                input.setCustomValidity("Invalid Email");
+            } else if (!pattern2.test(input.value)) {
+                Error.textContent = "Email must be at most 50 characters long.";
+                input.setCustomValidity("Invalid Email");
+            } else {
+                Error.textContent = "";
+                input.setCustomValidity("");
+            }
+        }
 
-    function validatePw() {
-      var input = document.getElementById('password');
-      var Error = document.getElementById('pw-error');
+        function validatePw() {
+            var input = document.getElementById('password');
+            var Error = document.getElementById('pw-error');
 
-      // Regular expression pattern for alphanumeric characters only
-      var pattern = /[A-Z]/;
-      var pattern1 = /[0-9]/;
-      var pattern2 = /^.{6,}$/;
+            // Regular expression pattern for alphanumeric characters only
+            var pattern = /[A-Z]/;
+            var pattern1 = /[0-9]/;
+            var pattern2 = /^.{6,}$/;
 
-      if (!pattern.test(input.value)) {
-        Error.textContent = "Password must contain at least 1 capital letter.";
-        input.setCustomValidity("Invalid Password");
-      } else if (!pattern1.test(input.value)) {
-        Error.textContent = "Password must contain at least 1 number.";
-        input.setCustomValidity("Invalid Password");
-      } else if (!pattern2.test(input.value)) {
-        Error.textContent = "Password must be at least 6 characters long.";
-        input.setCustomValidity("Invalid Password");
-      } else {
-        Error.textContent = "";
-        input.setCustomValidity("");
-      }
-    }
-
-       
+            if (!pattern.test(input.value)) {
+                Error.textContent = "Password must contain at least 1 capital letter.";
+                input.setCustomValidity("Invalid Password");
+            } else if (!pattern1.test(input.value)) {
+                Error.textContent = "Password must contain at least 1 number.";
+                input.setCustomValidity("Invalid Password");
+            } else if (!pattern2.test(input.value)) {
+                Error.textContent = "Password must be at least 6 characters long.";
+                input.setCustomValidity("Invalid Password");
+            } else {
+                Error.textContent = "";
+                input.setCustomValidity("");
+            }
+        }
     </script>
 </body>
+
 </html>

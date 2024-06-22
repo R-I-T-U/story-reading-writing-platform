@@ -11,6 +11,7 @@ $bio = !empty($row['bio']) ? $row['bio'] : 'Not specified';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,10 +27,12 @@ $bio = !empty($row['bio']) ? $row['bio'] : 'Not specified';
     <div class="navbar">
         <a href="read.php" class="nav">Read</a>
         <a href="write.php" class="nav">Write</a>
-        <div class="search-container">
-            <input type="text" class="search-bar" placeholder="Search...">
-            <button class="search-button">Search</button>
-        </div>
+        <form action="search_result.php" method="POST">
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Search..." name="search_content">
+                <button class="search-button">Search</button>
+            </div>
+        </form>
         <a href="profile.php" class="nav"><?php echo $uname; ?>&nbsp;
             <img src="<?php echo $avatar; ?>" alt='image' style='border-radius: 50%; width: 40px; height: 40px; object-fit: cover;'>
         </a>

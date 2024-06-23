@@ -92,9 +92,11 @@ if (isset($_GET['id'])) {
             </div>
             <div class="last">
                 <form action="insertCmt.php" method="POST">
-                    <input type="text" name="cmt" id="cmt">
+                    <input type="text" name="cmt" id="cmt" oninput="validateCmt()">
                     <button type="submit" name='add'>Add comment</button>
+                    <div id="cmt-error" style="color: red;"></div>
                 </form>
+                
                 <div class="cmt">
                     <?php
                     $pid = $_SESSION['postId'];
@@ -154,6 +156,29 @@ if (isset($_GET['id'])) {
         function msg() {
             alert('Comment reported succesfully!');
         }
+
+        function validateCmt() {
+      var input = document.getElementById('cmt');
+      var Error = document.getElementById('cmt-error');
+
+      // Regular expression pattern for alphanumeric characters only
+      var pattern = /^(?!.*[@#$%^*~\n]).*$/;
+      
+      var pattern2 = /^.{4,200}$/;
+
+
+
+      if (!pattern.test(input.value)) {
+        Error.textContent = "Comment cannot contain some special characters and one line spaces.";
+        input.setCustomValidity("Invalid Synopsis");
+      } else if (!pattern2.test(input.value)) {
+        Error.textContent = "Comment must be between 4-200 characters.";
+        input.setCustomValidity("Invalid Synopsis");
+      } else {
+        Error.textContent = "";
+        input.setCustomValidity("");
+      }
+    }
     </script>
 </body>
 

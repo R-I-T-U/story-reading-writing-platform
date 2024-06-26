@@ -96,7 +96,7 @@ if (!$con) {
 
 
                 <?php
-                $query = "SELECT * FROM posts WHERE state = 0";
+                $query = "SELECT * FROM posts";
                 $result = mysqli_query($con, $query);
                 if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
@@ -138,17 +138,13 @@ if (!$con) {
                    
                 </div>
                 <div class='cdescription'><b>Descrition:</b><br> $description</div><br>
-                <div style='display: flex;'>
-                <a href='adaccept.php?id=$id '>
-                   <div><button style='margin-right: 20px;'>Accept</button>
-                   </div>
-               </a> <br>
-               <a href='adreject.php?id=$id '>
-                   <div><button style='margin-right: 20px;'>Reject</button>
-                   </div>
-               </a>
-               </div>
-            </div><br><hr>";
+                
+            </div>";
+            if ($status == 'pending') {
+                echo "<div style='color:red;' class='cstatus'>Status: $status</div><br><hr>";
+            } else {
+                echo "<div style='color:green;' class='cstatus'>Status: $status</div><br><hr>";
+            };
                 }}
                 else {
                     echo "<p style='display:flex; justify-content:center;'>No results.</p>";

@@ -78,6 +78,11 @@ if (!$con) {
             <span class="material-icons-outlined">notifications</span> Reported Comments
           </a>
         </li>
+        <li class="sidebar-list-item">
+          <a href="viewstoryBYAdmin.php">
+            <span class="material-icons-outlined">groups</span> View all stories
+          </a>
+        </li>
       </ul>
     </aside>
     <!--End Sidebar -->

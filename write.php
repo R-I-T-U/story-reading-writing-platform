@@ -246,14 +246,15 @@ $avatar = isset($row['avatar']) ? 'profileImages/' . $row['avatar'] : 'images/ca
       var Error = document.getElementById('desc-error');
 
       // Regular expression pattern for alphanumeric characters only
-      var pattern = /^[^@#$%^~`]*$/;
+      //var pattern = /^[^@#$%^~`]*$/;
       var pattern1 = /^(?![0-9])[\s\S]*$/;
       var pattern2 = /^[\S\s]{800,}$/;
 
-      if (!pattern.test(input.value)) {
-        Error.textContent = "Description cannot contain some special characters.";
-        input.setCustomValidity("Invalid description");
-      } else if (!pattern1.test(input.value)) {
+      // if (!pattern.test(input.value)) {
+      //   Error.textContent = "Description cannot contain some special characters.";
+      //   input.setCustomValidity("Invalid description");
+      // } else
+       if (!pattern1.test(input.value)) {
         Error.textContent = "Description cannot begin with a number.";
         input.setCustomValidity("Invalid description");
       } else if (!pattern2.test(input.value)) {

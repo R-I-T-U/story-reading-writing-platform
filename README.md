@@ -18,7 +18,7 @@ Admin page:
 
 ## Description
 
-- This project was created from scratch as a **college project** by me, which includes **CRUD operations** and **validations**.
+- This project was created from scratch as a **college project**, which includes **CRUD operations** and **validations**.
 - It does **not implement any algorithms**.
 - The **frontend** is built using:
   - `HTML`

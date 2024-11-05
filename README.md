@@ -15,3 +15,14 @@ full story page
 Admin page:
 <img src="githubImages/adminDashboard.png"  />
 </div><br>
+
+## Description
+
+- This project was created from scratch as a **college project** by me, which includes **CRUD operations** and **validations**.
+- It does **not implement any algorithms**.
+- The **frontend** is built using:
+  - `HTML`
+  - `CSS`
+  - `JavaScript`
+- The **backend** is implemented using:
+  - `PHP`
